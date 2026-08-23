@@ -1,0 +1,7 @@
+__pycache__/
+*.py[cod]
+.pytest_cache/
+outputs/tasks/*.json
+outputs/gee-exports/*
+!outputs/gee-exports/.gitkeep
+

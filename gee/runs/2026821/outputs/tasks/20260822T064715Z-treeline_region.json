@@ -1,0 +1,6205 @@
+{
+  "created_at": "2026-08-22T06:47:15.295602+00:00",
+  "project": "ee-wsc",
+  "authentication": {
+    "credential_type": "Credentials",
+    "valid": true,
+    "detected_project": "ee-wsc",
+    "quota_project": "ee-wsc",
+    "ee_project": "ee-wsc",
+    "asset_root_count": 4
+  },
+  "manifest": {
+    "manifest_count": 978,
+    "matched_gmba_basic_count": 978,
+    "all_region_ids": [
+      "R1_WET_HIMALAYA",
+      "R2_DRY_TIBETAN_PLATEAU",
+      "R3_EUROPEAN_ALPS",
+      "R4_SCANDINAVIA",
+      "R5_ALASKA_YUKON",
+      "R6_NORTH_AMERICAN_ROCKIES",
+      "R7_ANDES",
+      "R8_EAST_AFRICAN_HIGH_MOUNTAINS"
+    ],
+    "selected_region_ids": [
+      "R2_DRY_TIBETAN_PLATEAU",
+      "R3_EUROPEAN_ALPS",
+      "R5_ALASKA_YUKON",
+      "R6_NORTH_AMERICAN_ROCKIES",
+      "R7_ANDES"
+    ],
+    "count_by_region": {
+      "R1_WET_HIMALAYA": 41,
+      "R2_DRY_TIBETAN_PLATEAU": 50,
+      "R3_EUROPEAN_ALPS": 134,
+      "R4_SCANDINAVIA": 127,
+      "R5_ALASKA_YUKON": 83,
+      "R6_NORTH_AMERICAN_ROCKIES": 387,
+      "R7_ANDES": 148,
+      "R8_EAST_AFRICAN_HIGH_MOUNTAINS": 8
+    },
+    "analysis_mountain_count": 30,
+    "analysis_count_by_region": {
+      "R2_DRY_TIBETAN_PLATEAU": 3,
+      "R3_EUROPEAN_ALPS": 8,
+      "R5_ALASKA_YUKON": 2,
+      "R6_NORTH_AMERICAN_ROCKIES": 7,
+      "R7_ANDES": 10
+    },
+    "analysis_gmba_v2_ids": [
+      10068,
+      10069,
+      10070,
+      10071,
+      10072,
+      10073,
+      10074,
+      10075,
+      11167,
+      11200,
+      11209,
+      11237,
+      11245,
+      11247,
+      11249,
+      11250,
+      11251,
+      11252,
+      11255,
+      11259,
+      11278,
+      11284,
+      11286,
+      11288,
+      11319,
+      11320,
+      11323,
+      11334,
+      11335,
+      11356
+    ],
+    "mountain_selection_order": "GMBA_V2_ID ascending (numeric)",
+    "mountain_offset": 20,
+    "mountain_ordinal_range": [
+      21,
+      50
+    ]
+  },
+  "target_collections": {
+    "treeline30m": {
+      "id": "projects/ee-alpine-506212/assets/Treeline_30m_Collection",
+      "type": "IMAGE_COLLECTION",
+      "existing_child_count": 5,
+      "existing_child_ids": [
+        "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R3_EUROPEAN_ALPS_xp002_yp022_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R3_EUROPEAN_ALPS_xp003_yp022_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R3_EUROPEAN_ALPS_xp003_yp023_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R3_EUROPEAN_ALPS_xp004_yp023_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R3_EUROPEAN_ALPS_xp005_yp023_none_first20_dynamic_v2"
+      ]
+    },
+    "treeline1km": {
+      "id": "projects/ee-alpine-506212/assets/Treeline_1km_Collection",
+      "type": "IMAGE_COLLECTION",
+      "existing_child_count": 5,
+      "existing_child_ids": [
+        "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R3_EUROPEAN_ALPS_xp002_yp022_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R3_EUROPEAN_ALPS_xp003_yp022_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R3_EUROPEAN_ALPS_xp003_yp023_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R3_EUROPEAN_ALPS_xp004_yp023_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R3_EUROPEAN_ALPS_xp005_yp023_none_first20_dynamic_v2"
+      ]
+    },
+    "qa30m": {
+      "id": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection",
+      "type": "IMAGE_COLLECTION",
+      "existing_child_count": 5,
+      "existing_child_ids": [
+        "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R3_EUROPEAN_ALPS_xp002_yp022_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R3_EUROPEAN_ALPS_xp003_yp022_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R3_EUROPEAN_ALPS_xp003_yp023_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R3_EUROPEAN_ALPS_xp004_yp023_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R3_EUROPEAN_ALPS_xp005_yp023_none_first20_dynamic_v2"
+      ]
+    }
+  },
+  "grid": {
+    "analysis_cell_degrees": 0.25,
+    "export_shard_degrees": 2.0,
+    "shard_count": 55,
+    "shard_count_by_region": {
+      "R2_DRY_TIBETAN_PLATEAU": 8,
+      "R3_EUROPEAN_ALPS": 3,
+      "R5_ALASKA_YUKON": 15,
+      "R6_NORTH_AMERICAN_ROCKIES": 6,
+      "R7_ANDES": 23
+    },
+    "domain_mode": "sayre-intersection",
+    "sayre_intersection": true
+  },
+  "otsu": {
+    "scope": "shard-dynamic",
+    "thresholds_by_region": {},
+    "note": "Fixed thresholds are reused by every 2-degree export shard. An empty mapping is expected only for explicitly accepted shard-dynamic mode."
+  },
+  "scientific_choices": {
+    "t_test_variance": "welch",
+    "t_test_alternative": "two-sided",
+    "hole_max_size_pixels": 512,
+    "hole_filling_assumption_accepted": true
+  },
+  "overwrite_assets": false,
+  "resume": false,
+  "max_export_tasks": null,
+  "max_mountains": 30,
+  "mountain_offset": 20,
+  "planned_export_task_count": 165,
+  "phase": "SUBMITTED",
+  "tasks": [
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 48,
+      "tile_y": 18,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp048_yp018",
+      "quarter_cell_count": 4,
+      "bounds": [
+        96.0,
+        36.0,
+        98.0,
+        38.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp048_yp018_none_treeline30m",
+      "task_id": "HZ7GBZ4R7FR2MJHBYM526HVT",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R2_DRY_TIBETAN_PLATEAU_xp048_yp018_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 48,
+      "tile_y": 18,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp048_yp018",
+      "quarter_cell_count": 4,
+      "bounds": [
+        96.0,
+        36.0,
+        98.0,
+        38.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp048_yp018_none_treeline1km",
+      "task_id": "AU4TQXFGD2M2FO7RVEDVZ63P",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R2_DRY_TIBETAN_PLATEAU_xp048_yp018_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 48,
+      "tile_y": 18,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp048_yp018",
+      "quarter_cell_count": 4,
+      "bounds": [
+        96.0,
+        36.0,
+        98.0,
+        38.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp048_yp018_none_qa30m",
+      "task_id": "KX5IUQZGT3PYOBYRMIMHNQ3D",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R2_DRY_TIBETAN_PLATEAU_xp048_yp018_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 49,
+      "tile_y": 18,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp049_yp018",
+      "quarter_cell_count": 23,
+      "bounds": [
+        98.0,
+        36.0,
+        100.0,
+        38.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp049_yp018_none_treeline30m",
+      "task_id": "XM7JEZE4XXNNNV7E7MY77IMH",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R2_DRY_TIBETAN_PLATEAU_xp049_yp018_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 49,
+      "tile_y": 18,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp049_yp018",
+      "quarter_cell_count": 23,
+      "bounds": [
+        98.0,
+        36.0,
+        100.0,
+        38.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp049_yp018_none_treeline1km",
+      "task_id": "VCKPKZNJMPYQIQW6RXS4CO2X",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R2_DRY_TIBETAN_PLATEAU_xp049_yp018_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 49,
+      "tile_y": 18,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp049_yp018",
+      "quarter_cell_count": 23,
+      "bounds": [
+        98.0,
+        36.0,
+        100.0,
+        38.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp049_yp018_none_qa30m",
+      "task_id": "X5IFFYVE4IKFVOVQV7ULW4TG",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R2_DRY_TIBETAN_PLATEAU_xp049_yp018_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 50,
+      "tile_y": 18,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp050_yp018",
+      "quarter_cell_count": 37,
+      "bounds": [
+        100.0,
+        36.0,
+        102.0,
+        38.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp050_yp018_none_treeline30m",
+      "task_id": "WBVXNDNJJRTSSTUKASR4OELY",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R2_DRY_TIBETAN_PLATEAU_xp050_yp018_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 50,
+      "tile_y": 18,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp050_yp018",
+      "quarter_cell_count": 37,
+      "bounds": [
+        100.0,
+        36.0,
+        102.0,
+        38.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp050_yp018_none_treeline1km",
+      "task_id": "ANXTONDJG77TUIJ3KHX3HCHM",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R2_DRY_TIBETAN_PLATEAU_xp050_yp018_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 50,
+      "tile_y": 18,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp050_yp018",
+      "quarter_cell_count": 37,
+      "bounds": [
+        100.0,
+        36.0,
+        102.0,
+        38.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp050_yp018_none_qa30m",
+      "task_id": "KXCLJNTGSRBMHQNIFR36NTLU",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R2_DRY_TIBETAN_PLATEAU_xp050_yp018_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 51,
+      "tile_y": 18,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp051_yp018",
+      "quarter_cell_count": 29,
+      "bounds": [
+        102.0,
+        36.0,
+        104.0,
+        38.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp051_yp018_none_treeline30m",
+      "task_id": "624DEJWASJJNMQIMTYYPPRY2",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R2_DRY_TIBETAN_PLATEAU_xp051_yp018_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 51,
+      "tile_y": 18,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp051_yp018",
+      "quarter_cell_count": 29,
+      "bounds": [
+        102.0,
+        36.0,
+        104.0,
+        38.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp051_yp018_none_treeline1km",
+      "task_id": "QXFDXPZIFSQTYFJDCHV6IM2R",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R2_DRY_TIBETAN_PLATEAU_xp051_yp018_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 51,
+      "tile_y": 18,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp051_yp018",
+      "quarter_cell_count": 29,
+      "bounds": [
+        102.0,
+        36.0,
+        104.0,
+        38.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp051_yp018_none_qa30m",
+      "task_id": "4N33SARF237JPRNULYOZGRFW",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R2_DRY_TIBETAN_PLATEAU_xp051_yp018_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 47,
+      "tile_y": 19,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp047_yp019",
+      "quarter_cell_count": 16,
+      "bounds": [
+        94.0,
+        38.0,
+        96.0,
+        40.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp047_yp019_none_treeline30m",
+      "task_id": "EHB6OWJDKHJKBBI4RIKYATOA",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R2_DRY_TIBETAN_PLATEAU_xp047_yp019_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 47,
+      "tile_y": 19,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp047_yp019",
+      "quarter_cell_count": 16,
+      "bounds": [
+        94.0,
+        38.0,
+        96.0,
+        40.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp047_yp019_none_treeline1km",
+      "task_id": "HXGI2HFK7IKTAEMBK527YT67",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R2_DRY_TIBETAN_PLATEAU_xp047_yp019_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 47,
+      "tile_y": 19,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp047_yp019",
+      "quarter_cell_count": 16,
+      "bounds": [
+        94.0,
+        38.0,
+        96.0,
+        40.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp047_yp019_none_qa30m",
+      "task_id": "JUGC7KA7NDM2CV6RKC35RH7F",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R2_DRY_TIBETAN_PLATEAU_xp047_yp019_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 48,
+      "tile_y": 19,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp048_yp019",
+      "quarter_cell_count": 17,
+      "bounds": [
+        96.0,
+        38.0,
+        98.0,
+        40.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp048_yp019_none_treeline30m",
+      "task_id": "4RYT2Y4M4CTI3C6V2EYTU6OQ",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R2_DRY_TIBETAN_PLATEAU_xp048_yp019_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 48,
+      "tile_y": 19,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp048_yp019",
+      "quarter_cell_count": 17,
+      "bounds": [
+        96.0,
+        38.0,
+        98.0,
+        40.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp048_yp019_none_treeline1km",
+      "task_id": "L7FPBUFAKEGACSBY4CCOO26E",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R2_DRY_TIBETAN_PLATEAU_xp048_yp019_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 48,
+      "tile_y": 19,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp048_yp019",
+      "quarter_cell_count": 17,
+      "bounds": [
+        96.0,
+        38.0,
+        98.0,
+        40.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp048_yp019_none_qa30m",
+      "task_id": "ZRGXWFVDCWZPQWI3V4ZSIYF6",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R2_DRY_TIBETAN_PLATEAU_xp048_yp019_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 49,
+      "tile_y": 19,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp049_yp019",
+      "quarter_cell_count": 17,
+      "bounds": [
+        98.0,
+        38.0,
+        100.0,
+        40.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp049_yp019_none_treeline30m",
+      "task_id": "76BMAIDM3CFDJW3XUHR2TYII",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R2_DRY_TIBETAN_PLATEAU_xp049_yp019_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 49,
+      "tile_y": 19,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp049_yp019",
+      "quarter_cell_count": 17,
+      "bounds": [
+        98.0,
+        38.0,
+        100.0,
+        40.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp049_yp019_none_treeline1km",
+      "task_id": "WQSQJOZZAJWYSC7T67YGCDQQ",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R2_DRY_TIBETAN_PLATEAU_xp049_yp019_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 49,
+      "tile_y": 19,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp049_yp019",
+      "quarter_cell_count": 17,
+      "bounds": [
+        98.0,
+        38.0,
+        100.0,
+        40.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp049_yp019_none_qa30m",
+      "task_id": "CDKVVDPVWB3Y4LSHNCVQVR6S",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R2_DRY_TIBETAN_PLATEAU_xp049_yp019_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 50,
+      "tile_y": 19,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp050_yp019",
+      "quarter_cell_count": 3,
+      "bounds": [
+        100.0,
+        38.0,
+        102.0,
+        40.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp050_yp019_none_treeline30m",
+      "task_id": "SXO2YM6JZKICKCEKIH5HGHN2",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R2_DRY_TIBETAN_PLATEAU_xp050_yp019_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 50,
+      "tile_y": 19,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp050_yp019",
+      "quarter_cell_count": 3,
+      "bounds": [
+        100.0,
+        38.0,
+        102.0,
+        40.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp050_yp019_none_treeline1km",
+      "task_id": "5NLQPGLKH2SGL6TG6LBF54CT",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R2_DRY_TIBETAN_PLATEAU_xp050_yp019_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R2_DRY_TIBETAN_PLATEAU",
+      "tile_x": 50,
+      "tile_y": 19,
+      "shard_id": "R2_DRY_TIBETAN_PLATEAU_xp050_yp019",
+      "quarter_cell_count": 3,
+      "bounds": [
+        100.0,
+        38.0,
+        102.0,
+        40.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp050_yp019_none_qa30m",
+      "task_id": "LDP7RXZBJ7JOZOGM3JCDU3XV",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R2_DRY_TIBETAN_PLATEAU_xp050_yp019_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R3_EUROPEAN_ALPS",
+      "tile_x": 2,
+      "tile_y": 22,
+      "shard_id": "R3_EUROPEAN_ALPS_xp002_yp022",
+      "quarter_cell_count": 7,
+      "bounds": [
+        4.0,
+        44.0,
+        6.0,
+        46.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R3_EUROPEAN_ALPS_xp002_yp022_none_treeline30m",
+      "task_id": "Y4BR4DCXNXBJQXDPDPKE6HHN",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R3_EUROPEAN_ALPS_xp002_yp022_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R3_EUROPEAN_ALPS",
+      "tile_x": 2,
+      "tile_y": 22,
+      "shard_id": "R3_EUROPEAN_ALPS_xp002_yp022",
+      "quarter_cell_count": 7,
+      "bounds": [
+        4.0,
+        44.0,
+        6.0,
+        46.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R3_EUROPEAN_ALPS_xp002_yp022_none_treeline1km",
+      "task_id": "T5JB4O3QGJXW2NPXBM26PSOP",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R3_EUROPEAN_ALPS_xp002_yp022_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R3_EUROPEAN_ALPS",
+      "tile_x": 2,
+      "tile_y": 22,
+      "shard_id": "R3_EUROPEAN_ALPS_xp002_yp022",
+      "quarter_cell_count": 7,
+      "bounds": [
+        4.0,
+        44.0,
+        6.0,
+        46.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R3_EUROPEAN_ALPS_xp002_yp022_none_qa30m",
+      "task_id": "QL6BFVGHIH5WTAGRLK2LCY4S",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R3_EUROPEAN_ALPS_xp002_yp022_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R3_EUROPEAN_ALPS",
+      "tile_x": 3,
+      "tile_y": 22,
+      "shard_id": "R3_EUROPEAN_ALPS_xp003_yp022",
+      "quarter_cell_count": 12,
+      "bounds": [
+        6.0,
+        44.0,
+        8.0,
+        46.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R3_EUROPEAN_ALPS_xp003_yp022_none_treeline30m",
+      "task_id": "UAGHTSVUASKAB2X66U66CJMG",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R3_EUROPEAN_ALPS_xp003_yp022_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R3_EUROPEAN_ALPS",
+      "tile_x": 3,
+      "tile_y": 22,
+      "shard_id": "R3_EUROPEAN_ALPS_xp003_yp022",
+      "quarter_cell_count": 12,
+      "bounds": [
+        6.0,
+        44.0,
+        8.0,
+        46.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R3_EUROPEAN_ALPS_xp003_yp022_none_treeline1km",
+      "task_id": "5JSQDF4CIBJKOUJM4HS6IJ7H",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R3_EUROPEAN_ALPS_xp003_yp022_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R3_EUROPEAN_ALPS",
+      "tile_x": 3,
+      "tile_y": 22,
+      "shard_id": "R3_EUROPEAN_ALPS_xp003_yp022",
+      "quarter_cell_count": 12,
+      "bounds": [
+        6.0,
+        44.0,
+        8.0,
+        46.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R3_EUROPEAN_ALPS_xp003_yp022_none_qa30m",
+      "task_id": "RNYVUC6OJORQQOOHM5LY5DXH",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R3_EUROPEAN_ALPS_xp003_yp022_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R3_EUROPEAN_ALPS",
+      "tile_x": 3,
+      "tile_y": 23,
+      "shard_id": "R3_EUROPEAN_ALPS_xp003_yp023",
+      "quarter_cell_count": 3,
+      "bounds": [
+        6.0,
+        46.0,
+        8.0,
+        48.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R3_EUROPEAN_ALPS_xp003_yp023_none_treeline30m",
+      "task_id": "R2RII2RVRSIYKNCQSJIFVMF7",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R3_EUROPEAN_ALPS_xp003_yp023_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R3_EUROPEAN_ALPS",
+      "tile_x": 3,
+      "tile_y": 23,
+      "shard_id": "R3_EUROPEAN_ALPS_xp003_yp023",
+      "quarter_cell_count": 3,
+      "bounds": [
+        6.0,
+        46.0,
+        8.0,
+        48.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R3_EUROPEAN_ALPS_xp003_yp023_none_treeline1km",
+      "task_id": "ZWJ6QTRSTN27UG65OKCO4KDD",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R3_EUROPEAN_ALPS_xp003_yp023_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R3_EUROPEAN_ALPS",
+      "tile_x": 3,
+      "tile_y": 23,
+      "shard_id": "R3_EUROPEAN_ALPS_xp003_yp023",
+      "quarter_cell_count": 3,
+      "bounds": [
+        6.0,
+        46.0,
+        8.0,
+        48.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R3_EUROPEAN_ALPS_xp003_yp023_none_qa30m",
+      "task_id": "QSI2ENNF23K5UD3W35MHUVEM",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R3_EUROPEAN_ALPS_xp003_yp023_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -70,
+      "tile_y": 30,
+      "shard_id": "R5_ALASKA_YUKON_xm070_yp030",
+      "quarter_cell_count": 1,
+      "bounds": [
+        -140.0,
+        60.0,
+        -138.0,
+        62.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm070_yp030_none_treeline30m",
+      "task_id": "4DBWMDKB7UJCOH2CF67OA5HG",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R5_ALASKA_YUKON_xm070_yp030_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -70,
+      "tile_y": 30,
+      "shard_id": "R5_ALASKA_YUKON_xm070_yp030",
+      "quarter_cell_count": 1,
+      "bounds": [
+        -140.0,
+        60.0,
+        -138.0,
+        62.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm070_yp030_none_treeline1km",
+      "task_id": "Z65LKIKHQI273R7JW4BDJNJY",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R5_ALASKA_YUKON_xm070_yp030_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -70,
+      "tile_y": 30,
+      "shard_id": "R5_ALASKA_YUKON_xm070_yp030",
+      "quarter_cell_count": 1,
+      "bounds": [
+        -140.0,
+        60.0,
+        -138.0,
+        62.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm070_yp030_none_qa30m",
+      "task_id": "C2KKO2FQFLWYL5OVIJIGLNIE",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R5_ALASKA_YUKON_xm070_yp030_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -69,
+      "tile_y": 30,
+      "shard_id": "R5_ALASKA_YUKON_xm069_yp030",
+      "quarter_cell_count": 30,
+      "bounds": [
+        -138.0,
+        60.0,
+        -136.0,
+        62.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm069_yp030_none_treeline30m",
+      "task_id": "2F4GFUEYMUDIL3QOLTJIQPQM",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R5_ALASKA_YUKON_xm069_yp030_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -69,
+      "tile_y": 30,
+      "shard_id": "R5_ALASKA_YUKON_xm069_yp030",
+      "quarter_cell_count": 30,
+      "bounds": [
+        -138.0,
+        60.0,
+        -136.0,
+        62.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm069_yp030_none_treeline1km",
+      "task_id": "MIPAXJSXVGIQGOLS5NSO4HLQ",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R5_ALASKA_YUKON_xm069_yp030_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -69,
+      "tile_y": 30,
+      "shard_id": "R5_ALASKA_YUKON_xm069_yp030",
+      "quarter_cell_count": 30,
+      "bounds": [
+        -138.0,
+        60.0,
+        -136.0,
+        62.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm069_yp030_none_qa30m",
+      "task_id": "JBAPKR4ORUBS24JJFYZ5ZEFX",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R5_ALASKA_YUKON_xm069_yp030_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -68,
+      "tile_y": 30,
+      "shard_id": "R5_ALASKA_YUKON_xm068_yp030",
+      "quarter_cell_count": 20,
+      "bounds": [
+        -136.0,
+        60.0,
+        -134.0,
+        62.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm068_yp030_none_treeline30m",
+      "task_id": "VKDG6ZDBM7DVAZ4VBW5MO5SQ",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R5_ALASKA_YUKON_xm068_yp030_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -68,
+      "tile_y": 30,
+      "shard_id": "R5_ALASKA_YUKON_xm068_yp030",
+      "quarter_cell_count": 20,
+      "bounds": [
+        -136.0,
+        60.0,
+        -134.0,
+        62.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm068_yp030_none_treeline1km",
+      "task_id": "PPIFBMCZ7CESSUROEXUSB3G6",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R5_ALASKA_YUKON_xm068_yp030_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -68,
+      "tile_y": 30,
+      "shard_id": "R5_ALASKA_YUKON_xm068_yp030",
+      "quarter_cell_count": 20,
+      "bounds": [
+        -136.0,
+        60.0,
+        -134.0,
+        62.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm068_yp030_none_qa30m",
+      "task_id": "WI2QLVFX45H35I342R2D36CB",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R5_ALASKA_YUKON_xm068_yp030_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -71,
+      "tile_y": 31,
+      "shard_id": "R5_ALASKA_YUKON_xm071_yp031",
+      "quarter_cell_count": 6,
+      "bounds": [
+        -142.0,
+        62.0,
+        -140.0,
+        64.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm071_yp031_none_treeline30m",
+      "task_id": "JS2JDO7OG6FPY3JBVUEYYNJL",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R5_ALASKA_YUKON_xm071_yp031_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -71,
+      "tile_y": 31,
+      "shard_id": "R5_ALASKA_YUKON_xm071_yp031",
+      "quarter_cell_count": 6,
+      "bounds": [
+        -142.0,
+        62.0,
+        -140.0,
+        64.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm071_yp031_none_treeline1km",
+      "task_id": "CD7NFKQMKJKQY2GMQSLEUTGZ",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R5_ALASKA_YUKON_xm071_yp031_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -71,
+      "tile_y": 31,
+      "shard_id": "R5_ALASKA_YUKON_xm071_yp031",
+      "quarter_cell_count": 6,
+      "bounds": [
+        -142.0,
+        62.0,
+        -140.0,
+        64.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm071_yp031_none_qa30m",
+      "task_id": "ICQTTMTTKJCDOFE4A65BLEVC",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R5_ALASKA_YUKON_xm071_yp031_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -70,
+      "tile_y": 31,
+      "shard_id": "R5_ALASKA_YUKON_xm070_yp031",
+      "quarter_cell_count": 32,
+      "bounds": [
+        -140.0,
+        62.0,
+        -138.0,
+        64.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm070_yp031_none_treeline30m",
+      "task_id": "5NTTM3U4KL5C2Q3W4OXHYB4L",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R5_ALASKA_YUKON_xm070_yp031_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -70,
+      "tile_y": 31,
+      "shard_id": "R5_ALASKA_YUKON_xm070_yp031",
+      "quarter_cell_count": 32,
+      "bounds": [
+        -140.0,
+        62.0,
+        -138.0,
+        64.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm070_yp031_none_treeline1km",
+      "task_id": "JCP46SZNU3DOOFMRQ2NSRBZ2",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R5_ALASKA_YUKON_xm070_yp031_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -70,
+      "tile_y": 31,
+      "shard_id": "R5_ALASKA_YUKON_xm070_yp031",
+      "quarter_cell_count": 32,
+      "bounds": [
+        -140.0,
+        62.0,
+        -138.0,
+        64.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm070_yp031_none_qa30m",
+      "task_id": "DDGINPWKOR6M2P5MGKTKLSPW",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R5_ALASKA_YUKON_xm070_yp031_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -69,
+      "tile_y": 31,
+      "shard_id": "R5_ALASKA_YUKON_xm069_yp031",
+      "quarter_cell_count": 22,
+      "bounds": [
+        -138.0,
+        62.0,
+        -136.0,
+        64.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm069_yp031_none_treeline30m",
+      "task_id": "DAMX7527NV6KTJCUZDCACB4T",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R5_ALASKA_YUKON_xm069_yp031_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -69,
+      "tile_y": 31,
+      "shard_id": "R5_ALASKA_YUKON_xm069_yp031",
+      "quarter_cell_count": 22,
+      "bounds": [
+        -138.0,
+        62.0,
+        -136.0,
+        64.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm069_yp031_none_treeline1km",
+      "task_id": "IBOH7UA4ZW7P23CUCQTBPED7",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R5_ALASKA_YUKON_xm069_yp031_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -69,
+      "tile_y": 31,
+      "shard_id": "R5_ALASKA_YUKON_xm069_yp031",
+      "quarter_cell_count": 22,
+      "bounds": [
+        -138.0,
+        62.0,
+        -136.0,
+        64.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm069_yp031_none_qa30m",
+      "task_id": "SUDVS2LE5JJZUPMQEPPXNCZA",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R5_ALASKA_YUKON_xm069_yp031_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -68,
+      "tile_y": 31,
+      "shard_id": "R5_ALASKA_YUKON_xm068_yp031",
+      "quarter_cell_count": 3,
+      "bounds": [
+        -136.0,
+        62.0,
+        -134.0,
+        64.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm068_yp031_none_treeline30m",
+      "task_id": "HOD4XG3ISLPIJUJXLUVMSQFE",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R5_ALASKA_YUKON_xm068_yp031_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -68,
+      "tile_y": 31,
+      "shard_id": "R5_ALASKA_YUKON_xm068_yp031",
+      "quarter_cell_count": 3,
+      "bounds": [
+        -136.0,
+        62.0,
+        -134.0,
+        64.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm068_yp031_none_treeline1km",
+      "task_id": "CPCHXWJALAQQWLXTFGJHP4WW",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R5_ALASKA_YUKON_xm068_yp031_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -68,
+      "tile_y": 31,
+      "shard_id": "R5_ALASKA_YUKON_xm068_yp031",
+      "quarter_cell_count": 3,
+      "bounds": [
+        -136.0,
+        62.0,
+        -134.0,
+        64.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm068_yp031_none_qa30m",
+      "task_id": "FCECJUF2NTBDG3KY2HTHTA24",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R5_ALASKA_YUKON_xm068_yp031_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -78,
+      "tile_y": 33,
+      "shard_id": "R5_ALASKA_YUKON_xm078_yp033",
+      "quarter_cell_count": 8,
+      "bounds": [
+        -156.0,
+        66.0,
+        -154.0,
+        68.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm078_yp033_none_treeline30m",
+      "task_id": "5DZTK3WEHHV3TXQD6AWDESV2",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R5_ALASKA_YUKON_xm078_yp033_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -78,
+      "tile_y": 33,
+      "shard_id": "R5_ALASKA_YUKON_xm078_yp033",
+      "quarter_cell_count": 8,
+      "bounds": [
+        -156.0,
+        66.0,
+        -154.0,
+        68.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm078_yp033_none_treeline1km",
+      "task_id": "AG2JVNMEEBRQUWWEPV6PSJWQ",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R5_ALASKA_YUKON_xm078_yp033_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -78,
+      "tile_y": 33,
+      "shard_id": "R5_ALASKA_YUKON_xm078_yp033",
+      "quarter_cell_count": 8,
+      "bounds": [
+        -156.0,
+        66.0,
+        -154.0,
+        68.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm078_yp033_none_qa30m",
+      "task_id": "ERCUSG522YLCMPCGRO2PLRUJ",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R5_ALASKA_YUKON_xm078_yp033_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -77,
+      "tile_y": 33,
+      "shard_id": "R5_ALASKA_YUKON_xm077_yp033",
+      "quarter_cell_count": 31,
+      "bounds": [
+        -154.0,
+        66.0,
+        -152.0,
+        68.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm077_yp033_none_treeline30m",
+      "task_id": "MHW4SK7IH7ZR7WKMIV6MWJL4",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R5_ALASKA_YUKON_xm077_yp033_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -77,
+      "tile_y": 33,
+      "shard_id": "R5_ALASKA_YUKON_xm077_yp033",
+      "quarter_cell_count": 31,
+      "bounds": [
+        -154.0,
+        66.0,
+        -152.0,
+        68.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm077_yp033_none_treeline1km",
+      "task_id": "RCP6FECGAMPLUMHIGULK5R7O",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R5_ALASKA_YUKON_xm077_yp033_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -77,
+      "tile_y": 33,
+      "shard_id": "R5_ALASKA_YUKON_xm077_yp033",
+      "quarter_cell_count": 31,
+      "bounds": [
+        -154.0,
+        66.0,
+        -152.0,
+        68.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm077_yp033_none_qa30m",
+      "task_id": "UK5DKLEI2QWHZSKTEDHUF6UE",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R5_ALASKA_YUKON_xm077_yp033_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -76,
+      "tile_y": 33,
+      "shard_id": "R5_ALASKA_YUKON_xm076_yp033",
+      "quarter_cell_count": 32,
+      "bounds": [
+        -152.0,
+        66.0,
+        -150.0,
+        68.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm076_yp033_none_treeline30m",
+      "task_id": "FAOKMNINXMA6FIBUXVET5VGM",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R5_ALASKA_YUKON_xm076_yp033_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -76,
+      "tile_y": 33,
+      "shard_id": "R5_ALASKA_YUKON_xm076_yp033",
+      "quarter_cell_count": 32,
+      "bounds": [
+        -152.0,
+        66.0,
+        -150.0,
+        68.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm076_yp033_none_treeline1km",
+      "task_id": "7JFMEPMBOQYDFJJ3KJHJVVGW",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R5_ALASKA_YUKON_xm076_yp033_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -76,
+      "tile_y": 33,
+      "shard_id": "R5_ALASKA_YUKON_xm076_yp033",
+      "quarter_cell_count": 32,
+      "bounds": [
+        -152.0,
+        66.0,
+        -150.0,
+        68.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm076_yp033_none_qa30m",
+      "task_id": "XC6BPQ6CEPLS3SWYZJAJIH5R",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R5_ALASKA_YUKON_xm076_yp033_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -75,
+      "tile_y": 33,
+      "shard_id": "R5_ALASKA_YUKON_xm075_yp033",
+      "quarter_cell_count": 4,
+      "bounds": [
+        -150.0,
+        66.0,
+        -148.0,
+        68.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm075_yp033_none_treeline30m",
+      "task_id": "OFJOC2FTLLEU6BNH5E7Z74Z4",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R5_ALASKA_YUKON_xm075_yp033_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -75,
+      "tile_y": 33,
+      "shard_id": "R5_ALASKA_YUKON_xm075_yp033",
+      "quarter_cell_count": 4,
+      "bounds": [
+        -150.0,
+        66.0,
+        -148.0,
+        68.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm075_yp033_none_treeline1km",
+      "task_id": "OJUZISZDETIAKNPGZL6KVMEA",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R5_ALASKA_YUKON_xm075_yp033_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -75,
+      "tile_y": 33,
+      "shard_id": "R5_ALASKA_YUKON_xm075_yp033",
+      "quarter_cell_count": 4,
+      "bounds": [
+        -150.0,
+        66.0,
+        -148.0,
+        68.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm075_yp033_none_qa30m",
+      "task_id": "JJNWFYF7F6CPMYWE6YSXVIUO",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R5_ALASKA_YUKON_xm075_yp033_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -78,
+      "tile_y": 34,
+      "shard_id": "R5_ALASKA_YUKON_xm078_yp034",
+      "quarter_cell_count": 5,
+      "bounds": [
+        -156.0,
+        68.0,
+        -154.0,
+        70.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm078_yp034_none_treeline30m",
+      "task_id": "CXAVYRSSNVHPFJEINDCE6YEU",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R5_ALASKA_YUKON_xm078_yp034_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -78,
+      "tile_y": 34,
+      "shard_id": "R5_ALASKA_YUKON_xm078_yp034",
+      "quarter_cell_count": 5,
+      "bounds": [
+        -156.0,
+        68.0,
+        -154.0,
+        70.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm078_yp034_none_treeline1km",
+      "task_id": "I7ZRSD3SNU7CDNE33LZNYAIH",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R5_ALASKA_YUKON_xm078_yp034_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -78,
+      "tile_y": 34,
+      "shard_id": "R5_ALASKA_YUKON_xm078_yp034",
+      "quarter_cell_count": 5,
+      "bounds": [
+        -156.0,
+        68.0,
+        -154.0,
+        70.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm078_yp034_none_qa30m",
+      "task_id": "M46MUZVOT5SGUZPHYOFYQCE4",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R5_ALASKA_YUKON_xm078_yp034_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -77,
+      "tile_y": 34,
+      "shard_id": "R5_ALASKA_YUKON_xm077_yp034",
+      "quarter_cell_count": 26,
+      "bounds": [
+        -154.0,
+        68.0,
+        -152.0,
+        70.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm077_yp034_none_treeline30m",
+      "task_id": "UZONBY4X6OHDM6O4J5MIKWPW",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R5_ALASKA_YUKON_xm077_yp034_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -77,
+      "tile_y": 34,
+      "shard_id": "R5_ALASKA_YUKON_xm077_yp034",
+      "quarter_cell_count": 26,
+      "bounds": [
+        -154.0,
+        68.0,
+        -152.0,
+        70.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm077_yp034_none_treeline1km",
+      "task_id": "TWEDO34OQIKPLNQERN2PKF5E",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R5_ALASKA_YUKON_xm077_yp034_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -77,
+      "tile_y": 34,
+      "shard_id": "R5_ALASKA_YUKON_xm077_yp034",
+      "quarter_cell_count": 26,
+      "bounds": [
+        -154.0,
+        68.0,
+        -152.0,
+        70.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm077_yp034_none_qa30m",
+      "task_id": "AKCRO5NICXHGWQLJ554PV4FD",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R5_ALASKA_YUKON_xm077_yp034_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -76,
+      "tile_y": 34,
+      "shard_id": "R5_ALASKA_YUKON_xm076_yp034",
+      "quarter_cell_count": 28,
+      "bounds": [
+        -152.0,
+        68.0,
+        -150.0,
+        70.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm076_yp034_none_treeline30m",
+      "task_id": "B5ACEMWFFPIB7H4GKNG6KYS4",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R5_ALASKA_YUKON_xm076_yp034_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -76,
+      "tile_y": 34,
+      "shard_id": "R5_ALASKA_YUKON_xm076_yp034",
+      "quarter_cell_count": 28,
+      "bounds": [
+        -152.0,
+        68.0,
+        -150.0,
+        70.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm076_yp034_none_treeline1km",
+      "task_id": "TIKK32STK5T65XEFL43EDV57",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R5_ALASKA_YUKON_xm076_yp034_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -76,
+      "tile_y": 34,
+      "shard_id": "R5_ALASKA_YUKON_xm076_yp034",
+      "quarter_cell_count": 28,
+      "bounds": [
+        -152.0,
+        68.0,
+        -150.0,
+        70.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm076_yp034_none_qa30m",
+      "task_id": "7PSBSPBSNHHLU74SDAE6T6OA",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R5_ALASKA_YUKON_xm076_yp034_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -75,
+      "tile_y": 34,
+      "shard_id": "R5_ALASKA_YUKON_xm075_yp034",
+      "quarter_cell_count": 7,
+      "bounds": [
+        -150.0,
+        68.0,
+        -148.0,
+        70.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm075_yp034_none_treeline30m",
+      "task_id": "I4V5SYCXMNPAVVRWJ6RLJ3ZH",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R5_ALASKA_YUKON_xm075_yp034_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -75,
+      "tile_y": 34,
+      "shard_id": "R5_ALASKA_YUKON_xm075_yp034",
+      "quarter_cell_count": 7,
+      "bounds": [
+        -150.0,
+        68.0,
+        -148.0,
+        70.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm075_yp034_none_treeline1km",
+      "task_id": "F4YD7PS4RIIA4UXRPWUJUDO7",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R5_ALASKA_YUKON_xm075_yp034_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R5_ALASKA_YUKON",
+      "tile_x": -75,
+      "tile_y": 34,
+      "shard_id": "R5_ALASKA_YUKON_xm075_yp034",
+      "quarter_cell_count": 7,
+      "bounds": [
+        -150.0,
+        68.0,
+        -148.0,
+        70.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm075_yp034_none_qa30m",
+      "task_id": "UXOYCQJXGCL72MBIFSB35NMH",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R5_ALASKA_YUKON_xm075_yp034_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R6_NORTH_AMERICAN_ROCKIES",
+      "tile_x": -54,
+      "tile_y": 19,
+      "shard_id": "R6_NORTH_AMERICAN_ROCKIES_xm054_yp019",
+      "quarter_cell_count": 30,
+      "bounds": [
+        -108.0,
+        38.0,
+        -106.0,
+        40.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm054_yp019_none_treeline30m",
+      "task_id": "LWOEMLPASSYT4RDLEBOFSBVT",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R6_NORTH_AMERICAN_ROCKIES_xm054_yp019_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R6_NORTH_AMERICAN_ROCKIES",
+      "tile_x": -54,
+      "tile_y": 19,
+      "shard_id": "R6_NORTH_AMERICAN_ROCKIES_xm054_yp019",
+      "quarter_cell_count": 30,
+      "bounds": [
+        -108.0,
+        38.0,
+        -106.0,
+        40.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm054_yp019_none_treeline1km",
+      "task_id": "RVKARNSGNLCIZ5QXS4MU2DG4",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R6_NORTH_AMERICAN_ROCKIES_xm054_yp019_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R6_NORTH_AMERICAN_ROCKIES",
+      "tile_x": -54,
+      "tile_y": 19,
+      "shard_id": "R6_NORTH_AMERICAN_ROCKIES_xm054_yp019",
+      "quarter_cell_count": 30,
+      "bounds": [
+        -108.0,
+        38.0,
+        -106.0,
+        40.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm054_yp019_none_qa30m",
+      "task_id": "DB4WKRWA6XEIYPCL3Y37R5IW",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R6_NORTH_AMERICAN_ROCKIES_xm054_yp019_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R6_NORTH_AMERICAN_ROCKIES",
+      "tile_x": -54,
+      "tile_y": 20,
+      "shard_id": "R6_NORTH_AMERICAN_ROCKIES_xm054_yp020",
+      "quarter_cell_count": 24,
+      "bounds": [
+        -108.0,
+        40.0,
+        -106.0,
+        42.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm054_yp020_none_treeline30m",
+      "task_id": "SEN5H3FTSNJF6AWAMHPXP4UW",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R6_NORTH_AMERICAN_ROCKIES_xm054_yp020_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R6_NORTH_AMERICAN_ROCKIES",
+      "tile_x": -54,
+      "tile_y": 20,
+      "shard_id": "R6_NORTH_AMERICAN_ROCKIES_xm054_yp020",
+      "quarter_cell_count": 24,
+      "bounds": [
+        -108.0,
+        40.0,
+        -106.0,
+        42.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm054_yp020_none_treeline1km",
+      "task_id": "ZBU5WR6MUE5LBOEKU2QQ2KOY",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R6_NORTH_AMERICAN_ROCKIES_xm054_yp020_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R6_NORTH_AMERICAN_ROCKIES",
+      "tile_x": -54,
+      "tile_y": 20,
+      "shard_id": "R6_NORTH_AMERICAN_ROCKIES_xm054_yp020",
+      "quarter_cell_count": 24,
+      "bounds": [
+        -108.0,
+        40.0,
+        -106.0,
+        42.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm054_yp020_none_qa30m",
+      "task_id": "SHQK35CABSRPXDAHIROAZTD5",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R6_NORTH_AMERICAN_ROCKIES_xm054_yp020_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R6_NORTH_AMERICAN_ROCKIES",
+      "tile_x": -56,
+      "tile_y": 21,
+      "shard_id": "R6_NORTH_AMERICAN_ROCKIES_xm056_yp021",
+      "quarter_cell_count": 10,
+      "bounds": [
+        -112.0,
+        42.0,
+        -110.0,
+        44.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm056_yp021_none_treeline30m",
+      "task_id": "LSYV7NDCH2W34YJZHTGAIHVK",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R6_NORTH_AMERICAN_ROCKIES_xm056_yp021_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R6_NORTH_AMERICAN_ROCKIES",
+      "tile_x": -56,
+      "tile_y": 21,
+      "shard_id": "R6_NORTH_AMERICAN_ROCKIES_xm056_yp021",
+      "quarter_cell_count": 10,
+      "bounds": [
+        -112.0,
+        42.0,
+        -110.0,
+        44.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm056_yp021_none_treeline1km",
+      "task_id": "HBZWZTEFIGNIY6W5MKFFU3OJ",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R6_NORTH_AMERICAN_ROCKIES_xm056_yp021_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R6_NORTH_AMERICAN_ROCKIES",
+      "tile_x": -56,
+      "tile_y": 21,
+      "shard_id": "R6_NORTH_AMERICAN_ROCKIES_xm056_yp021",
+      "quarter_cell_count": 10,
+      "bounds": [
+        -112.0,
+        42.0,
+        -110.0,
+        44.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm056_yp021_none_qa30m",
+      "task_id": "2I3VXJHV67B7XYD6BBHNLDNV",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R6_NORTH_AMERICAN_ROCKIES_xm056_yp021_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R6_NORTH_AMERICAN_ROCKIES",
+      "tile_x": -57,
+      "tile_y": 23,
+      "shard_id": "R6_NORTH_AMERICAN_ROCKIES_xm057_yp023",
+      "quarter_cell_count": 2,
+      "bounds": [
+        -114.0,
+        46.0,
+        -112.0,
+        48.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm057_yp023_none_treeline30m",
+      "task_id": "BSO56OAZ5OUK43N3H67C4YZZ",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R6_NORTH_AMERICAN_ROCKIES_xm057_yp023_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R6_NORTH_AMERICAN_ROCKIES",
+      "tile_x": -57,
+      "tile_y": 23,
+      "shard_id": "R6_NORTH_AMERICAN_ROCKIES_xm057_yp023",
+      "quarter_cell_count": 2,
+      "bounds": [
+        -114.0,
+        46.0,
+        -112.0,
+        48.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm057_yp023_none_treeline1km",
+      "task_id": "MYTBVTIYFLUNYO2N25KN5FJV",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R6_NORTH_AMERICAN_ROCKIES_xm057_yp023_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R6_NORTH_AMERICAN_ROCKIES",
+      "tile_x": -57,
+      "tile_y": 23,
+      "shard_id": "R6_NORTH_AMERICAN_ROCKIES_xm057_yp023",
+      "quarter_cell_count": 2,
+      "bounds": [
+        -114.0,
+        46.0,
+        -112.0,
+        48.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm057_yp023_none_qa30m",
+      "task_id": "2QZWWBMM5LAIRIUYLWODK6PN",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R6_NORTH_AMERICAN_ROCKIES_xm057_yp023_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R6_NORTH_AMERICAN_ROCKIES",
+      "tile_x": -56,
+      "tile_y": 23,
+      "shard_id": "R6_NORTH_AMERICAN_ROCKIES_xm056_yp023",
+      "quarter_cell_count": 17,
+      "bounds": [
+        -112.0,
+        46.0,
+        -110.0,
+        48.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm056_yp023_none_treeline30m",
+      "task_id": "DMQ6YVG6ZW55ULRYD2NOBAMB",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R6_NORTH_AMERICAN_ROCKIES_xm056_yp023_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R6_NORTH_AMERICAN_ROCKIES",
+      "tile_x": -56,
+      "tile_y": 23,
+      "shard_id": "R6_NORTH_AMERICAN_ROCKIES_xm056_yp023",
+      "quarter_cell_count": 17,
+      "bounds": [
+        -112.0,
+        46.0,
+        -110.0,
+        48.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm056_yp023_none_treeline1km",
+      "task_id": "CGV5T737FB4DU3DFJR3OMPAI",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R6_NORTH_AMERICAN_ROCKIES_xm056_yp023_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R6_NORTH_AMERICAN_ROCKIES",
+      "tile_x": -56,
+      "tile_y": 23,
+      "shard_id": "R6_NORTH_AMERICAN_ROCKIES_xm056_yp023",
+      "quarter_cell_count": 17,
+      "bounds": [
+        -112.0,
+        46.0,
+        -110.0,
+        48.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm056_yp023_none_qa30m",
+      "task_id": "LNENK56NRADYZ6LXAO4LK5VI",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R6_NORTH_AMERICAN_ROCKIES_xm056_yp023_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R6_NORTH_AMERICAN_ROCKIES",
+      "tile_x": -58,
+      "tile_y": 24,
+      "shard_id": "R6_NORTH_AMERICAN_ROCKIES_xm058_yp024",
+      "quarter_cell_count": 6,
+      "bounds": [
+        -116.0,
+        48.0,
+        -114.0,
+        50.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm058_yp024_none_treeline30m",
+      "task_id": "RR7GT7N5JCATEX7Q53LZ6IFS",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R6_NORTH_AMERICAN_ROCKIES_xm058_yp024_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R6_NORTH_AMERICAN_ROCKIES",
+      "tile_x": -58,
+      "tile_y": 24,
+      "shard_id": "R6_NORTH_AMERICAN_ROCKIES_xm058_yp024",
+      "quarter_cell_count": 6,
+      "bounds": [
+        -116.0,
+        48.0,
+        -114.0,
+        50.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm058_yp024_none_treeline1km",
+      "task_id": "LY3OPIWMIHHN62PG3YHSEUNT",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R6_NORTH_AMERICAN_ROCKIES_xm058_yp024_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R6_NORTH_AMERICAN_ROCKIES",
+      "tile_x": -58,
+      "tile_y": 24,
+      "shard_id": "R6_NORTH_AMERICAN_ROCKIES_xm058_yp024",
+      "quarter_cell_count": 6,
+      "bounds": [
+        -116.0,
+        48.0,
+        -114.0,
+        50.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm058_yp024_none_qa30m",
+      "task_id": "LE3D4GEHJH6XVVRKUL7J3LII",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R6_NORTH_AMERICAN_ROCKIES_xm058_yp024_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -36,
+      "tile_y": -16,
+      "shard_id": "R7_ANDES_xm036_ym016",
+      "quarter_cell_count": 20,
+      "bounds": [
+        -72.0,
+        -32.0,
+        -70.0,
+        -30.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm036_ym016_none_treeline30m",
+      "task_id": "422TIFEDYITJAZC2LSANDEY2",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm036_ym016_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -36,
+      "tile_y": -16,
+      "shard_id": "R7_ANDES_xm036_ym016",
+      "quarter_cell_count": 20,
+      "bounds": [
+        -72.0,
+        -32.0,
+        -70.0,
+        -30.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm036_ym016_none_treeline1km",
+      "task_id": "VWYJKLQIAHJSKFVGKTQVFU2U",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm036_ym016_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -36,
+      "tile_y": -16,
+      "shard_id": "R7_ANDES_xm036_ym016",
+      "quarter_cell_count": 20,
+      "bounds": [
+        -72.0,
+        -32.0,
+        -70.0,
+        -30.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm036_ym016_none_qa30m",
+      "task_id": "PTHSJSCILRI3XLQTTBGPWBK2",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm036_ym016_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -35,
+      "tile_y": -16,
+      "shard_id": "R7_ANDES_xm035_ym016",
+      "quarter_cell_count": 11,
+      "bounds": [
+        -70.0,
+        -32.0,
+        -68.0,
+        -30.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym016_none_treeline30m",
+      "task_id": "P7RKAB64ZTPVHL7OUTPPOZ3I",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm035_ym016_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -35,
+      "tile_y": -16,
+      "shard_id": "R7_ANDES_xm035_ym016",
+      "quarter_cell_count": 11,
+      "bounds": [
+        -70.0,
+        -32.0,
+        -68.0,
+        -30.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym016_none_treeline1km",
+      "task_id": "YDZMXLWMU453KPJ2BJVCVF3O",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm035_ym016_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -35,
+      "tile_y": -16,
+      "shard_id": "R7_ANDES_xm035_ym016",
+      "quarter_cell_count": 11,
+      "bounds": [
+        -70.0,
+        -32.0,
+        -68.0,
+        -30.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym016_none_qa30m",
+      "task_id": "KFXVZKQGSYVZZ6ZVLOLTDYAQ",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm035_ym016_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -36,
+      "tile_y": -15,
+      "shard_id": "R7_ANDES_xm036_ym015",
+      "quarter_cell_count": 7,
+      "bounds": [
+        -72.0,
+        -30.0,
+        -70.0,
+        -28.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm036_ym015_none_treeline30m",
+      "task_id": "RYGQJBPZPFQZ6NHDGQAAGI5O",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm036_ym015_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -36,
+      "tile_y": -15,
+      "shard_id": "R7_ANDES_xm036_ym015",
+      "quarter_cell_count": 7,
+      "bounds": [
+        -72.0,
+        -30.0,
+        -70.0,
+        -28.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm036_ym015_none_treeline1km",
+      "task_id": "KPYB6D5EY46ZVKDSGKAX6HHE",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm036_ym015_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -36,
+      "tile_y": -15,
+      "shard_id": "R7_ANDES_xm036_ym015",
+      "quarter_cell_count": 7,
+      "bounds": [
+        -72.0,
+        -30.0,
+        -70.0,
+        -28.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm036_ym015_none_qa30m",
+      "task_id": "EUPF3YZAEOQ4FNHKUSRVPMA7",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm036_ym015_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -35,
+      "tile_y": -15,
+      "shard_id": "R7_ANDES_xm035_ym015",
+      "quarter_cell_count": 7,
+      "bounds": [
+        -70.0,
+        -30.0,
+        -68.0,
+        -28.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym015_none_treeline30m",
+      "task_id": "PSROXBXPOJRYVKTMVEASMSX2",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm035_ym015_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -35,
+      "tile_y": -15,
+      "shard_id": "R7_ANDES_xm035_ym015",
+      "quarter_cell_count": 7,
+      "bounds": [
+        -70.0,
+        -30.0,
+        -68.0,
+        -28.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym015_none_treeline1km",
+      "task_id": "AAOIVOQWAQWNL6HSZ7AB7VVI",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm035_ym015_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -35,
+      "tile_y": -15,
+      "shard_id": "R7_ANDES_xm035_ym015",
+      "quarter_cell_count": 7,
+      "bounds": [
+        -70.0,
+        -30.0,
+        -68.0,
+        -28.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym015_none_qa30m",
+      "task_id": "NOUOKZFBIVOCVEK2P4BUIJZN",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm035_ym015_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -35,
+      "tile_y": -14,
+      "shard_id": "R7_ANDES_xm035_ym014",
+      "quarter_cell_count": 11,
+      "bounds": [
+        -70.0,
+        -28.0,
+        -68.0,
+        -26.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym014_none_treeline30m",
+      "task_id": "BEB3LBM7WCEJLFLP6BH2H6DA",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm035_ym014_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -35,
+      "tile_y": -14,
+      "shard_id": "R7_ANDES_xm035_ym014",
+      "quarter_cell_count": 11,
+      "bounds": [
+        -70.0,
+        -28.0,
+        -68.0,
+        -26.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym014_none_treeline1km",
+      "task_id": "KWKKKYNI2FIQIS4ENNCJTKTW",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm035_ym014_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -35,
+      "tile_y": -14,
+      "shard_id": "R7_ANDES_xm035_ym014",
+      "quarter_cell_count": 11,
+      "bounds": [
+        -70.0,
+        -28.0,
+        -68.0,
+        -26.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym014_none_qa30m",
+      "task_id": "WT646OAUABK2COYQ7FM2J64S",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm035_ym014_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -35,
+      "tile_y": -13,
+      "shard_id": "R7_ANDES_xm035_ym013",
+      "quarter_cell_count": 28,
+      "bounds": [
+        -70.0,
+        -26.0,
+        -68.0,
+        -24.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym013_none_treeline30m",
+      "task_id": "MKCQB3QMLJ3UO2J4CJYQ2IRH",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm035_ym013_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -35,
+      "tile_y": -13,
+      "shard_id": "R7_ANDES_xm035_ym013",
+      "quarter_cell_count": 28,
+      "bounds": [
+        -70.0,
+        -26.0,
+        -68.0,
+        -24.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym013_none_treeline1km",
+      "task_id": "LVK73H6YOJIYFBHKAZLCESHS",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm035_ym013_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -35,
+      "tile_y": -13,
+      "shard_id": "R7_ANDES_xm035_ym013",
+      "quarter_cell_count": 28,
+      "bounds": [
+        -70.0,
+        -26.0,
+        -68.0,
+        -24.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym013_none_qa30m",
+      "task_id": "WAYJPZIPCO2JPQDBAHWZB3SS",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm035_ym013_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -35,
+      "tile_y": -12,
+      "shard_id": "R7_ANDES_xm035_ym012",
+      "quarter_cell_count": 25,
+      "bounds": [
+        -70.0,
+        -24.0,
+        -68.0,
+        -22.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym012_none_treeline30m",
+      "task_id": "ZAGFPVVCNUZM2N43MMKUQNGM",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm035_ym012_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -35,
+      "tile_y": -12,
+      "shard_id": "R7_ANDES_xm035_ym012",
+      "quarter_cell_count": 25,
+      "bounds": [
+        -70.0,
+        -24.0,
+        -68.0,
+        -22.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym012_none_treeline1km",
+      "task_id": "45CYBQGQ56V2FNRKM7AU6BTY",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm035_ym012_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -35,
+      "tile_y": -12,
+      "shard_id": "R7_ANDES_xm035_ym012",
+      "quarter_cell_count": 25,
+      "bounds": [
+        -70.0,
+        -24.0,
+        -68.0,
+        -22.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym012_none_qa30m",
+      "task_id": "STKBBYT3XN4ADKKREAQRS4H7",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm035_ym012_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -34,
+      "tile_y": -12,
+      "shard_id": "R7_ANDES_xm034_ym012",
+      "quarter_cell_count": 27,
+      "bounds": [
+        -68.0,
+        -24.0,
+        -66.0,
+        -22.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm034_ym012_none_treeline30m",
+      "task_id": "XW5C5CWAYI34JIVZ6AH3WDGY",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm034_ym012_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -34,
+      "tile_y": -12,
+      "shard_id": "R7_ANDES_xm034_ym012",
+      "quarter_cell_count": 27,
+      "bounds": [
+        -68.0,
+        -24.0,
+        -66.0,
+        -22.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm034_ym012_none_treeline1km",
+      "task_id": "Y7PCB3HPRN74FNGCDJHU7627",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm034_ym012_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -34,
+      "tile_y": -12,
+      "shard_id": "R7_ANDES_xm034_ym012",
+      "quarter_cell_count": 27,
+      "bounds": [
+        -68.0,
+        -24.0,
+        -66.0,
+        -22.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm034_ym012_none_qa30m",
+      "task_id": "4TRHRHGDPXE2SA4AXEKFBXGX",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm034_ym012_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -33,
+      "tile_y": -12,
+      "shard_id": "R7_ANDES_xm033_ym012",
+      "quarter_cell_count": 3,
+      "bounds": [
+        -66.0,
+        -24.0,
+        -64.0,
+        -22.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm033_ym012_none_treeline30m",
+      "task_id": "PKBTQAIWMP2UU3NSCMMPBJKC",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm033_ym012_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -33,
+      "tile_y": -12,
+      "shard_id": "R7_ANDES_xm033_ym012",
+      "quarter_cell_count": 3,
+      "bounds": [
+        -66.0,
+        -24.0,
+        -64.0,
+        -22.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm033_ym012_none_treeline1km",
+      "task_id": "HNC3Q3US2PPTOV5QYWHCS37K",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm033_ym012_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -33,
+      "tile_y": -12,
+      "shard_id": "R7_ANDES_xm033_ym012",
+      "quarter_cell_count": 3,
+      "bounds": [
+        -66.0,
+        -24.0,
+        -64.0,
+        -22.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm033_ym012_none_qa30m",
+      "task_id": "EYU56T4YDSVRUQE7ZHI2CGE6",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm033_ym012_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -32,
+      "tile_y": -12,
+      "shard_id": "R7_ANDES_xm032_ym012",
+      "quarter_cell_count": 4,
+      "bounds": [
+        -64.0,
+        -24.0,
+        -62.0,
+        -22.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm032_ym012_none_treeline30m",
+      "task_id": "YVRPO5SEV4BD3LXRMUIKB7KG",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm032_ym012_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -32,
+      "tile_y": -12,
+      "shard_id": "R7_ANDES_xm032_ym012",
+      "quarter_cell_count": 4,
+      "bounds": [
+        -64.0,
+        -24.0,
+        -62.0,
+        -22.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm032_ym012_none_treeline1km",
+      "task_id": "LTYW7O23SHHONJRGDNYAL2K2",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm032_ym012_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -32,
+      "tile_y": -12,
+      "shard_id": "R7_ANDES_xm032_ym012",
+      "quarter_cell_count": 4,
+      "bounds": [
+        -64.0,
+        -24.0,
+        -62.0,
+        -22.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm032_ym012_none_qa30m",
+      "task_id": "ZY45446WRHZBSS46RV2Z5YCY",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm032_ym012_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -34,
+      "tile_y": -11,
+      "shard_id": "R7_ANDES_xm034_ym011",
+      "quarter_cell_count": 14,
+      "bounds": [
+        -68.0,
+        -22.0,
+        -66.0,
+        -20.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm034_ym011_none_treeline30m",
+      "task_id": "ZBBIM2EDHPO35MJSNNYXTSDK",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm034_ym011_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -34,
+      "tile_y": -11,
+      "shard_id": "R7_ANDES_xm034_ym011",
+      "quarter_cell_count": 14,
+      "bounds": [
+        -68.0,
+        -22.0,
+        -66.0,
+        -20.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm034_ym011_none_treeline1km",
+      "task_id": "WUZLD25EQ2EJ5NQUZ65YDST3",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm034_ym011_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -34,
+      "tile_y": -11,
+      "shard_id": "R7_ANDES_xm034_ym011",
+      "quarter_cell_count": 14,
+      "bounds": [
+        -68.0,
+        -22.0,
+        -66.0,
+        -20.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm034_ym011_none_qa30m",
+      "task_id": "NNJ4DADGTQNACMDLJELBXEWN",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm034_ym011_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -33,
+      "tile_y": -11,
+      "shard_id": "R7_ANDES_xm033_ym011",
+      "quarter_cell_count": 2,
+      "bounds": [
+        -66.0,
+        -22.0,
+        -64.0,
+        -20.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm033_ym011_none_treeline30m",
+      "task_id": "YWIYORV4TL57JF53ZFFBAM35",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm033_ym011_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -33,
+      "tile_y": -11,
+      "shard_id": "R7_ANDES_xm033_ym011",
+      "quarter_cell_count": 2,
+      "bounds": [
+        -66.0,
+        -22.0,
+        -64.0,
+        -20.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm033_ym011_none_treeline1km",
+      "task_id": "V3D3B6QOAYCSXCHOUKYTADMR",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm033_ym011_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -33,
+      "tile_y": -11,
+      "shard_id": "R7_ANDES_xm033_ym011",
+      "quarter_cell_count": 2,
+      "bounds": [
+        -66.0,
+        -22.0,
+        -64.0,
+        -20.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm033_ym011_none_qa30m",
+      "task_id": "CHT3O4737MUDAIWAEUDOPIOP",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm033_ym011_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -32,
+      "tile_y": -11,
+      "shard_id": "R7_ANDES_xm032_ym011",
+      "quarter_cell_count": 14,
+      "bounds": [
+        -64.0,
+        -22.0,
+        -62.0,
+        -20.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm032_ym011_none_treeline30m",
+      "task_id": "6XFEDJMZEQHBDHKZSXMLK6E3",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm032_ym011_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -32,
+      "tile_y": -11,
+      "shard_id": "R7_ANDES_xm032_ym011",
+      "quarter_cell_count": 14,
+      "bounds": [
+        -64.0,
+        -22.0,
+        -62.0,
+        -20.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm032_ym011_none_treeline1km",
+      "task_id": "7HHE2FHLGZ2HA5FRQGBR5DEI",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm032_ym011_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -32,
+      "tile_y": -11,
+      "shard_id": "R7_ANDES_xm032_ym011",
+      "quarter_cell_count": 14,
+      "bounds": [
+        -64.0,
+        -22.0,
+        -62.0,
+        -20.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm032_ym011_none_qa30m",
+      "task_id": "W2LCMWA3Y2XXM3GO6MTSMLPV",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm032_ym011_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -34,
+      "tile_y": -10,
+      "shard_id": "R7_ANDES_xm034_ym010",
+      "quarter_cell_count": 17,
+      "bounds": [
+        -68.0,
+        -20.0,
+        -66.0,
+        -18.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm034_ym010_none_treeline30m",
+      "task_id": "3SMVCRG74EO5ECH5SCC3Q4Z3",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm034_ym010_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -34,
+      "tile_y": -10,
+      "shard_id": "R7_ANDES_xm034_ym010",
+      "quarter_cell_count": 17,
+      "bounds": [
+        -68.0,
+        -20.0,
+        -66.0,
+        -18.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm034_ym010_none_treeline1km",
+      "task_id": "M3LJPJDXTE3A7YNVKV3GCCWA",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm034_ym010_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -34,
+      "tile_y": -10,
+      "shard_id": "R7_ANDES_xm034_ym010",
+      "quarter_cell_count": 17,
+      "bounds": [
+        -68.0,
+        -20.0,
+        -66.0,
+        -18.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm034_ym010_none_qa30m",
+      "task_id": "D6ADYPK2VYHNXJZR47BI76QS",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm034_ym010_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -33,
+      "tile_y": -10,
+      "shard_id": "R7_ANDES_xm033_ym010",
+      "quarter_cell_count": 17,
+      "bounds": [
+        -66.0,
+        -20.0,
+        -64.0,
+        -18.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm033_ym010_none_treeline30m",
+      "task_id": "EAVU3D365V6E4WRWNFEQSBI7",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm033_ym010_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -33,
+      "tile_y": -10,
+      "shard_id": "R7_ANDES_xm033_ym010",
+      "quarter_cell_count": 17,
+      "bounds": [
+        -66.0,
+        -20.0,
+        -64.0,
+        -18.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm033_ym010_none_treeline1km",
+      "task_id": "M6UMI376GBVSSWD5SSW43ZBJ",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm033_ym010_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -33,
+      "tile_y": -10,
+      "shard_id": "R7_ANDES_xm033_ym010",
+      "quarter_cell_count": 17,
+      "bounds": [
+        -66.0,
+        -20.0,
+        -64.0,
+        -18.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm033_ym010_none_qa30m",
+      "task_id": "ETEN4AFLIEGGUEX775RX6B23",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm033_ym010_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -39,
+      "tile_y": -5,
+      "shard_id": "R7_ANDES_xm039_ym005",
+      "quarter_cell_count": 10,
+      "bounds": [
+        -78.0,
+        -10.0,
+        -76.0,
+        -8.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym005_none_treeline30m",
+      "task_id": "OOTBF6NX2NU6KLFSFQ6IOGJ7",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm039_ym005_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -39,
+      "tile_y": -5,
+      "shard_id": "R7_ANDES_xm039_ym005",
+      "quarter_cell_count": 10,
+      "bounds": [
+        -78.0,
+        -10.0,
+        -76.0,
+        -8.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym005_none_treeline1km",
+      "task_id": "F2V6S7TIRKCCXEYMA5SJC6ZU",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm039_ym005_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -39,
+      "tile_y": -5,
+      "shard_id": "R7_ANDES_xm039_ym005",
+      "quarter_cell_count": 10,
+      "bounds": [
+        -78.0,
+        -10.0,
+        -76.0,
+        -8.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym005_none_qa30m",
+      "task_id": "QDXENCM45TSHU6PVETDN2QKA",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm039_ym005_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -38,
+      "tile_y": -5,
+      "shard_id": "R7_ANDES_xm038_ym005",
+      "quarter_cell_count": 19,
+      "bounds": [
+        -76.0,
+        -10.0,
+        -74.0,
+        -8.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm038_ym005_none_treeline30m",
+      "task_id": "ER7DTXFR4TIGBBF7MDDMKCDD",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm038_ym005_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -38,
+      "tile_y": -5,
+      "shard_id": "R7_ANDES_xm038_ym005",
+      "quarter_cell_count": 19,
+      "bounds": [
+        -76.0,
+        -10.0,
+        -74.0,
+        -8.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm038_ym005_none_treeline1km",
+      "task_id": "7VJAFZTZYVNIHAOPOTX6FM6J",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm038_ym005_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -38,
+      "tile_y": -5,
+      "shard_id": "R7_ANDES_xm038_ym005",
+      "quarter_cell_count": 19,
+      "bounds": [
+        -76.0,
+        -10.0,
+        -74.0,
+        -8.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm038_ym005_none_qa30m",
+      "task_id": "465RJLOATUE2GMCZE6HRLSTL",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm038_ym005_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -39,
+      "tile_y": -4,
+      "shard_id": "R7_ANDES_xm039_ym004",
+      "quarter_cell_count": 15,
+      "bounds": [
+        -78.0,
+        -8.0,
+        -76.0,
+        -6.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym004_none_treeline30m",
+      "task_id": "FOT5ARSUIQJ7TAVSG3IMJDSF",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm039_ym004_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -39,
+      "tile_y": -4,
+      "shard_id": "R7_ANDES_xm039_ym004",
+      "quarter_cell_count": 15,
+      "bounds": [
+        -78.0,
+        -8.0,
+        -76.0,
+        -6.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym004_none_treeline1km",
+      "task_id": "KQ5GUXP34I4KOQJ2WIBCIEYC",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm039_ym004_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -39,
+      "tile_y": -4,
+      "shard_id": "R7_ANDES_xm039_ym004",
+      "quarter_cell_count": 15,
+      "bounds": [
+        -78.0,
+        -8.0,
+        -76.0,
+        -6.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym004_none_qa30m",
+      "task_id": "VWH3LNZBDTPN3VDE2Q47PCEC",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm039_ym004_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -38,
+      "tile_y": -4,
+      "shard_id": "R7_ANDES_xm038_ym004",
+      "quarter_cell_count": 7,
+      "bounds": [
+        -76.0,
+        -8.0,
+        -74.0,
+        -6.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm038_ym004_none_treeline30m",
+      "task_id": "DFONLE4IPTUBMDVIRLSV2XE4",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm038_ym004_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -38,
+      "tile_y": -4,
+      "shard_id": "R7_ANDES_xm038_ym004",
+      "quarter_cell_count": 7,
+      "bounds": [
+        -76.0,
+        -8.0,
+        -74.0,
+        -6.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm038_ym004_none_treeline1km",
+      "task_id": "6ERDDYGCJMK67WXILDVLBX4R",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm038_ym004_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -38,
+      "tile_y": -4,
+      "shard_id": "R7_ANDES_xm038_ym004",
+      "quarter_cell_count": 7,
+      "bounds": [
+        -76.0,
+        -8.0,
+        -74.0,
+        -6.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm038_ym004_none_qa30m",
+      "task_id": "TCEA22VDWIOKWRWRIC436KC4",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm038_ym004_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -40,
+      "tile_y": -3,
+      "shard_id": "R7_ANDES_xm040_ym003",
+      "quarter_cell_count": 21,
+      "bounds": [
+        -80.0,
+        -6.0,
+        -78.0,
+        -4.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm040_ym003_none_treeline30m",
+      "task_id": "ARM6DH43EVQOKEMUKFGCDXGL",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm040_ym003_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -40,
+      "tile_y": -3,
+      "shard_id": "R7_ANDES_xm040_ym003",
+      "quarter_cell_count": 21,
+      "bounds": [
+        -80.0,
+        -6.0,
+        -78.0,
+        -4.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm040_ym003_none_treeline1km",
+      "task_id": "AZPA5EMRBSZI2Z6GOPOBFVUP",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm040_ym003_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -40,
+      "tile_y": -3,
+      "shard_id": "R7_ANDES_xm040_ym003",
+      "quarter_cell_count": 21,
+      "bounds": [
+        -80.0,
+        -6.0,
+        -78.0,
+        -4.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm040_ym003_none_qa30m",
+      "task_id": "PLFQG7VJAUQHJOT6I3CTDBF6",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm040_ym003_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -39,
+      "tile_y": -3,
+      "shard_id": "R7_ANDES_xm039_ym003",
+      "quarter_cell_count": 2,
+      "bounds": [
+        -78.0,
+        -6.0,
+        -76.0,
+        -4.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym003_none_treeline30m",
+      "task_id": "J6VNFUXEMNAZXYUIKKS2YPXC",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm039_ym003_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -39,
+      "tile_y": -3,
+      "shard_id": "R7_ANDES_xm039_ym003",
+      "quarter_cell_count": 2,
+      "bounds": [
+        -78.0,
+        -6.0,
+        -76.0,
+        -4.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym003_none_treeline1km",
+      "task_id": "C6G4JR3O72A5BAM2ALGQE7JV",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm039_ym003_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -39,
+      "tile_y": -3,
+      "shard_id": "R7_ANDES_xm039_ym003",
+      "quarter_cell_count": 2,
+      "bounds": [
+        -78.0,
+        -6.0,
+        -76.0,
+        -4.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym003_none_qa30m",
+      "task_id": "YKE4MHOZYZNJR3OL53E6HD76",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm039_ym003_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -40,
+      "tile_y": -2,
+      "shard_id": "R7_ANDES_xm040_ym002",
+      "quarter_cell_count": 16,
+      "bounds": [
+        -80.0,
+        -4.0,
+        -78.0,
+        -2.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm040_ym002_none_treeline30m",
+      "task_id": "MXSK6QXFRDFDLRBOGKPN65TH",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm040_ym002_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -40,
+      "tile_y": -2,
+      "shard_id": "R7_ANDES_xm040_ym002",
+      "quarter_cell_count": 16,
+      "bounds": [
+        -80.0,
+        -4.0,
+        -78.0,
+        -2.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm040_ym002_none_treeline1km",
+      "task_id": "QV7NZ7MYGWD7TLFGHDFNE676",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm040_ym002_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -40,
+      "tile_y": -2,
+      "shard_id": "R7_ANDES_xm040_ym002",
+      "quarter_cell_count": 16,
+      "bounds": [
+        -80.0,
+        -4.0,
+        -78.0,
+        -2.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm040_ym002_none_qa30m",
+      "task_id": "QZV5F6YOH7QTNEOGBOLIRD3T",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm040_ym002_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -39,
+      "tile_y": -2,
+      "shard_id": "R7_ANDES_xm039_ym002",
+      "quarter_cell_count": 8,
+      "bounds": [
+        -78.0,
+        -4.0,
+        -76.0,
+        -2.0
+      ],
+      "product": "treeline30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym002_none_treeline30m",
+      "task_id": "LLH6ZZAMKZIUGEJYJU3YKAMS",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R7_ANDES_xm039_ym002_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -39,
+      "tile_y": -2,
+      "shard_id": "R7_ANDES_xm039_ym002",
+      "quarter_cell_count": 8,
+      "bounds": [
+        -78.0,
+        -4.0,
+        -76.0,
+        -2.0
+      ],
+      "product": "treeline1km",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym002_none_treeline1km",
+      "task_id": "T4I4LJ4IVYWYS7SHTJTOTLNR",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R7_ANDES_xm039_ym002_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      }
+    },
+    {
+      "region_id": "R7_ANDES",
+      "tile_x": -39,
+      "tile_y": -2,
+      "shard_id": "R7_ANDES_xm039_ym002",
+      "quarter_cell_count": 8,
+      "bounds": [
+        -78.0,
+        -4.0,
+        -76.0,
+        -2.0
+      ],
+      "product": "qa30m",
+      "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym002_none_qa30m",
+      "task_id": "XTX7RGPZGIBSUYY7CDUBQA64",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R7_ANDES_xm039_ym002_none_next30_dynamic_v2",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_stk": "mean"
+      }
+    }
+  ],
+  "target_collections_after_preflight": {
+    "treeline30m": {
+      "id": "projects/ee-alpine-506212/assets/Treeline_30m_Collection",
+      "type": "IMAGE_COLLECTION",
+      "existing_child_count": 5,
+      "existing_child_ids": [
+        "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R3_EUROPEAN_ALPS_xp002_yp022_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R3_EUROPEAN_ALPS_xp003_yp022_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R3_EUROPEAN_ALPS_xp003_yp023_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R3_EUROPEAN_ALPS_xp004_yp023_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_30m_Collection/R3_EUROPEAN_ALPS_xp005_yp023_none_first20_dynamic_v2"
+      ]
+    },
+    "treeline1km": {
+      "id": "projects/ee-alpine-506212/assets/Treeline_1km_Collection",
+      "type": "IMAGE_COLLECTION",
+      "existing_child_count": 5,
+      "existing_child_ids": [
+        "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R3_EUROPEAN_ALPS_xp002_yp022_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R3_EUROPEAN_ALPS_xp003_yp022_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R3_EUROPEAN_ALPS_xp003_yp023_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R3_EUROPEAN_ALPS_xp004_yp023_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_1km_Collection/R3_EUROPEAN_ALPS_xp005_yp023_none_first20_dynamic_v2"
+      ]
+    },
+    "qa30m": {
+      "id": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection",
+      "type": "IMAGE_COLLECTION",
+      "existing_child_count": 5,
+      "existing_child_ids": [
+        "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R3_EUROPEAN_ALPS_xp002_yp022_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R3_EUROPEAN_ALPS_xp003_yp022_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R3_EUROPEAN_ALPS_xp003_yp023_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R3_EUROPEAN_ALPS_xp004_yp023_none_first20_dynamic_v2",
+        "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/R3_EUROPEAN_ALPS_xp005_yp023_none_first20_dynamic_v2"
+      ]
+    }
+  },
+  "last_monitor": {
+    "timestamp_utc": "2026-08-22T13:21:10.655224+00:00",
+    "recovered_task_ids": 0,
+    "counts": {
+      "COMPLETED": 104,
+      "RUNNING": 4,
+      "READY": 57
+    },
+    "tasks": [
+      {
+        "task_id": "HZ7GBZ4R7FR2MJHBYM526HVT",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp048_yp018_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "AU4TQXFGD2M2FO7RVEDVZ63P",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp048_yp018_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "KX5IUQZGT3PYOBYRMIMHNQ3D",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp048_yp018_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "XM7JEZE4XXNNNV7E7MY77IMH",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp049_yp018_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "VCKPKZNJMPYQIQW6RXS4CO2X",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp049_yp018_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "X5IFFYVE4IKFVOVQV7ULW4TG",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp049_yp018_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "WBVXNDNJJRTSSTUKASR4OELY",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp050_yp018_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "ANXTONDJG77TUIJ3KHX3HCHM",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp050_yp018_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "KXCLJNTGSRBMHQNIFR36NTLU",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp050_yp018_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "624DEJWASJJNMQIMTYYPPRY2",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp051_yp018_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "QXFDXPZIFSQTYFJDCHV6IM2R",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp051_yp018_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "4N33SARF237JPRNULYOZGRFW",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp051_yp018_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "EHB6OWJDKHJKBBI4RIKYATOA",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp047_yp019_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "HXGI2HFK7IKTAEMBK527YT67",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp047_yp019_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "JUGC7KA7NDM2CV6RKC35RH7F",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp047_yp019_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "4RYT2Y4M4CTI3C6V2EYTU6OQ",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp048_yp019_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "L7FPBUFAKEGACSBY4CCOO26E",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp048_yp019_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "ZRGXWFVDCWZPQWI3V4ZSIYF6",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp048_yp019_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "76BMAIDM3CFDJW3XUHR2TYII",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp049_yp019_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "WQSQJOZZAJWYSC7T67YGCDQQ",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp049_yp019_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "CDKVVDPVWB3Y4LSHNCVQVR6S",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp049_yp019_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "SXO2YM6JZKICKCEKIH5HGHN2",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp050_yp019_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "5NLQPGLKH2SGL6TG6LBF54CT",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp050_yp019_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "LDP7RXZBJ7JOZOGM3JCDU3XV",
+        "description": "treeline_region_next30_dynamic_v2_R2_DRY_TIBETAN_PLATEAU_xp050_yp019_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "Y4BR4DCXNXBJQXDPDPKE6HHN",
+        "description": "treeline_region_next30_dynamic_v2_R3_EUROPEAN_ALPS_xp002_yp022_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "T5JB4O3QGJXW2NPXBM26PSOP",
+        "description": "treeline_region_next30_dynamic_v2_R3_EUROPEAN_ALPS_xp002_yp022_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "QL6BFVGHIH5WTAGRLK2LCY4S",
+        "description": "treeline_region_next30_dynamic_v2_R3_EUROPEAN_ALPS_xp002_yp022_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "UAGHTSVUASKAB2X66U66CJMG",
+        "description": "treeline_region_next30_dynamic_v2_R3_EUROPEAN_ALPS_xp003_yp022_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "5JSQDF4CIBJKOUJM4HS6IJ7H",
+        "description": "treeline_region_next30_dynamic_v2_R3_EUROPEAN_ALPS_xp003_yp022_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "RNYVUC6OJORQQOOHM5LY5DXH",
+        "description": "treeline_region_next30_dynamic_v2_R3_EUROPEAN_ALPS_xp003_yp022_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "R2RII2RVRSIYKNCQSJIFVMF7",
+        "description": "treeline_region_next30_dynamic_v2_R3_EUROPEAN_ALPS_xp003_yp023_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "ZWJ6QTRSTN27UG65OKCO4KDD",
+        "description": "treeline_region_next30_dynamic_v2_R3_EUROPEAN_ALPS_xp003_yp023_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "QSI2ENNF23K5UD3W35MHUVEM",
+        "description": "treeline_region_next30_dynamic_v2_R3_EUROPEAN_ALPS_xp003_yp023_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "4DBWMDKB7UJCOH2CF67OA5HG",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm070_yp030_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "Z65LKIKHQI273R7JW4BDJNJY",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm070_yp030_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "C2KKO2FQFLWYL5OVIJIGLNIE",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm070_yp030_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "2F4GFUEYMUDIL3QOLTJIQPQM",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm069_yp030_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "MIPAXJSXVGIQGOLS5NSO4HLQ",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm069_yp030_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "JBAPKR4ORUBS24JJFYZ5ZEFX",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm069_yp030_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "VKDG6ZDBM7DVAZ4VBW5MO5SQ",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm068_yp030_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "PPIFBMCZ7CESSUROEXUSB3G6",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm068_yp030_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "WI2QLVFX45H35I342R2D36CB",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm068_yp030_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "JS2JDO7OG6FPY3JBVUEYYNJL",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm071_yp031_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "CD7NFKQMKJKQY2GMQSLEUTGZ",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm071_yp031_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "ICQTTMTTKJCDOFE4A65BLEVC",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm071_yp031_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "5NTTM3U4KL5C2Q3W4OXHYB4L",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm070_yp031_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "JCP46SZNU3DOOFMRQ2NSRBZ2",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm070_yp031_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "DDGINPWKOR6M2P5MGKTKLSPW",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm070_yp031_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "DAMX7527NV6KTJCUZDCACB4T",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm069_yp031_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "IBOH7UA4ZW7P23CUCQTBPED7",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm069_yp031_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "SUDVS2LE5JJZUPMQEPPXNCZA",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm069_yp031_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "HOD4XG3ISLPIJUJXLUVMSQFE",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm068_yp031_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "CPCHXWJALAQQWLXTFGJHP4WW",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm068_yp031_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "FCECJUF2NTBDG3KY2HTHTA24",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm068_yp031_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "5DZTK3WEHHV3TXQD6AWDESV2",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm078_yp033_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "AG2JVNMEEBRQUWWEPV6PSJWQ",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm078_yp033_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "ERCUSG522YLCMPCGRO2PLRUJ",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm078_yp033_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "MHW4SK7IH7ZR7WKMIV6MWJL4",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm077_yp033_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "RCP6FECGAMPLUMHIGULK5R7O",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm077_yp033_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "UK5DKLEI2QWHZSKTEDHUF6UE",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm077_yp033_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "FAOKMNINXMA6FIBUXVET5VGM",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm076_yp033_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "7JFMEPMBOQYDFJJ3KJHJVVGW",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm076_yp033_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "XC6BPQ6CEPLS3SWYZJAJIH5R",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm076_yp033_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "OFJOC2FTLLEU6BNH5E7Z74Z4",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm075_yp033_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "OJUZISZDETIAKNPGZL6KVMEA",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm075_yp033_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "JJNWFYF7F6CPMYWE6YSXVIUO",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm075_yp033_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "CXAVYRSSNVHPFJEINDCE6YEU",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm078_yp034_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "I7ZRSD3SNU7CDNE33LZNYAIH",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm078_yp034_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "M46MUZVOT5SGUZPHYOFYQCE4",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm078_yp034_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "UZONBY4X6OHDM6O4J5MIKWPW",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm077_yp034_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "TWEDO34OQIKPLNQERN2PKF5E",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm077_yp034_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "AKCRO5NICXHGWQLJ554PV4FD",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm077_yp034_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "B5ACEMWFFPIB7H4GKNG6KYS4",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm076_yp034_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "TIKK32STK5T65XEFL43EDV57",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm076_yp034_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "7PSBSPBSNHHLU74SDAE6T6OA",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm076_yp034_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "I4V5SYCXMNPAVVRWJ6RLJ3ZH",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm075_yp034_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "F4YD7PS4RIIA4UXRPWUJUDO7",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm075_yp034_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "UXOYCQJXGCL72MBIFSB35NMH",
+        "description": "treeline_region_next30_dynamic_v2_R5_ALASKA_YUKON_xm075_yp034_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "LWOEMLPASSYT4RDLEBOFSBVT",
+        "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm054_yp019_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "RVKARNSGNLCIZ5QXS4MU2DG4",
+        "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm054_yp019_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "DB4WKRWA6XEIYPCL3Y37R5IW",
+        "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm054_yp019_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "SEN5H3FTSNJF6AWAMHPXP4UW",
+        "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm054_yp020_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "ZBU5WR6MUE5LBOEKU2QQ2KOY",
+        "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm054_yp020_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "SHQK35CABSRPXDAHIROAZTD5",
+        "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm054_yp020_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "LSYV7NDCH2W34YJZHTGAIHVK",
+        "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm056_yp021_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "HBZWZTEFIGNIY6W5MKFFU3OJ",
+        "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm056_yp021_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "2I3VXJHV67B7XYD6BBHNLDNV",
+        "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm056_yp021_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "BSO56OAZ5OUK43N3H67C4YZZ",
+        "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm057_yp023_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "MYTBVTIYFLUNYO2N25KN5FJV",
+        "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm057_yp023_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "2QZWWBMM5LAIRIUYLWODK6PN",
+        "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm057_yp023_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "DMQ6YVG6ZW55ULRYD2NOBAMB",
+        "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm056_yp023_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "CGV5T737FB4DU3DFJR3OMPAI",
+        "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm056_yp023_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "LNENK56NRADYZ6LXAO4LK5VI",
+        "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm056_yp023_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "RR7GT7N5JCATEX7Q53LZ6IFS",
+        "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm058_yp024_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "LY3OPIWMIHHN62PG3YHSEUNT",
+        "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm058_yp024_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "LE3D4GEHJH6XVVRKUL7J3LII",
+        "description": "treeline_region_next30_dynamic_v2_R6_NORTH_AMERICAN_ROCKIES_xm058_yp024_none_qa30m",
+        "state": "RUNNING",
+        "error_message": null
+      },
+      {
+        "task_id": "422TIFEDYITJAZC2LSANDEY2",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm036_ym016_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "VWYJKLQIAHJSKFVGKTQVFU2U",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm036_ym016_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "PTHSJSCILRI3XLQTTBGPWBK2",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm036_ym016_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "P7RKAB64ZTPVHL7OUTPPOZ3I",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym016_none_treeline30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "YDZMXLWMU453KPJ2BJVCVF3O",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym016_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "KFXVZKQGSYVZZ6ZVLOLTDYAQ",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym016_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "RYGQJBPZPFQZ6NHDGQAAGI5O",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm036_ym015_none_treeline30m",
+        "state": "RUNNING",
+        "error_message": null
+      },
+      {
+        "task_id": "KPYB6D5EY46ZVKDSGKAX6HHE",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm036_ym015_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "EUPF3YZAEOQ4FNHKUSRVPMA7",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm036_ym015_none_qa30m",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "PSROXBXPOJRYVKTMVEASMSX2",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym015_none_treeline30m",
+        "state": "RUNNING",
+        "error_message": null
+      },
+      {
+        "task_id": "AAOIVOQWAQWNL6HSZ7AB7VVI",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym015_none_treeline1km",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "NOUOKZFBIVOCVEK2P4BUIJZN",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym015_none_qa30m",
+        "state": "RUNNING",
+        "error_message": null
+      },
+      {
+        "task_id": "BEB3LBM7WCEJLFLP6BH2H6DA",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym014_none_treeline30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "KWKKKYNI2FIQIS4ENNCJTKTW",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym014_none_treeline1km",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "WT646OAUABK2COYQ7FM2J64S",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym014_none_qa30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "MKCQB3QMLJ3UO2J4CJYQ2IRH",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym013_none_treeline30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "LVK73H6YOJIYFBHKAZLCESHS",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym013_none_treeline1km",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "WAYJPZIPCO2JPQDBAHWZB3SS",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym013_none_qa30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "ZAGFPVVCNUZM2N43MMKUQNGM",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym012_none_treeline30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "45CYBQGQ56V2FNRKM7AU6BTY",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym012_none_treeline1km",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "STKBBYT3XN4ADKKREAQRS4H7",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm035_ym012_none_qa30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "XW5C5CWAYI34JIVZ6AH3WDGY",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm034_ym012_none_treeline30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "Y7PCB3HPRN74FNGCDJHU7627",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm034_ym012_none_treeline1km",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "4TRHRHGDPXE2SA4AXEKFBXGX",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm034_ym012_none_qa30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "PKBTQAIWMP2UU3NSCMMPBJKC",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm033_ym012_none_treeline30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "HNC3Q3US2PPTOV5QYWHCS37K",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm033_ym012_none_treeline1km",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "EYU56T4YDSVRUQE7ZHI2CGE6",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm033_ym012_none_qa30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "YVRPO5SEV4BD3LXRMUIKB7KG",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm032_ym012_none_treeline30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "LTYW7O23SHHONJRGDNYAL2K2",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm032_ym012_none_treeline1km",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "ZY45446WRHZBSS46RV2Z5YCY",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm032_ym012_none_qa30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "ZBBIM2EDHPO35MJSNNYXTSDK",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm034_ym011_none_treeline30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "WUZLD25EQ2EJ5NQUZ65YDST3",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm034_ym011_none_treeline1km",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "NNJ4DADGTQNACMDLJELBXEWN",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm034_ym011_none_qa30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "YWIYORV4TL57JF53ZFFBAM35",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm033_ym011_none_treeline30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "V3D3B6QOAYCSXCHOUKYTADMR",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm033_ym011_none_treeline1km",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "CHT3O4737MUDAIWAEUDOPIOP",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm033_ym011_none_qa30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "6XFEDJMZEQHBDHKZSXMLK6E3",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm032_ym011_none_treeline30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "7HHE2FHLGZ2HA5FRQGBR5DEI",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm032_ym011_none_treeline1km",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "W2LCMWA3Y2XXM3GO6MTSMLPV",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm032_ym011_none_qa30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "3SMVCRG74EO5ECH5SCC3Q4Z3",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm034_ym010_none_treeline30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "M3LJPJDXTE3A7YNVKV3GCCWA",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm034_ym010_none_treeline1km",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "D6ADYPK2VYHNXJZR47BI76QS",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm034_ym010_none_qa30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "EAVU3D365V6E4WRWNFEQSBI7",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm033_ym010_none_treeline30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "M6UMI376GBVSSWD5SSW43ZBJ",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm033_ym010_none_treeline1km",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "ETEN4AFLIEGGUEX775RX6B23",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm033_ym010_none_qa30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "OOTBF6NX2NU6KLFSFQ6IOGJ7",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym005_none_treeline30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "F2V6S7TIRKCCXEYMA5SJC6ZU",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym005_none_treeline1km",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "QDXENCM45TSHU6PVETDN2QKA",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym005_none_qa30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "ER7DTXFR4TIGBBF7MDDMKCDD",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm038_ym005_none_treeline30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "7VJAFZTZYVNIHAOPOTX6FM6J",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm038_ym005_none_treeline1km",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "465RJLOATUE2GMCZE6HRLSTL",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm038_ym005_none_qa30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "FOT5ARSUIQJ7TAVSG3IMJDSF",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym004_none_treeline30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "KQ5GUXP34I4KOQJ2WIBCIEYC",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym004_none_treeline1km",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "VWH3LNZBDTPN3VDE2Q47PCEC",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym004_none_qa30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "DFONLE4IPTUBMDVIRLSV2XE4",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm038_ym004_none_treeline30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "6ERDDYGCJMK67WXILDVLBX4R",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm038_ym004_none_treeline1km",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "TCEA22VDWIOKWRWRIC436KC4",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm038_ym004_none_qa30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "ARM6DH43EVQOKEMUKFGCDXGL",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm040_ym003_none_treeline30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "AZPA5EMRBSZI2Z6GOPOBFVUP",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm040_ym003_none_treeline1km",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "PLFQG7VJAUQHJOT6I3CTDBF6",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm040_ym003_none_qa30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "J6VNFUXEMNAZXYUIKKS2YPXC",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym003_none_treeline30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "C6G4JR3O72A5BAM2ALGQE7JV",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym003_none_treeline1km",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "YKE4MHOZYZNJR3OL53E6HD76",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym003_none_qa30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "MXSK6QXFRDFDLRBOGKPN65TH",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm040_ym002_none_treeline30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "QV7NZ7MYGWD7TLFGHDFNE676",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm040_ym002_none_treeline1km",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "QZV5F6YOH7QTNEOGBOLIRD3T",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm040_ym002_none_qa30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "LLH6ZZAMKZIUGEJYJU3YKAMS",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym002_none_treeline30m",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "T4I4LJ4IVYWYS7SHTJTOTLNR",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym002_none_treeline1km",
+        "state": "READY",
+        "error_message": null
+      },
+      {
+        "task_id": "XTX7RGPZGIBSUYY7CDUBQA64",
+        "description": "treeline_region_next30_dynamic_v2_R7_ANDES_xm039_ym002_none_qa30m",
+        "state": "READY",
+        "error_message": null
+      }
+    ]
+  }
+}

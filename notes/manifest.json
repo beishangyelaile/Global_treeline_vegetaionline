@@ -1,0 +1,56 @@
+{
+  "workspace": "D:\\\u5b9e\u9a8c\u590d\u73b0\\globaltreeline",
+  "source": "E:\\\u8bba\u6587+\u6a21\u62df\\Zetero\u6570\u636e\u5e93\\llm-for-zotero-mineru\\1892",
+  "source_pdf": null,
+  "source_summary": {
+    "path": "E:\\\u8bba\u6587+\u6a21\u62df\\Zetero\u6570\u636e\u5e93\\llm-for-zotero-mineru\\1892",
+    "type": "directory",
+    "markdown_files": [
+      "E:\\\u8bba\u6587+\u6a21\u62df\\Zetero\u6570\u636e\u5e93\\llm-for-zotero-mineru\\1892\\full.md"
+    ],
+    "json_files": [
+      "E:\\\u8bba\u6587+\u6a21\u62df\\Zetero\u6570\u636e\u5e93\\llm-for-zotero-mineru\\1892\\content_list.json",
+      "E:\\\u8bba\u6587+\u6a21\u62df\\Zetero\u6570\u636e\u5e93\\llm-for-zotero-mineru\\1892\\manifest.json",
+      "E:\\\u8bba\u6587+\u6a21\u62df\\Zetero\u6570\u636e\u5e93\\llm-for-zotero-mineru\\1892\\_llm_source.json"
+    ],
+    "manifest_files": [
+      "E:\\\u8bba\u6587+\u6a21\u62df\\Zetero\u6570\u636e\u5e93\\llm-for-zotero-mineru\\1892\\manifest.json"
+    ],
+    "image_files": [
+      "E:\\\u8bba\u6587+\u6a21\u62df\\Zetero\u6570\u636e\u5e93\\llm-for-zotero-mineru\\1892\\images\\07ac7d9ac6857d6f4b7d245b9e34f92f26d50af1ad6b4318475497f930092447.jpg",
+      "E:\\\u8bba\u6587+\u6a21\u62df\\Zetero\u6570\u636e\u5e93\\llm-for-zotero-mineru\\1892\\images\\2555b597f1a507c13bc5fa84ea252dd577c7729c9e4df2d9a880ee978f6178dc.jpg",
+      "E:\\\u8bba\u6587+\u6a21\u62df\\Zetero\u6570\u636e\u5e93\\llm-for-zotero-mineru\\1892\\images\\40701247f7e221b69ade738c1525d6c7073070c7d397f6b8170e07d6a512afd0.jpg",
+      "E:\\\u8bba\u6587+\u6a21\u62df\\Zetero\u6570\u636e\u5e93\\llm-for-zotero-mineru\\1892\\images\\62571790b5a12385bff36919647a7d2ef08479705946136d1431c0ae159a9b5b.jpg",
+      "E:\\\u8bba\u6587+\u6a21\u62df\\Zetero\u6570\u636e\u5e93\\llm-for-zotero-mineru\\1892\\images\\64a08debd69b7360e7fa96e071edeb941d4d71ce22b78eb72fab9d67fd02d345.jpg",
+      "E:\\\u8bba\u6587+\u6a21\u62df\\Zetero\u6570\u636e\u5e93\\llm-for-zotero-mineru\\1892\\images\\6b3ee0eda5e8b8a8f852181078b0f43414e2c8b5d20ba94e38d4faefdb468955.jpg",
+      "E:\\\u8bba\u6587+\u6a21\u62df\\Zetero\u6570\u636e\u5e93\\llm-for-zotero-mineru\\1892\\images\\7315b58a1d16f2ce841418b0208f7c545df6a5ad5a69fdabc434f45b98663f71.jpg",
+      "E:\\\u8bba\u6587+\u6a21\u62df\\Zetero\u6570\u636e\u5e93\\llm-for-zotero-mineru\\1892\\images\\78537738c0bb45a8e40103e300ed2fb7ddb550ebf510238748cb000fb90aff12.jpg",
+      "E:\\\u8bba\u6587+\u6a21\u62df\\Zetero\u6570\u636e\u5e93\\llm-for-zotero-mineru\\1892\\images\\b53b8d96d92f36b9cfffecc02303d235fa6d4045cafbf3617d865ff367714077.jpg",
+      "E:\\\u8bba\u6587+\u6a21\u62df\\Zetero\u6570\u636e\u5e93\\llm-for-zotero-mineru\\1892\\images\\b815021d568c7e6953ed46c9cefd8fae2da83ab76864e2b3e2f80154a2b16543.jpg",
+      "E:\\\u8bba\u6587+\u6a21\u62df\\Zetero\u6570\u636e\u5e93\\llm-for-zotero-mineru\\1892\\images\\c60feba4105c7a28a6ee7ea1806a570bdbbc045cc64616d5de83c643e97821f4.jpg",
+      "E:\\\u8bba\u6587+\u6a21\u62df\\Zetero\u6570\u636e\u5e93\\llm-for-zotero-mineru\\1892\\images\\f1197728274b33c6a779af0a2ddb3856d28106fc1275318ced3d1c2f660814b0.jpg"
+    ]
+  },
+  "created_at": "2026-08-18T03:21:06.573652+00:00",
+  "target": "gee",
+  "official_code": [],
+  "datasets": [
+    "projects/ee-remote/assets/Alpine/high_mountain",
+    "projects/glad/GLCLU2020/Forest_height_2000",
+    "projects/glad/GLCLU2020/Forest_height_2020",
+    "NASA/NASADEM_HGT/001",
+    "ESA/WorldCover/v100",
+    "CSP/ERGo/1_0/Global/SRTM_landforms"
+  ],
+  "commands": [
+    "git init D:\\实验复现\\Globaltreeline",
+    "check_local_environment.py --project ee-wsc --require-project --require-auth",
+    "gee/probe_assets.py --project ee-wsc --asset <ASSET>"
+  ],
+  "deviations": [
+    "CHELSA V2.1 annual mean temperature asset unresolved",
+    "Topology-preserving hole-fill method unavailable; 30 m closing remains an explicit approximation",
+    "Otsu spatial scope unavailable; exports require one externally fixed threshold",
+    "NASADEM does not cover polar regions outside 56 S to 60 N"
+  ]
+}

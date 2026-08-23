@@ -1,0 +1,321 @@
+{
+  "status": "first-run-check-passed",
+  "timestamp_utc": "2026-08-21T09:07:54.016828+00:00",
+  "resolved_plan": {
+    "mode": "check",
+    "project": "ee-wsc",
+    "auth": "Google Application Default Credentials",
+    "bbox": [
+      11.2,
+      47.1,
+      11.3,
+      47.2
+    ],
+    "bbox_area_km2_approx": 84.08759907776137,
+    "aspect_mode": "none",
+    "fine_grid": {
+      "crs": "EPSG:4326",
+      "transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ]
+    },
+    "climate_grid": {
+      "crs": "EPSG:4326",
+      "transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ]
+    },
+    "output": {
+      "check_report": "D:\\实验复现\\Globaltreeline\\gee\\runs\\2026821\\first_run_console.json",
+      "check_map": "D:\\实验复现\\Globaltreeline\\gee\\runs\\2026821\\first_run_map.html",
+      "export_destination": "Google Drive/Globaltreeline"
+    },
+    "temperature_transform": {
+      "formula": "temperature_c = raw * scale + offset",
+      "scale": 0.1,
+      "offset": -273.15,
+      "fixed_otsu_threshold_c": null
+    },
+    "assets": {
+      "gmba": "projects/ee-remote/assets/Alpine/GMBA_v2",
+      "sayre": "projects/ee-remote/assets/Alpine/high_mountain",
+      "forest_height_2000": "projects/glad/GLCLU2020/Forest_height_2000",
+      "forest_height_2020": "projects/glad/GLCLU2020/Forest_height_2020",
+      "chelsa_bio01": "projects/ee-wsc/assets/Alpine/CHELSA_bio01_1981-2010_V21",
+      "aw3d30": "JAXA/ALOS/AW3D30/V4_1",
+      "alos_landforms": "CSP/ERGo/1_0/Global/ALOS_landforms",
+      "worldcover": "ESA/WorldCover/v100"
+    },
+    "ready": true,
+    "missing_requirements": [],
+    "export_guard": "task.start() is reachable only with --export and a fixed Otsu threshold"
+  },
+  "authentication": {
+    "credential_type": "Credentials",
+    "valid": true,
+    "detected_project": "ee-wsc",
+    "quota_project": "ee-wsc",
+    "ee_project": "ee-wsc",
+    "asset_root_count": 4
+  },
+  "assets": {
+    "gmba": {
+      "id": "projects/ee-remote/assets/Alpine/GMBA_v2",
+      "type": "TABLE",
+      "bands": []
+    },
+    "sayre": {
+      "id": "projects/ee-remote/assets/Alpine/high_mountain",
+      "type": "IMAGE",
+      "bands": [
+        {
+          "id": "b1",
+          "data_type": {
+            "precision": "INT",
+            "range": {
+              "min": -128,
+              "max": 127
+            }
+          },
+          "crs": "EPSG:4326",
+          "affine_transform": {
+            "scaleX": 0.002083333333,
+            "translateX": -180.000138888889,
+            "scaleY": -0.002083333333,
+            "translateY": 83.624861111111
+          }
+        }
+      ]
+    },
+    "forest_height_2000": {
+      "id": "projects/glad/GLCLU2020/Forest_height_2000",
+      "type": "IMAGE",
+      "bands": [
+        {
+          "id": "b1",
+          "data_type": {
+            "precision": "INT",
+            "range": {
+              "max": 255
+            }
+          },
+          "crs": "EPSG:4326",
+          "affine_transform": {
+            "scaleX": 0.00025000000000000017,
+            "translateX": -180.00000000000006,
+            "scaleY": -0.00025000000000000017,
+            "translateY": 80.00000000000004
+          }
+        }
+      ]
+    },
+    "forest_height_2020": {
+      "id": "projects/glad/GLCLU2020/Forest_height_2020",
+      "type": "IMAGE",
+      "bands": [
+        {
+          "id": "b1",
+          "data_type": {
+            "precision": "INT",
+            "range": {
+              "max": 255
+            }
+          },
+          "crs": "EPSG:4326",
+          "affine_transform": {
+            "scaleX": 0.00025000000000000017,
+            "translateX": -180.00000000000006,
+            "scaleY": -0.00025000000000000017,
+            "translateY": 80.00000000000004
+          }
+        }
+      ]
+    },
+    "chelsa_bio01": {
+      "id": "projects/ee-wsc/assets/Alpine/CHELSA_bio01_1981-2010_V21",
+      "type": "IMAGE",
+      "bands": [
+        {
+          "id": "b1",
+          "data_type": {
+            "precision": "INT",
+            "range": {
+              "max": 65535
+            }
+          },
+          "crs": "EPSG:4326",
+          "affine_transform": {
+            "scaleX": 0.0083333333,
+            "translateX": -180.00013888885002,
+            "scaleY": -0.0083333333,
+            "translateY": 83.99986041515001
+          }
+        }
+      ]
+    },
+    "aw3d30": {
+      "id": "JAXA/ALOS/AW3D30/V4_1",
+      "type": "IMAGE_COLLECTION",
+      "bands": []
+    },
+    "alos_landforms": {
+      "id": "CSP/ERGo/1_0/Global/ALOS_landforms",
+      "type": "IMAGE",
+      "bands": [
+        {
+          "id": "constant",
+          "data_type": {
+            "precision": "INT",
+            "range": {
+              "max": 255
+            }
+          },
+          "crs": "EPSG:4326",
+          "affine_transform": {
+            "scaleX": 0.0008084837557075694,
+            "translateX": -180.00001488697754,
+            "scaleY": -0.0008084837557075694,
+            "translateY": 70.00014053667277
+          }
+        }
+      ]
+    },
+    "worldcover": {
+      "id": "ESA/WorldCover/v100",
+      "type": "IMAGE_COLLECTION",
+      "bands": []
+    }
+  },
+  "gmba": {
+    "features_intersecting_sayre_31_32_in_buffered_tile": 1,
+    "first_feature_property_names": [
+      "ColorAll",
+      "GMBA_V1_ID",
+      "CountryISO",
+      "Name_PT",
+      "Countries",
+      "Level_09",
+      "DBaseName",
+      "Level_05",
+      "Name_RU",
+      "Feature",
+      "Level_06",
+      "Level_07",
+      "Name_DE",
+      "Color300",
+      "Level_08",
+      "Elev_High",
+      "Level_10",
+      "Name_ES",
+      "Name_ZH",
+      "WikiDataUR",
+      "Hier_Lvl",
+      "Path_ID",
+      "Name_AR",
+      "Path",
+      "Perimeter",
+      "GMBA_V2_ID",
+      "ColorBasic",
+      "Name_EN",
+      "Level_01",
+      "Level_02",
+      "MapName",
+      "Area",
+      "Level_03",
+      "Select_300",
+      "Level_04",
+      "LocalNames",
+      "AsciiName",
+      "MapUnit",
+      "Elev_Low",
+      "Name_FR",
+      "GMBA_V2__1",
+      "system:index"
+    ],
+    "overlap_warning": "GMBA Standard hierarchy levels overlap; hit count is not an independent mountain count."
+  },
+  "chelsa_bio01_range": {
+    "bio01_raw_count": 156,
+    "bio01_raw_max": 2800,
+    "bio01_raw_mean": 2738.0589052287573,
+    "bio01_raw_min": 2693,
+    "temperature_c_count": 156,
+    "temperature_c_max": 6.850000000000023,
+    "temperature_c_mean": 0.6558905228758509,
+    "temperature_c_min": -3.849999999999966
+  },
+  "bio1_conversion_assessment": {
+    "official_chelsa_v2_1_bio01_unit": "degrees Celsius",
+    "configured_scale": 0.1,
+    "configured_offset": -273.15,
+    "verdict": "conversion confirmed by asset range: deci-Kelvin to degrees Celsius",
+    "otsu_note": "Otsu is run on the unchanged integer values with a one-raw-unit minimum bucket width. Only the resulting raw threshold is converted to degrees Celsius."
+  },
+  "otsu": {
+    "threshold_raw": 2748.0,
+    "threshold_c": 1.650000000000034,
+    "source": "Otsu on raw integer BIO1; threshold converted to degrees Celsius",
+    "histogram_bucket_count": 87,
+    "candidate_sample_count": 61.03137254901961
+  },
+  "layers": [
+    {
+      "name": "Selected GMBA",
+      "kind": "FeatureCollection",
+      "shown": false,
+      "feature_count": 1
+    },
+    {
+      "name": "Analysis domain",
+      "kind": "Image",
+      "shown": false,
+      "pixel_count": {
+        "analysis_domain": 137641
+      }
+    },
+    {
+      "name": "Treeline elevation 2000",
+      "kind": "Image",
+      "shown": true,
+      "pixel_count": {
+        "treeline_all_2000_m": 393
+      }
+    },
+    {
+      "name": "Treeline elevation 2020",
+      "kind": "Image",
+      "shown": true,
+      "pixel_count": {
+        "treeline_all_2020_m": 417
+      }
+    },
+    {
+      "name": "Treeline shift m/yr",
+      "kind": "Image",
+      "shown": false,
+      "pixel_count": {
+        "shift_2000_2020_m_per_year": 26
+      }
+    },
+    {
+      "name": "AW3D MSK",
+      "kind": "Image",
+      "shown": false,
+      "pixel_count": {
+        "dem_msk": 137641
+      }
+    }
+  ],
+  "map_html": "D:\\实验复现\\Globaltreeline\\gee\\runs\\2026821\\first_run_map.html",
+  "exports_started": false
+}
