@@ -95,14 +95,58 @@ class V2CliTests(unittest.TestCase):
         )
 
     def test_export_requires_a_bounded_batch_before_initialization(self) -> None:
-        result = run_cli("--export", "--accept-hole-filling-assumption")
+        result = run_cli("--export")
         self.assertNotEqual(result.returncode, 0)
         self.assertIn("--max-mountains between 1 and 100", result.stderr)
 
-    def test_export_requires_explicit_hole_assumption_before_initialization(self) -> None:
-        result = run_cli("--export", "--max-mountains", "1")
-        self.assertNotEqual(result.returncode, 0)
-        self.assertIn("undocumented hole-size assumption", result.stderr)
+    def test_jrc_mmu_defaults_are_fixed_and_not_cli_adjustable(self) -> None:
+        args = parser_args(self.module)
+        self.assertEqual(self.module.JRC_MMU_HA, 0.5)
+        self.assertEqual(self.module.JRC_MMU_CONNECTIVITY, 8)
+        self.assertEqual(self.module.CONNECTED_COMPONENT_MAX_SIZE, 512)
+        self.assertFalse(hasattr(args, "minimum_forest_patch_ha"))
+        self.assertFalse(hasattr(args, "hole_max_dimension_pixels"))
+        self.assertFalse(hasattr(args, "hole_border_width_m"))
+        self.assertFalse(hasattr(args, "accept_hole_filling_assumption"))
+        self.assertFalse(hasattr(args, "patch_count_cap"))
+
+    def test_jrc_mmu_order_connectivity_and_area_are_fixed(self) -> None:
+        component_source = inspect.getsource(self.module.small_component_mask)
+        self.assertIn("ee.Kernel.square(1)", component_source)
+        self.assertIn("ee.Image.pixelArea()", component_source)
+        self.assertIn("reduceConnectedComponents", component_source)
+        self.assertNotIn("ee.Kernel.plus(1)", component_source)
+        self.assertNotIn("connectedPixelCount", component_source)
+
+        clean_source = inspect.getsource(self.module.clean_forest)
+        remove_index = clean_source.index('small_component_mask(raw, "lte")')
+        retained_index = clean_source.index("retained = raw.And")
+        background_index = clean_source.index("nonforest = retained.Not()")
+        fill_index = clean_source.index('small_component_mask(nonforest, "lt")')
+        self.assertLess(remove_index, retained_index)
+        self.assertLess(retained_index, background_index)
+        self.assertLess(background_index, fill_index)
+        self.assertNotIn("difference(", clean_source)
+
+    def test_jrc_mmu_threshold_boundaries_match_the_fixed_method(self) -> None:
+        component_source = inspect.getsource(self.module.small_component_mask)
+        self.assertIn("component_area.lte(JRC_MMU_M2)", component_source)
+        self.assertIn("component_area.lt(JRC_MMU_M2)", component_source)
+        clean_source = inspect.getsource(self.module.clean_forest)
+        self.assertIn('small_component_mask(raw, "lte")', clean_source)
+        self.assertIn('small_component_mask(nonforest, "lt")', clean_source)
+
+    def test_removed_mmu_options_are_rejected(self) -> None:
+        for option in (
+            "--minimum-forest-patch-ha",
+            "--hole-max-dimension-pixels",
+            "--hole-border-width-m",
+            "--accept-hole-filling-assumption",
+            "--patch-count-cap",
+        ):
+            result = run_cli("--dry-run", option)
+            self.assertNotEqual(result.returncode, 0)
+            self.assertIn("unrecognized arguments", result.stderr)
 
     def test_safe_defaults_remain_opt_in(self) -> None:
         args = parser_args(self.module)
@@ -114,6 +158,7 @@ class V2CliTests(unittest.TestCase):
         self.assertEqual(args.check_strategy, "median")
         self.assertEqual(args.temperature_scale, 0.1)
         self.assertEqual(args.temperature_offset, -273.15)
+        self.assertEqual(args.run_label, "mountain_v4_jrc_mmu")
 
     def test_canopy_thresholds_are_positive_sorted_and_unique(self) -> None:
         self.assertEqual(
@@ -159,6 +204,10 @@ class V2CliTests(unittest.TestCase):
         self.assertIn("dem_elevation_m", bands["qa30m"])
         self.assertIn("dem_stk", bands["qa30m"])
         self.assertIn("otsu_valid_h3m", bands["qa30m"])
+        self.assertIn("forest_small_patch_removed_2000_h3m", bands["qa30m"])
+        self.assertIn("forest_small_patch_removed_2020_h5m", bands["qa30m"])
+        self.assertIn("nonforest_small_gap_filled_2000_h3m", bands["qa30m"])
+        self.assertIn("nonforest_small_gap_filled_2020_h5m", bands["qa30m"])
 
     def test_qa_pyramiding_policy_matches_band_semantics(self) -> None:
         records = self.module.planned_export_records(
@@ -201,6 +250,28 @@ class V2CliTests(unittest.TestCase):
             self.module.configuration_hash(first),
             self.module.configuration_hash(changed),
         )
+
+    def test_configuration_identifies_v4_jrc_mmu_contract(self) -> None:
+        configuration = self.module.scientific_configuration(parser_args(self.module))
+        self.assertEqual(configuration["workflow"], "per-gmba-v4-jrc-mmu")
+        self.assertEqual(configuration["mmu_area_ha"], 0.5)
+        self.assertEqual(configuration["mmu_connectivity"], 8)
+        self.assertEqual(
+            configuration["mmu_area_measure"],
+            "sum_pixelArea_m2_per_connected_component",
+        )
+        self.assertEqual(
+            configuration["mmu_operation_order"],
+            "remove_small_forest_then_fill_small_nonforest_gaps",
+        )
+        self.assertEqual(configuration["connected_component_max_size_pixels"], 512)
+        self.assertEqual(
+            configuration["connected_component_max_size_role"],
+            "compute_protection_only",
+        )
+        self.assertEqual(configuration["jrc_alignment"], "binary_mmu_postprocessing_only")
+        self.assertNotIn("minimum_forest_patch_ha", configuration)
+        self.assertNotIn("hole_max_dimension_pixels", configuration)
 
     def test_active_task_conflict_requires_resume(self) -> None:
         args = parser_args(self.module)
