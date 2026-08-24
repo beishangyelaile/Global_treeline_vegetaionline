@@ -9,6 +9,20 @@
 - Generated task registries, console reports, HTML maps and the validation package were moved outside the source repository to `D:\实验复现\Globaltreeline_artifacts\2026821`.
 - No Earth Engine task or Asset was changed during this repository cleanup.
 
+## 2026-08-24 fixed JRC-style binary MMU
+
+- Updated the sole entry point to workflow identifier `per-gmba-v4-jrc-mmu` and default run label `mountain_v4_jrc_mmu`.
+- Fixed the binary post-processing order to: GLAD canopy-height threshold, eight-neighbour forest components, remove forest area `<=0.5 ha`, eight-neighbour non-forest components, fill internal non-forest gaps `<0.5 ha`, median filter, then Zero Crossing.
+- Both forest and non-forest component areas are the sum of `ee.Image.pixelArea()` within each connected object. The value `512` remains only as the connected-component computation protection limit and is not a scientific area or hole-size threshold.
+- Removed the four-neighbour hole test, vector `buffer(-90) + difference` border ring, pixel-count area approximation, configurable MMU CLI options, and the export-time hole-assumption acknowledgement.
+- Added QA bands `forest_small_patch_removed_*` and `nonforest_small_gap_filled_*`.
+- This change aligns only the binary MMU post-processing with JRC GFC2020 v2. The study still uses approximately 30 m GLAD canopy height with `>3 m` primary and `>5 m` sensitivity thresholds; it does not reproduce the complete JRC 10 m forest land-use definition.
+- With the production Asset arguments and a 10-mountain dry-run, `ready=true`, `missing_requirements=[]`, `expected_task_count=30`, and configuration hash `aa634a00da7502f6e966950c1d14c2c699e480a9b87c81d8eac9d37601efe777`.
+- Python compilation and all 19 maintained offline regression tests passed. Earth Engine initialization for project `ee-wsc` passed with Python 3.11.9, earthengine-api 1.7.32, and geemap 0.37.2. No new Earth Engine check, export, preparation task, or Asset write was started.
+- Boundary/compute risk remains high for very large GMBA geometries because connected components are not generally tile-safe; staged online validation and a <=10-mountain pilot remain required before expansion.
+- User-supplied reference copies were preserved outside the source repository under `D:\实验复现\Globaltreeline_artifacts\20260824-jrc-mmu-reference` after their hashes were recorded.
+- JRC method source: https://doi.org/10.5194/essd-18-1331-2026; public source code: https://figshare.com/articles/code/Joint_Research_Centre_-_Global_Forest_Cover_for_year_2020_version_2_Code_source/29315528.
+
 ## Paper
 
 - Source: E:\论文+模拟\Zetero数据库\llm-for-zotero-mineru\1892

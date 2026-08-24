@@ -7,17 +7,20 @@ The workflow has two explicit stages.
    mountain units to one Earth Engine table Asset.  Original GMBA vector
    geometry is preserved.
 2. ``--check`` and ``--export`` process one output unit per prepared GMBA.
-   The full GMBA Basic geometry is the processing domain. Forest masks are
-   hole-filled and stripped of patches smaller than 0.5 ha, edges are detected,
-   valleys are removed, and one per-mountain Otsu BIO1
+   The full GMBA Basic geometry is the processing domain. Binary forest masks
+   use the fixed JRC GFC2020-style MMU post-processing order: remove forest
+   components with area <=0.5 ha, fill internal non-forest gaps with area
+   <0.5 ha, then median-filter and detect edges. Valleys are removed, and one
+   per-mountain Otsu BIO1
    threshold is estimated from the union of the 2000/2020 post-landform edge
    candidates.  The same threshold is applied to both years before the 300 m
    local elevation test.
 
 Canopy height >3 m is primary; >5 m is exported as sensitivity by default.
 Zero crossing is the paper-aligned edge detector and Canny is an optional
-sensitivity mode.  Parameters omitted by the source paper are explicit in the
-CLI and written to output metadata.
+sensitivity mode. This aligns only the binary MMU post-processing with JRC;
+the forest definition remains based on GLAD canopy height. Parameters omitted
+by the source paper are explicit in the CLI and written to output metadata.
 """
 
 from __future__ import annotations
@@ -59,6 +62,10 @@ FOREST_HEIGHT_2020 = "projects/glad/GLCLU2020/Forest_height_2020"
 AW3D30 = "JAXA/ALOS/AW3D30/V4_1"
 ALOS_LANDFORMS = "CSP/ERGo/1_0/Global/ALOS_landforms"
 VALLEY_CLASSES = (41, 42)
+JRC_MMU_HA = 0.5
+JRC_MMU_M2 = JRC_MMU_HA * 10_000
+JRC_MMU_CONNECTIVITY = 8
+CONNECTED_COMPONENT_MAX_SIZE = 512
 FINE_CRS = "EPSG:4326"
 FINE_TRANSFORM = [0.00025, 0, -180, 0, -0.00025, 90]
 CLIMATE_CRS = "EPSG:4326"
@@ -139,14 +146,6 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument(
         "--canopy-thresholds-m", type=float, nargs="+", default=[3.0, 5.0]
     )
-    parser.add_argument("--minimum-forest-patch-ha", type=float, default=0.5)
-    parser.add_argument(
-        "--hole-max-dimension-pixels", type=int, default=512,
-        help="Maximum width/height of an eligible background component, not area",
-    )
-    parser.add_argument("--hole-border-width-m", type=float, default=90)
-    parser.add_argument("--accept-hole-filling-assumption", action="store_true")
-    parser.add_argument("--patch-count-cap", type=int, default=128)
     parser.add_argument("--median-radius-pixels", type=float, default=1)
     parser.add_argument(
         "--edge-method", choices=("zero-crossing", "canny"), default="zero-crossing"
@@ -182,7 +181,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--export-1km", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--export-qa", action=argparse.BooleanOptionalAction, default=True)
     parser.add_argument("--task-prefix", default="treeline_gmba")
-    parser.add_argument("--run-label", default="mountain_v3")
+    parser.add_argument("--run-label", default="mountain_v4_jrc_mmu")
     parser.add_argument("--overwrite-assets", action="store_true")
     parser.add_argument("--resume", action="store_true")
     parser.add_argument("--table-max-vertices", type=int, default=1_000_000)
@@ -248,7 +247,7 @@ def implementation_sha256() -> str:
 
 def scientific_configuration(args: argparse.Namespace) -> Dict[str, object]:
     return {
-        "workflow": "per-gmba-v3",
+        "workflow": "per-gmba-v4-jrc-mmu",
         "implementation_sha256": implementation_sha256(),
         "prepared_mountains_asset": args.prepared_mountains_asset,
         "analysis_domain": "complete_GMBA_v2_Standard_Basic_geometry",
@@ -261,10 +260,14 @@ def scientific_configuration(args: argparse.Namespace) -> Dict[str, object]:
         "fine_grid": {"crs": FINE_CRS, "transform": FINE_TRANSFORM},
         "climate_grid": {"crs": CLIMATE_CRS, "transform": CLIMATE_TRANSFORM},
         "canopy_thresholds_m": normalized_canopy_thresholds(args.canopy_thresholds_m),
-        "minimum_forest_patch_ha": args.minimum_forest_patch_ha,
-        "hole_max_dimension_pixels": args.hole_max_dimension_pixels,
-        "hole_border_width_m": args.hole_border_width_m,
-        "patch_count_cap": args.patch_count_cap,
+        "mmu_area_ha": JRC_MMU_HA,
+        "mmu_connectivity": JRC_MMU_CONNECTIVITY,
+        "mmu_area_measure": "sum_pixelArea_m2_per_connected_component",
+        "mmu_operation_order": "remove_small_forest_then_fill_small_nonforest_gaps",
+        "connected_component_max_size_pixels": CONNECTED_COMPONENT_MAX_SIZE,
+        "connected_component_max_size_role": "compute_protection_only",
+        "jrc_alignment": "binary_mmu_postprocessing_only",
+        "forest_definition": "GLAD_canopy_height_threshold",
         "median_radius_pixels": args.median_radius_pixels,
         "edge_method": args.edge_method,
         "canny_threshold": args.canny_threshold,
@@ -339,8 +342,6 @@ def missing_requirements(args: argparse.Namespace) -> List[str]:
             missing.append("per-mountain threshold JSON (--mountain-thresholds-json)")
         elif not args.mountain_thresholds_json.is_file():
             missing.append(f"existing threshold JSON ({args.mountain_thresholds_json})")
-    if args.export and not args.accept_hole_filling_assumption:
-        missing.append("explicit acceptance of the undocumented hole-size assumption")
     return missing
 
 
@@ -794,41 +795,48 @@ def build_common(feature: "ee.Feature", args: argparse.Namespace) -> Dict[str, o
     }
 
 
-def fill_interior_holes(
-    forest: "ee.Image", processing_region: "ee.Geometry", args: argparse.Namespace
-) -> "ee.Image":
-    """Fill bounded 4-connected background components up to a size dimension."""
-    background = forest.Not().clip(processing_region).rename("background")
-    labels = background.selfMask().connectedComponents(
-        ee.Kernel.plus(1), args.hole_max_dimension_pixels
+def small_component_mask(binary: "ee.Image", comparison: str) -> "ee.Image":
+    """Return components selected by the fixed 0.5 ha MMU area rule."""
+    foreground = ee.Image(binary).unmask(0).eq(1).selfMask()
+    labels = foreground.connectedComponents(
+        ee.Kernel.square(1), CONNECTED_COMPONENT_MAX_SIZE
     ).select("labels")
-    inner = processing_region.buffer(-args.hole_border_width_m, args.geometry_max_error_m)
-    border_ring = processing_region.difference(inner, args.geometry_max_error_m)
-    border = (
-        ee.Image(0).byte().paint(ee.FeatureCollection([ee.Feature(border_ring)]), 1)
-        .setDefaultProjection(forest.projection()).rename("touch")
+    component_area = (
+        labels.addBands(ee.Image.pixelArea().rename("component_area_m2"))
+        .reduceConnectedComponents(
+            ee.Reducer.sum(), "labels", CONNECTED_COMPONENT_MAX_SIZE
+        )
+        .select("component_area_m2")
     )
-    touches_border = border.addBands(labels).reduceConnectedComponents(
-        ee.Reducer.max(), "labels", args.hole_max_dimension_pixels
-    ).select("touch")
-    holes = labels.mask().And(touches_border.eq(0))
-    return forest.Or(holes).rename("forest_filled").clip(processing_region)
+    if comparison == "lt":
+        selected = component_area.lt(JRC_MMU_M2)
+    elif comparison == "lte":
+        selected = component_area.lte(JRC_MMU_M2)
+    else:
+        raise ValueError("comparison must be 'lt' or 'lte'")
+    return selected.unmask(0).rename("small_component")
 
 
 def clean_forest(
     canopy_asset: str,
     canopy_threshold_m: float,
     processing_region: "ee.Geometry",
-    args: argparse.Namespace,
-) -> "ee.Image":
-    forest = (
+) -> Dict[str, "ee.Image"]:
+    """Apply the fixed JRC-style binary MMU before median filtering."""
+    raw = (
         ee.Image(canopy_asset).select([0]).gt(canopy_threshold_m)
         .unmask(0).clip(processing_region).rename("forest_raw")
     )
-    filled = fill_interior_holes(forest, processing_region, args)
-    count = filled.selfMask().connectedPixelCount(args.patch_count_cap, True)
-    keep = count.multiply(ee.Image.pixelArea()).gte(args.minimum_forest_patch_ha * 10_000)
-    return filled.updateMask(keep).unmask(0).rename("forest_clean")
+    forest_small_patch_removed = small_component_mask(raw, "lte")
+    retained = raw.And(forest_small_patch_removed.Not()).rename("forest_mmu_retained")
+    nonforest = retained.Not().clip(processing_region).rename("nonforest")
+    nonforest_small_gap_filled = small_component_mask(nonforest, "lt")
+    forest = retained.Or(nonforest_small_gap_filled).rename("forest_clean")
+    return {
+        "forest": forest,
+        "forest_small_patch_removed": forest_small_patch_removed,
+        "nonforest_small_gap_filled": nonforest_small_gap_filled,
+    }
 
 
 def forest_edges(
@@ -1140,6 +1148,10 @@ def expected_product_bands(args: argparse.Namespace) -> Dict[str, List[str]]:
             bands1k.append(f"{shift}_2000_2020_{label}_m_per_year")
         qa.extend([
             f"forest_clean_2000_{label}", f"forest_clean_2020_{label}",
+            f"forest_small_patch_removed_2000_{label}",
+            f"forest_small_patch_removed_2020_{label}",
+            f"nonforest_small_gap_filled_2000_{label}",
+            f"nonforest_small_gap_filled_2020_{label}",
             f"edge_post_landform_2000_{label}", f"edge_post_landform_2020_{label}",
             f"cold_zone_{label}", f"otsu_valid_{label}",
         ])
@@ -1193,12 +1205,14 @@ def build_mountain_bundle(
 
     for canopy_threshold in normalized_canopy_thresholds(args.canopy_thresholds_m):
         label = threshold_label(canopy_threshold)
-        forest2000 = clean_forest(
-            FOREST_HEIGHT_2000, canopy_threshold, common["processing_region"], args
+        forest2000_info = clean_forest(
+            FOREST_HEIGHT_2000, canopy_threshold, common["processing_region"]
         )
-        forest2020 = clean_forest(
-            FOREST_HEIGHT_2020, canopy_threshold, common["processing_region"], args
+        forest2020_info = clean_forest(
+            FOREST_HEIGHT_2020, canopy_threshold, common["processing_region"]
         )
+        forest2000 = ee.Image(forest2000_info["forest"])
+        forest2020 = ee.Image(forest2020_info["forest"])
         edge2000 = forest_edges(forest2000, domain, args)
         edge2020 = forest_edges(forest2020, domain, args)
         post_landform2000 = edge2000.And(nonvalley).selfMask()
@@ -1223,6 +1237,18 @@ def build_mountain_bundle(
         qa = (
             qa.addBands(forest2000.rename(f"forest_clean_2000_{label}"))
             .addBands(forest2020.rename(f"forest_clean_2020_{label}"))
+            .addBands(ee.Image(forest2000_info["forest_small_patch_removed"]).rename(
+                f"forest_small_patch_removed_2000_{label}"
+            ))
+            .addBands(ee.Image(forest2020_info["forest_small_patch_removed"]).rename(
+                f"forest_small_patch_removed_2020_{label}"
+            ))
+            .addBands(ee.Image(forest2000_info["nonforest_small_gap_filled"]).rename(
+                f"nonforest_small_gap_filled_2000_{label}"
+            ))
+            .addBands(ee.Image(forest2020_info["nonforest_small_gap_filled"]).rename(
+                f"nonforest_small_gap_filled_2020_{label}"
+            ))
             .addBands(post_landform2000.unmask(0).rename(
                 f"edge_post_landform_2000_{label}"
             ))
@@ -1293,9 +1319,15 @@ def build_mountain_bundle(
             f"{value:g}" for value in normalized_canopy_thresholds(args.canopy_thresholds_m)
         ),
         "edge_method": args.edge_method,
-        "minimum_forest_patch_ha": args.minimum_forest_patch_ha,
-        "hole_max_dimension_pixels": args.hole_max_dimension_pixels,
-        "hole_filling_assumption_accepted": args.accept_hole_filling_assumption,
+        "workflow": "per-gmba-v4-jrc-mmu",
+        "mmu_area_ha": JRC_MMU_HA,
+        "mmu_connectivity": JRC_MMU_CONNECTIVITY,
+        "mmu_area_measure": "sum_pixelArea_m2_per_connected_component",
+        "mmu_operation_order": "remove_small_forest_then_fill_small_nonforest_gaps",
+        "connected_component_max_size_pixels": CONNECTED_COMPONENT_MAX_SIZE,
+        "connected_component_max_size_role": "compute_protection_only",
+        "jrc_alignment": "binary_mmu_postprocessing_only",
+        "forest_definition": "GLAD_canopy_height_threshold",
         "window_size_m": args.window_radius_m * 2,
         "t_test_variance": args.t_test_variance,
         "t_test_alternative": args.t_test_alternative,
@@ -1641,17 +1673,13 @@ def validate_args(parser: argparse.ArgumentParser, args: argparse.Namespace) -> 
         parser.error("--mountain-offset requires --max-mountains")
     if args.expected_mountain_count < 1 or args.expected_region_count < 1:
         parser.error("expected counts must be positive")
-    if args.minimum_forest_patch_ha <= 0:
-        parser.error("--minimum-forest-patch-ha must be positive")
-    if args.hole_max_dimension_pixels < 1 or args.patch_count_cap < 1:
-        parser.error("hole/patch component limits must be positive")
-    if args.hole_border_width_m <= 0 or args.context_buffer_m <= 0:
-        parser.error("hole border and context buffer must be positive")
-    minimum_buffer = args.hole_max_dimension_pixels * 30 + args.window_radius_m
+    if args.context_buffer_m <= 0:
+        parser.error("--context-buffer-m must be positive")
+    minimum_buffer = CONNECTED_COMPONENT_MAX_SIZE * 30 + args.window_radius_m
     if args.context_buffer_m < minimum_buffer:
         parser.error(
-            f"--context-buffer-m must be at least {minimum_buffer:g} m for the "
-            "configured component and neighborhood operations"
+            f"--context-buffer-m must be at least {minimum_buffer:g} m for "
+            "connected-component boundary protection and neighborhood operations"
         )
     if args.median_radius_pixels < 0:
         parser.error("--median-radius-pixels must be non-negative")
