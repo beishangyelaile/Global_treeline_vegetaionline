@@ -6,7 +6,17 @@
 
 ### Added
 
-- 后续变化在合并前记录于此。
+- QA 波段 `forest_small_patch_removed_*` 和 `nonforest_small_gap_filled_*`。
+
+### Changed
+
+- 二值森林后处理固定为 JRC GFC2020 v2 式 0.5 ha MMU：八邻域、连通对象内 `pixelArea()` 面积求和、先删除小森林斑块再填充小非森林间隙。
+- 工作流配置标识更新为 `per-gmba-v4-jrc-mmu`，默认 run label 更新为 `mountain_v4_jrc_mmu`。
+
+### Removed
+
+- 四邻域孔隙判定、矢量边界环和无面积约束填孔实现。
+- 可调整固定 MMU 的 CLI 参数及正式导出的填孔假设确认参数。
 
 ## [0.1.0] - 2026-08-24
 
