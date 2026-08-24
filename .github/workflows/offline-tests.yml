@@ -1,0 +1,55 @@
+name: offline-tests
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  offline-tests:
+    name: offline-tests
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v6
+        with:
+          fetch-depth: 2
+
+      - name: Set up Python 3.11.9
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11.9"
+          cache: pip
+          cache-dependency-path: requirements-dev.txt
+
+      - name: Install pinned dependencies
+        run: python -m pip install --disable-pip-version-check -r requirements-dev.txt
+
+      - name: Check committed whitespace
+        run: git diff --check HEAD^ HEAD
+
+      - name: Run offline tests
+        env:
+          PYTHONDONTWRITEBYTECODE: "1"
+        run: python -m pytest -q -p no:cacheprovider
+
+      - name: Validate the offline 10-mountain plan
+        shell: bash
+        run: |
+          python gee/runs/2026821/code_region_revised_v2.py \
+            --dry-run \
+            --project test-project \
+            --prepared-mountains-asset projects/example/assets/prepared_mountains \
+            --chelsa-bio01 projects/example/assets/chelsa_bio01 \
+            --treeline30m-collection projects/example/assets/treeline30m \
+            --treeline1km-collection projects/example/assets/treeline1km \
+            --qa30m-collection projects/example/assets/qa30m \
+            --max-mountains 10 \
+            --mountain-offset 0 \
+          | python -c 'import json, sys; plan=json.load(sys.stdin); assert plan["ready"] is True; assert plan["missing_requirements"] == []; assert plan["expected_task_count"] == 30'
