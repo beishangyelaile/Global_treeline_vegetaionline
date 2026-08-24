@@ -1,0 +1,1271 @@
+{
+  "created_at": "2026-08-23T20:38:56.210388+00:00",
+  "phase": "SUBMITTED",
+  "project": "ee-wsc",
+  "authentication": {
+    "credential_type": "Credentials",
+    "valid": true,
+    "detected_project": "ee-wsc",
+    "quota_project": "ee-wsc",
+    "ee_project": "ee-wsc"
+  },
+  "resolved_plan": {
+    "mode": "export",
+    "project": "ee-wsc",
+    "prepared_mountains_asset": "projects/ee-wsc/assets/Alpine/GMBA_Basic_Sayre_selected_v3",
+    "selection": {
+      "region_ids": "all",
+      "mountain_offset": 0,
+      "max_mountains": 10,
+      "expected_full_count": 978,
+      "order": "gmba_sort_key ascending"
+    },
+    "analysis_unit": "one GMBA v2 Standard Basic feature",
+    "analysis_domain": "complete GMBA v2 Standard Basic geometry",
+    "otsu": {
+      "scope": "mountain-pooled",
+      "population": "union of 2000/2020 post-landform edge candidates",
+      "native_temperature_cells_counted_once": true,
+      "same_threshold_reused_for_both_years": true
+    },
+    "canopy_thresholds_m": [
+      3.0,
+      5.0
+    ],
+    "edge_method": "zero-crossing",
+    "products": [
+      "treeline30m",
+      "treeline1km",
+      "qa30m"
+    ],
+    "expected_task_count": 30,
+    "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+    "git_commit": "b97cecd08718d2cd9d89425ebcd73f395e89028b",
+    "ready": true,
+    "missing_requirements": [],
+    "scientific_configuration": {
+      "workflow": "per-gmba-v3",
+      "implementation_sha256": "243ab252f96dad5afd260b998e742b6094d313fc9ee796ed87bac0c40250b9bd",
+      "prepared_mountains_asset": "projects/ee-wsc/assets/Alpine/GMBA_Basic_Sayre_selected_v3",
+      "analysis_domain": "complete_GMBA_v2_Standard_Basic_geometry",
+      "chelsa_bio01": "projects/ee-wsc/assets/Alpine/CHELSA_bio01_1981-2010_V21",
+      "forest_height_2000": "projects/glad/GLCLU2020/Forest_height_2000",
+      "forest_height_2020": "projects/glad/GLCLU2020/Forest_height_2020",
+      "dem": "JAXA/ALOS/AW3D30/V4_1",
+      "landforms": "CSP/ERGo/1_0/Global/ALOS_landforms",
+      "valley_classes": [
+        41,
+        42
+      ],
+      "fine_grid": {
+        "crs": "EPSG:4326",
+        "transform": [
+          0.00025,
+          0,
+          -180,
+          0,
+          -0.00025,
+          90
+        ]
+      },
+      "climate_grid": {
+        "crs": "EPSG:4326",
+        "transform": [
+          0.008333333333333333,
+          0,
+          -180,
+          0,
+          -0.008333333333333333,
+          90
+        ]
+      },
+      "canopy_thresholds_m": [
+        3.0,
+        5.0
+      ],
+      "minimum_forest_patch_ha": 0.5,
+      "hole_max_dimension_pixels": 512,
+      "hole_border_width_m": 90,
+      "patch_count_cap": 128,
+      "median_radius_pixels": 1,
+      "edge_method": "zero-crossing",
+      "canny_threshold": 0.1,
+      "canny_sigma": 1.0,
+      "window_radius_m": 150,
+      "minimum_samples_per_group": 5,
+      "minimum_elevation_difference_m": 0.0,
+      "t_test_variance": "welch",
+      "t_test_alternative": "less",
+      "t_test_alpha": 0.05,
+      "aspect_mode": "none",
+      "aspect_half_width_deg": 45,
+      "minimum_slope_deg": 5,
+      "equator_buffer_deg": 0.1,
+      "otsu_scope": "mountain-pooled",
+      "mountain_thresholds_sha256": null,
+      "otsu_population": "union_2000_2020_post_landform_edges_at_native_bio01_cells",
+      "otsu_min_samples": 20,
+      "temperature_scale": 0.1,
+      "temperature_offset": -273.15,
+      "strict_aw3d_native_only": false,
+      "context_buffer_m": 16000,
+      "geometry_max_error_m": 1000
+    }
+  },
+  "selection": {
+    "prepared_asset_count": 978,
+    "selected_mountain_count": 10,
+    "mountain_offset": 0,
+    "max_mountains": 10,
+    "selected_region_ids": [
+      "R3_EUROPEAN_ALPS"
+    ],
+    "selected_gmba_ids": [
+      "10011",
+      "10012",
+      "10013",
+      "10014",
+      "10016",
+      "10017",
+      "10018",
+      "10053",
+      "10054",
+      "10055"
+    ]
+  },
+  "queue_projection_before_preflight": {
+    "existing_ready": 0,
+    "new_tasks": 30,
+    "projected_ready": 30,
+    "queue_safety_limit": 2900
+  },
+  "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+  "git_commit": "b97cecd08718d2cd9d89425ebcd73f395e89028b",
+  "tasks": [
+    {
+      "mountain_id": "10011",
+      "gmba_sort_key": 10011.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 1989.0972528174334,
+      "mountain_key": "gmba_10011",
+      "product": "treeline30m",
+      "description": "treeline_gmba_gmba_v3_gmba_10011_treeline30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/gmba_10011_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "K7OZWQYBFXY66Y3J3JX5YJOT",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10011",
+      "gmba_sort_key": 10011.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 1989.0972528174334,
+      "mountain_key": "gmba_10011",
+      "product": "treeline1km",
+      "description": "treeline_gmba_gmba_v3_gmba_10011_treeline1km_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/gmba_10011_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "LQ3GZK3XDMKJXACN7ZZP2IWA",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10011",
+      "gmba_sort_key": 10011.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 1989.0972528174334,
+      "mountain_key": "gmba_10011",
+      "product": "qa30m",
+      "description": "treeline_gmba_gmba_v3_gmba_10011_qa30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/gmba_10011_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_elevation_m": "mean",
+        "dem_stk": "mean",
+        "elev_delta_nonforest_minus_forest_2000_h3m_m": "mean",
+        "t_statistic_2000_h3m": "mean",
+        "forest_sample_count_2000_h3m": "mean",
+        "nonforest_sample_count_2000_h3m": "mean",
+        "elev_delta_nonforest_minus_forest_2020_h3m_m": "mean",
+        "t_statistic_2020_h3m": "mean",
+        "forest_sample_count_2020_h3m": "mean",
+        "nonforest_sample_count_2020_h3m": "mean",
+        "elev_delta_nonforest_minus_forest_2000_h5m_m": "mean",
+        "t_statistic_2000_h5m": "mean",
+        "forest_sample_count_2000_h5m": "mean",
+        "nonforest_sample_count_2000_h5m": "mean",
+        "elev_delta_nonforest_minus_forest_2020_h5m_m": "mean",
+        "t_statistic_2020_h5m": "mean",
+        "forest_sample_count_2020_h5m": "mean",
+        "nonforest_sample_count_2020_h5m": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "PXYFDDCAVIA5PZICW3TVFBIU",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10012",
+      "gmba_sort_key": 10012.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 699.7141954953122,
+      "mountain_key": "gmba_10012",
+      "product": "treeline30m",
+      "description": "treeline_gmba_gmba_v3_gmba_10012_treeline30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/gmba_10012_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "NRCNTR66AI6G3XNNZGAH4HQR",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10012",
+      "gmba_sort_key": 10012.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 699.7141954953122,
+      "mountain_key": "gmba_10012",
+      "product": "treeline1km",
+      "description": "treeline_gmba_gmba_v3_gmba_10012_treeline1km_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/gmba_10012_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "52K7G4ZR3HY2JJHXVBRRAAHL",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10012",
+      "gmba_sort_key": 10012.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 699.7141954953122,
+      "mountain_key": "gmba_10012",
+      "product": "qa30m",
+      "description": "treeline_gmba_gmba_v3_gmba_10012_qa30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/gmba_10012_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_elevation_m": "mean",
+        "dem_stk": "mean",
+        "elev_delta_nonforest_minus_forest_2000_h3m_m": "mean",
+        "t_statistic_2000_h3m": "mean",
+        "forest_sample_count_2000_h3m": "mean",
+        "nonforest_sample_count_2000_h3m": "mean",
+        "elev_delta_nonforest_minus_forest_2020_h3m_m": "mean",
+        "t_statistic_2020_h3m": "mean",
+        "forest_sample_count_2020_h3m": "mean",
+        "nonforest_sample_count_2020_h3m": "mean",
+        "elev_delta_nonforest_minus_forest_2000_h5m_m": "mean",
+        "t_statistic_2000_h5m": "mean",
+        "forest_sample_count_2000_h5m": "mean",
+        "nonforest_sample_count_2000_h5m": "mean",
+        "elev_delta_nonforest_minus_forest_2020_h5m_m": "mean",
+        "t_statistic_2020_h5m": "mean",
+        "forest_sample_count_2020_h5m": "mean",
+        "nonforest_sample_count_2020_h5m": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "3ZPYZR5WP7W2JI75TAEHIORR",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10013",
+      "gmba_sort_key": 10013.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 1120.396907183946,
+      "mountain_key": "gmba_10013",
+      "product": "treeline30m",
+      "description": "treeline_gmba_gmba_v3_gmba_10013_treeline30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/gmba_10013_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "AGFYQTHHMWZ3PC6VG2TDRJXW",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10013",
+      "gmba_sort_key": 10013.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 1120.396907183946,
+      "mountain_key": "gmba_10013",
+      "product": "treeline1km",
+      "description": "treeline_gmba_gmba_v3_gmba_10013_treeline1km_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/gmba_10013_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "FSTDDZJMEV4YMBQML2EOYLFL",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10013",
+      "gmba_sort_key": 10013.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 1120.396907183946,
+      "mountain_key": "gmba_10013",
+      "product": "qa30m",
+      "description": "treeline_gmba_gmba_v3_gmba_10013_qa30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/gmba_10013_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_elevation_m": "mean",
+        "dem_stk": "mean",
+        "elev_delta_nonforest_minus_forest_2000_h3m_m": "mean",
+        "t_statistic_2000_h3m": "mean",
+        "forest_sample_count_2000_h3m": "mean",
+        "nonforest_sample_count_2000_h3m": "mean",
+        "elev_delta_nonforest_minus_forest_2020_h3m_m": "mean",
+        "t_statistic_2020_h3m": "mean",
+        "forest_sample_count_2020_h3m": "mean",
+        "nonforest_sample_count_2020_h3m": "mean",
+        "elev_delta_nonforest_minus_forest_2000_h5m_m": "mean",
+        "t_statistic_2000_h5m": "mean",
+        "forest_sample_count_2000_h5m": "mean",
+        "nonforest_sample_count_2000_h5m": "mean",
+        "elev_delta_nonforest_minus_forest_2020_h5m_m": "mean",
+        "t_statistic_2020_h5m": "mean",
+        "forest_sample_count_2020_h5m": "mean",
+        "nonforest_sample_count_2020_h5m": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "HFXCGJXPXQAUEKQSSKNC7X24",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10014",
+      "gmba_sort_key": 10014.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 2224.8022244674166,
+      "mountain_key": "gmba_10014",
+      "product": "treeline30m",
+      "description": "treeline_gmba_gmba_v3_gmba_10014_treeline30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/gmba_10014_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "QZY2F575RBBPQ72QL4PLNE34",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10014",
+      "gmba_sort_key": 10014.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 2224.8022244674166,
+      "mountain_key": "gmba_10014",
+      "product": "treeline1km",
+      "description": "treeline_gmba_gmba_v3_gmba_10014_treeline1km_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/gmba_10014_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "GJSAUFXR2HCUWZYSABLDAFJI",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10014",
+      "gmba_sort_key": 10014.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 2224.8022244674166,
+      "mountain_key": "gmba_10014",
+      "product": "qa30m",
+      "description": "treeline_gmba_gmba_v3_gmba_10014_qa30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/gmba_10014_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_elevation_m": "mean",
+        "dem_stk": "mean",
+        "elev_delta_nonforest_minus_forest_2000_h3m_m": "mean",
+        "t_statistic_2000_h3m": "mean",
+        "forest_sample_count_2000_h3m": "mean",
+        "nonforest_sample_count_2000_h3m": "mean",
+        "elev_delta_nonforest_minus_forest_2020_h3m_m": "mean",
+        "t_statistic_2020_h3m": "mean",
+        "forest_sample_count_2020_h3m": "mean",
+        "nonforest_sample_count_2020_h3m": "mean",
+        "elev_delta_nonforest_minus_forest_2000_h5m_m": "mean",
+        "t_statistic_2000_h5m": "mean",
+        "forest_sample_count_2000_h5m": "mean",
+        "nonforest_sample_count_2000_h5m": "mean",
+        "elev_delta_nonforest_minus_forest_2020_h5m_m": "mean",
+        "t_statistic_2020_h5m": "mean",
+        "forest_sample_count_2020_h5m": "mean",
+        "nonforest_sample_count_2020_h5m": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "EOKG4AWIOZLZHNYNNOTG45JP",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10016",
+      "gmba_sort_key": 10016.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 1850.560539190962,
+      "mountain_key": "gmba_10016",
+      "product": "treeline30m",
+      "description": "treeline_gmba_gmba_v3_gmba_10016_treeline30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/gmba_10016_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "H3IYTK6PLG2NZHCSCDLCJJJX",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10016",
+      "gmba_sort_key": 10016.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 1850.560539190962,
+      "mountain_key": "gmba_10016",
+      "product": "treeline1km",
+      "description": "treeline_gmba_gmba_v3_gmba_10016_treeline1km_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/gmba_10016_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "QCMI6FD2UJ5EH6JHAPWQU3TJ",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10016",
+      "gmba_sort_key": 10016.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 1850.560539190962,
+      "mountain_key": "gmba_10016",
+      "product": "qa30m",
+      "description": "treeline_gmba_gmba_v3_gmba_10016_qa30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/gmba_10016_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_elevation_m": "mean",
+        "dem_stk": "mean",
+        "elev_delta_nonforest_minus_forest_2000_h3m_m": "mean",
+        "t_statistic_2000_h3m": "mean",
+        "forest_sample_count_2000_h3m": "mean",
+        "nonforest_sample_count_2000_h3m": "mean",
+        "elev_delta_nonforest_minus_forest_2020_h3m_m": "mean",
+        "t_statistic_2020_h3m": "mean",
+        "forest_sample_count_2020_h3m": "mean",
+        "nonforest_sample_count_2020_h3m": "mean",
+        "elev_delta_nonforest_minus_forest_2000_h5m_m": "mean",
+        "t_statistic_2000_h5m": "mean",
+        "forest_sample_count_2000_h5m": "mean",
+        "nonforest_sample_count_2000_h5m": "mean",
+        "elev_delta_nonforest_minus_forest_2020_h5m_m": "mean",
+        "t_statistic_2020_h5m": "mean",
+        "forest_sample_count_2020_h5m": "mean",
+        "nonforest_sample_count_2020_h5m": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "45RKKMQCJX26DGUBVGD2ZGJB",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10017",
+      "gmba_sort_key": 10017.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 563.2912706497398,
+      "mountain_key": "gmba_10017",
+      "product": "treeline30m",
+      "description": "treeline_gmba_gmba_v3_gmba_10017_treeline30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/gmba_10017_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "OQOWYEYD3TQF62QYA6S77KOD",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10017",
+      "gmba_sort_key": 10017.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 563.2912706497398,
+      "mountain_key": "gmba_10017",
+      "product": "treeline1km",
+      "description": "treeline_gmba_gmba_v3_gmba_10017_treeline1km_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/gmba_10017_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "POZJZ3DHE52KYYSOED6ZZOZL",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10017",
+      "gmba_sort_key": 10017.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 563.2912706497398,
+      "mountain_key": "gmba_10017",
+      "product": "qa30m",
+      "description": "treeline_gmba_gmba_v3_gmba_10017_qa30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/gmba_10017_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_elevation_m": "mean",
+        "dem_stk": "mean",
+        "elev_delta_nonforest_minus_forest_2000_h3m_m": "mean",
+        "t_statistic_2000_h3m": "mean",
+        "forest_sample_count_2000_h3m": "mean",
+        "nonforest_sample_count_2000_h3m": "mean",
+        "elev_delta_nonforest_minus_forest_2020_h3m_m": "mean",
+        "t_statistic_2020_h3m": "mean",
+        "forest_sample_count_2020_h3m": "mean",
+        "nonforest_sample_count_2020_h3m": "mean",
+        "elev_delta_nonforest_minus_forest_2000_h5m_m": "mean",
+        "t_statistic_2000_h5m": "mean",
+        "forest_sample_count_2000_h5m": "mean",
+        "nonforest_sample_count_2000_h5m": "mean",
+        "elev_delta_nonforest_minus_forest_2020_h5m_m": "mean",
+        "t_statistic_2020_h5m": "mean",
+        "forest_sample_count_2020_h5m": "mean",
+        "nonforest_sample_count_2020_h5m": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "DCIO6LQOJD2E2VZGQOZIHJ4O",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10018",
+      "gmba_sort_key": 10018.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 921.9216486300401,
+      "mountain_key": "gmba_10018",
+      "product": "treeline30m",
+      "description": "treeline_gmba_gmba_v3_gmba_10018_treeline30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/gmba_10018_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "BRPOS4TQIMY7WTGF4MWFJ6HP",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10018",
+      "gmba_sort_key": 10018.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 921.9216486300401,
+      "mountain_key": "gmba_10018",
+      "product": "treeline1km",
+      "description": "treeline_gmba_gmba_v3_gmba_10018_treeline1km_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/gmba_10018_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "ODC4BO2FIOQU4XO7IKNBWWCQ",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10018",
+      "gmba_sort_key": 10018.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 921.9216486300401,
+      "mountain_key": "gmba_10018",
+      "product": "qa30m",
+      "description": "treeline_gmba_gmba_v3_gmba_10018_qa30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/gmba_10018_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_elevation_m": "mean",
+        "dem_stk": "mean",
+        "elev_delta_nonforest_minus_forest_2000_h3m_m": "mean",
+        "t_statistic_2000_h3m": "mean",
+        "forest_sample_count_2000_h3m": "mean",
+        "nonforest_sample_count_2000_h3m": "mean",
+        "elev_delta_nonforest_minus_forest_2020_h3m_m": "mean",
+        "t_statistic_2020_h3m": "mean",
+        "forest_sample_count_2020_h3m": "mean",
+        "nonforest_sample_count_2020_h3m": "mean",
+        "elev_delta_nonforest_minus_forest_2000_h5m_m": "mean",
+        "t_statistic_2000_h5m": "mean",
+        "forest_sample_count_2000_h5m": "mean",
+        "nonforest_sample_count_2000_h5m": "mean",
+        "elev_delta_nonforest_minus_forest_2020_h5m_m": "mean",
+        "t_statistic_2020_h5m": "mean",
+        "forest_sample_count_2020_h5m": "mean",
+        "nonforest_sample_count_2020_h5m": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "4EKEOBKLJDHOLFDSA2GA35W4",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10053",
+      "gmba_sort_key": 10053.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 750.5011439628373,
+      "mountain_key": "gmba_10053",
+      "product": "treeline30m",
+      "description": "treeline_gmba_gmba_v3_gmba_10053_treeline30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/gmba_10053_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "NUEKNKITZKT5SWFA37KKJ6BP",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10053",
+      "gmba_sort_key": 10053.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 750.5011439628373,
+      "mountain_key": "gmba_10053",
+      "product": "treeline1km",
+      "description": "treeline_gmba_gmba_v3_gmba_10053_treeline1km_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/gmba_10053_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "OKTGUVHRTC3GUAIBXNUZDYKD",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10053",
+      "gmba_sort_key": 10053.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 750.5011439628373,
+      "mountain_key": "gmba_10053",
+      "product": "qa30m",
+      "description": "treeline_gmba_gmba_v3_gmba_10053_qa30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/gmba_10053_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_elevation_m": "mean",
+        "dem_stk": "mean",
+        "elev_delta_nonforest_minus_forest_2000_h3m_m": "mean",
+        "t_statistic_2000_h3m": "mean",
+        "forest_sample_count_2000_h3m": "mean",
+        "nonforest_sample_count_2000_h3m": "mean",
+        "elev_delta_nonforest_minus_forest_2020_h3m_m": "mean",
+        "t_statistic_2020_h3m": "mean",
+        "forest_sample_count_2020_h3m": "mean",
+        "nonforest_sample_count_2020_h3m": "mean",
+        "elev_delta_nonforest_minus_forest_2000_h5m_m": "mean",
+        "t_statistic_2000_h5m": "mean",
+        "forest_sample_count_2000_h5m": "mean",
+        "nonforest_sample_count_2000_h5m": "mean",
+        "elev_delta_nonforest_minus_forest_2020_h5m_m": "mean",
+        "t_statistic_2020_h5m": "mean",
+        "forest_sample_count_2020_h5m": "mean",
+        "nonforest_sample_count_2020_h5m": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "NPJPL5ISTSBGTSEA454VT7VD",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10054",
+      "gmba_sort_key": 10054.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 896.0352891074449,
+      "mountain_key": "gmba_10054",
+      "product": "treeline30m",
+      "description": "treeline_gmba_gmba_v3_gmba_10054_treeline30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/gmba_10054_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "2I6SW34AWU24K2NTIDQCCYSO",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10054",
+      "gmba_sort_key": 10054.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 896.0352891074449,
+      "mountain_key": "gmba_10054",
+      "product": "treeline1km",
+      "description": "treeline_gmba_gmba_v3_gmba_10054_treeline1km_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/gmba_10054_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "Y25L7GXVAVUAGIU5D4HZNICT",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10054",
+      "gmba_sort_key": 10054.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 896.0352891074449,
+      "mountain_key": "gmba_10054",
+      "product": "qa30m",
+      "description": "treeline_gmba_gmba_v3_gmba_10054_qa30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/gmba_10054_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_elevation_m": "mean",
+        "dem_stk": "mean",
+        "elev_delta_nonforest_minus_forest_2000_h3m_m": "mean",
+        "t_statistic_2000_h3m": "mean",
+        "forest_sample_count_2000_h3m": "mean",
+        "nonforest_sample_count_2000_h3m": "mean",
+        "elev_delta_nonforest_minus_forest_2020_h3m_m": "mean",
+        "t_statistic_2020_h3m": "mean",
+        "forest_sample_count_2020_h3m": "mean",
+        "nonforest_sample_count_2020_h3m": "mean",
+        "elev_delta_nonforest_minus_forest_2000_h5m_m": "mean",
+        "t_statistic_2000_h5m": "mean",
+        "forest_sample_count_2000_h5m": "mean",
+        "nonforest_sample_count_2000_h5m": "mean",
+        "elev_delta_nonforest_minus_forest_2020_h5m_m": "mean",
+        "t_statistic_2020_h5m": "mean",
+        "forest_sample_count_2020_h5m": "mean",
+        "nonforest_sample_count_2020_h5m": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "WMDAAFJM63OD4X554YXMJF5N",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10055",
+      "gmba_sort_key": 10055.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 1434.2936252770521,
+      "mountain_key": "gmba_10055",
+      "product": "treeline30m",
+      "description": "treeline_gmba_gmba_v3_gmba_10055_treeline30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/gmba_10055_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "P3L63JGORI5HYNFA6QQ2OWTA",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10055",
+      "gmba_sort_key": 10055.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 1434.2936252770521,
+      "mountain_key": "gmba_10055",
+      "product": "treeline1km",
+      "description": "treeline_gmba_gmba_v3_gmba_10055_treeline1km_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/gmba_10055_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.008333333333333333,
+        0,
+        -180,
+        0,
+        -0.008333333333333333,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "Z6RNPPNMBQZKBZWCZS7ZWKCL",
+      "state": "SUBMITTED"
+    },
+    {
+      "mountain_id": "10055",
+      "gmba_sort_key": 10055.0,
+      "region_id": "R3_EUROPEAN_ALPS",
+      "high_mountain_area_km2": 1434.2936252770521,
+      "mountain_key": "gmba_10055",
+      "product": "qa30m",
+      "description": "treeline_gmba_gmba_v3_gmba_10055_qa30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/gmba_10055_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "crs": "EPSG:4326",
+      "crs_transform": [
+        0.00025,
+        0,
+        -180,
+        0,
+        -0.00025,
+        90
+      ],
+      "pyramiding_policy": {
+        ".default": "mode",
+        "dem_elevation_m": "mean",
+        "dem_stk": "mean",
+        "elev_delta_nonforest_minus_forest_2000_h3m_m": "mean",
+        "t_statistic_2000_h3m": "mean",
+        "forest_sample_count_2000_h3m": "mean",
+        "nonforest_sample_count_2000_h3m": "mean",
+        "elev_delta_nonforest_minus_forest_2020_h3m_m": "mean",
+        "t_statistic_2020_h3m": "mean",
+        "forest_sample_count_2020_h3m": "mean",
+        "nonforest_sample_count_2020_h3m": "mean",
+        "elev_delta_nonforest_minus_forest_2000_h5m_m": "mean",
+        "t_statistic_2000_h5m": "mean",
+        "forest_sample_count_2000_h5m": "mean",
+        "nonforest_sample_count_2000_h5m": "mean",
+        "elev_delta_nonforest_minus_forest_2020_h5m_m": "mean",
+        "t_statistic_2020_h5m": "mean",
+        "forest_sample_count_2020_h5m": "mean",
+        "nonforest_sample_count_2020_h5m": "mean"
+      },
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303",
+      "task_id": "T2VXWPTHIIULLX33ZWVO72YA",
+      "state": "SUBMITTED"
+    }
+  ],
+  "queue_projection_before_submit": {
+    "existing_ready": 0,
+    "new_tasks": 30,
+    "projected_ready": 30,
+    "queue_safety_limit": 2900
+  },
+  "last_monitor": {
+    "timestamp_utc": "2026-08-23T21:31:03.293183+00:00",
+    "recovered_task_ids": 0,
+    "counts": {
+      "COMPLETED": 30
+    },
+    "tasks": [
+      {
+        "task_id": "K7OZWQYBFXY66Y3J3JX5YJOT",
+        "description": "treeline_gmba_gmba_v3_gmba_10011_treeline30m_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "LQ3GZK3XDMKJXACN7ZZP2IWA",
+        "description": "treeline_gmba_gmba_v3_gmba_10011_treeline1km_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "PXYFDDCAVIA5PZICW3TVFBIU",
+        "description": "treeline_gmba_gmba_v3_gmba_10011_qa30m_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "NRCNTR66AI6G3XNNZGAH4HQR",
+        "description": "treeline_gmba_gmba_v3_gmba_10012_treeline30m_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "52K7G4ZR3HY2JJHXVBRRAAHL",
+        "description": "treeline_gmba_gmba_v3_gmba_10012_treeline1km_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "3ZPYZR5WP7W2JI75TAEHIORR",
+        "description": "treeline_gmba_gmba_v3_gmba_10012_qa30m_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "AGFYQTHHMWZ3PC6VG2TDRJXW",
+        "description": "treeline_gmba_gmba_v3_gmba_10013_treeline30m_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "FSTDDZJMEV4YMBQML2EOYLFL",
+        "description": "treeline_gmba_gmba_v3_gmba_10013_treeline1km_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "HFXCGJXPXQAUEKQSSKNC7X24",
+        "description": "treeline_gmba_gmba_v3_gmba_10013_qa30m_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "QZY2F575RBBPQ72QL4PLNE34",
+        "description": "treeline_gmba_gmba_v3_gmba_10014_treeline30m_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "GJSAUFXR2HCUWZYSABLDAFJI",
+        "description": "treeline_gmba_gmba_v3_gmba_10014_treeline1km_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "EOKG4AWIOZLZHNYNNOTG45JP",
+        "description": "treeline_gmba_gmba_v3_gmba_10014_qa30m_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "H3IYTK6PLG2NZHCSCDLCJJJX",
+        "description": "treeline_gmba_gmba_v3_gmba_10016_treeline30m_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "QCMI6FD2UJ5EH6JHAPWQU3TJ",
+        "description": "treeline_gmba_gmba_v3_gmba_10016_treeline1km_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "45RKKMQCJX26DGUBVGD2ZGJB",
+        "description": "treeline_gmba_gmba_v3_gmba_10016_qa30m_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "OQOWYEYD3TQF62QYA6S77KOD",
+        "description": "treeline_gmba_gmba_v3_gmba_10017_treeline30m_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "POZJZ3DHE52KYYSOED6ZZOZL",
+        "description": "treeline_gmba_gmba_v3_gmba_10017_treeline1km_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "DCIO6LQOJD2E2VZGQOZIHJ4O",
+        "description": "treeline_gmba_gmba_v3_gmba_10017_qa30m_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "BRPOS4TQIMY7WTGF4MWFJ6HP",
+        "description": "treeline_gmba_gmba_v3_gmba_10018_treeline30m_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "ODC4BO2FIOQU4XO7IKNBWWCQ",
+        "description": "treeline_gmba_gmba_v3_gmba_10018_treeline1km_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "4EKEOBKLJDHOLFDSA2GA35W4",
+        "description": "treeline_gmba_gmba_v3_gmba_10018_qa30m_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "NUEKNKITZKT5SWFA37KKJ6BP",
+        "description": "treeline_gmba_gmba_v3_gmba_10053_treeline30m_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "OKTGUVHRTC3GUAIBXNUZDYKD",
+        "description": "treeline_gmba_gmba_v3_gmba_10053_treeline1km_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "NPJPL5ISTSBGTSEA454VT7VD",
+        "description": "treeline_gmba_gmba_v3_gmba_10053_qa30m_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "2I6SW34AWU24K2NTIDQCCYSO",
+        "description": "treeline_gmba_gmba_v3_gmba_10054_treeline30m_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "Y25L7GXVAVUAGIU5D4HZNICT",
+        "description": "treeline_gmba_gmba_v3_gmba_10054_treeline1km_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "WMDAAFJM63OD4X554YXMJF5N",
+        "description": "treeline_gmba_gmba_v3_gmba_10054_qa30m_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "P3L63JGORI5HYNFA6QQ2OWTA",
+        "description": "treeline_gmba_gmba_v3_gmba_10055_treeline30m_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "Z6RNPPNMBQZKBZWCZS7ZWKCL",
+        "description": "treeline_gmba_gmba_v3_gmba_10055_treeline1km_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      },
+      {
+        "task_id": "T2VXWPTHIIULLX33ZWVO72YA",
+        "description": "treeline_gmba_gmba_v3_gmba_10055_qa30m_1656e99394",
+        "state": "COMPLETED",
+        "error_message": null
+      }
+    ]
+  }
+}

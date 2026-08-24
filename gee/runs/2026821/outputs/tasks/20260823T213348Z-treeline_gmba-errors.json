@@ -1,0 +1,155 @@
+{
+  "queried_at_utc": "2026-08-24T01:00:38.564601+00:00",
+  "registry": "D:\\实验复现\\Globaltreeline\\gee\\runs\\2026821\\outputs\\tasks\\20260823T213348Z-treeline_gmba.json",
+  "summary": {
+    "COMPLETED": 78,
+    "FAILED": 12
+  },
+  "error_count": 12,
+  "errors": [
+    {
+      "task_id": "PLR76VGXED4RY3QPWICRG5NB",
+      "mountain_id": "11237",
+      "mountain_key": "gmba_11237",
+      "region_id": "R7_ANDES",
+      "product": "treeline30m",
+      "state": "FAILED",
+      "error_message": "Object too large (122708960 bytes).",
+      "description": "treeline_gmba_gmba_v3_gmba_11237_treeline30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/gmba_11237_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303"
+    },
+    {
+      "task_id": "3XGECAIVNKPI4JQDNXD6VB6J",
+      "mountain_id": "11237",
+      "mountain_key": "gmba_11237",
+      "region_id": "R7_ANDES",
+      "product": "treeline1km",
+      "state": "FAILED",
+      "error_message": "Object too large (122708960 bytes).",
+      "description": "treeline_gmba_gmba_v3_gmba_11237_treeline1km_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/gmba_11237_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303"
+    },
+    {
+      "task_id": "WFUO4QUZGZOMOSUSOW3VBRPK",
+      "mountain_id": "11237",
+      "mountain_key": "gmba_11237",
+      "region_id": "R7_ANDES",
+      "product": "qa30m",
+      "state": "FAILED",
+      "error_message": "Object too large (122708960 bytes).",
+      "description": "treeline_gmba_gmba_v3_gmba_11237_qa30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/gmba_11237_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303"
+    },
+    {
+      "task_id": "AMEMRFACUBWJMKHPAPVTA53R",
+      "mountain_id": "11247",
+      "mountain_key": "gmba_11247",
+      "region_id": "R7_ANDES",
+      "product": "treeline30m",
+      "state": "FAILED",
+      "error_message": "Object too large (125210848 bytes).",
+      "description": "treeline_gmba_gmba_v3_gmba_11247_treeline30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/gmba_11247_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303"
+    },
+    {
+      "task_id": "6AL545FXBBHPJYAGVH7A7YSX",
+      "mountain_id": "11247",
+      "mountain_key": "gmba_11247",
+      "region_id": "R7_ANDES",
+      "product": "treeline1km",
+      "state": "FAILED",
+      "error_message": "Object too large (125210848 bytes).",
+      "description": "treeline_gmba_gmba_v3_gmba_11247_treeline1km_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/gmba_11247_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303"
+    },
+    {
+      "task_id": "6U72XUQE4LXNBX6DDJIFY24F",
+      "mountain_id": "11247",
+      "mountain_key": "gmba_11247",
+      "region_id": "R7_ANDES",
+      "product": "qa30m",
+      "state": "FAILED",
+      "error_message": "Object too large (125210848 bytes).",
+      "description": "treeline_gmba_gmba_v3_gmba_11247_qa30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/gmba_11247_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303"
+    },
+    {
+      "task_id": "J6OTEYIYWGH5REWJUTMKFHD4",
+      "mountain_id": "11255",
+      "mountain_key": "gmba_11255",
+      "region_id": "R7_ANDES",
+      "product": "treeline30m",
+      "state": "FAILED",
+      "error_message": "Object too large (135451648 bytes).",
+      "description": "treeline_gmba_gmba_v3_gmba_11255_treeline30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/gmba_11255_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303"
+    },
+    {
+      "task_id": "M5532FJEOPSHHB3B2DF2772F",
+      "mountain_id": "11255",
+      "mountain_key": "gmba_11255",
+      "region_id": "R7_ANDES",
+      "product": "treeline1km",
+      "state": "FAILED",
+      "error_message": "Object too large (135451648 bytes).",
+      "description": "treeline_gmba_gmba_v3_gmba_11255_treeline1km_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/gmba_11255_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303"
+    },
+    {
+      "task_id": "P7LJQ3H3YKIGEIHWCWVQWTYU",
+      "mountain_id": "11255",
+      "mountain_key": "gmba_11255",
+      "region_id": "R7_ANDES",
+      "product": "qa30m",
+      "state": "FAILED",
+      "error_message": "Object too large (135451648 bytes).",
+      "description": "treeline_gmba_gmba_v3_gmba_11255_qa30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/gmba_11255_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303"
+    },
+    {
+      "task_id": "UPQTOOGMWURYS6D7PZXBDAQF",
+      "mountain_id": "11259",
+      "mountain_key": "gmba_11259",
+      "region_id": "R7_ANDES",
+      "product": "treeline30m",
+      "state": "FAILED",
+      "error_message": "Object too large (195758760 bytes).",
+      "description": "treeline_gmba_gmba_v3_gmba_11259_treeline30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_30m_Collection/gmba_11259_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303"
+    },
+    {
+      "task_id": "UCKKX3ZQGHDGBIGUOBVMAKMK",
+      "mountain_id": "11259",
+      "mountain_key": "gmba_11259",
+      "region_id": "R7_ANDES",
+      "product": "treeline1km",
+      "state": "FAILED",
+      "error_message": "Object too large (195735824 bytes).",
+      "description": "treeline_gmba_gmba_v3_gmba_11259_treeline1km_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_1km_Collection/gmba_11259_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303"
+    },
+    {
+      "task_id": "STDGQZCUXXO6LMFBOQSJ5TIR",
+      "mountain_id": "11259",
+      "mountain_key": "gmba_11259",
+      "region_id": "R7_ANDES",
+      "product": "qa30m",
+      "state": "FAILED",
+      "error_message": "Object too large (195758760 bytes).",
+      "description": "treeline_gmba_gmba_v3_gmba_11259_qa30m_1656e99394",
+      "destination": "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection/gmba_11259_zero-crossing_none_h3m_h5m_gmba_v3_1656e99394",
+      "configuration_hash": "1656e993948e1200b1a794b08dc749424e748d4e4898d44092cc68ddca9ee303"
+    }
+  ]
+}

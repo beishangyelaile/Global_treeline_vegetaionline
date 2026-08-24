@@ -1,0 +1,43 @@
+{
+  "created_at": "2026-08-23T14:20:45.414434+00:00",
+  "phase": "SUBMITTED",
+  "mode": "prepare-mountains",
+  "authentication": {
+    "credential_type": "Credentials",
+    "valid": true,
+    "detected_project": "ee-wsc",
+    "quota_project": "ee-wsc",
+    "ee_project": "ee-wsc"
+  },
+  "source_gmba": "projects/ee-remote/assets/Alpine/GMBA_v2",
+  "source_manifest": "projects/ee-wsc/assets/Alpine/GMBA_8regions_Sayre31_32_manifest",
+  "source_manifest_count": 978,
+  "selected_mountain_count": 978,
+  "distinct_gmba_id_count": 978,
+  "region_count": 8,
+  "destination": "projects/ee-wsc/assets/Alpine/GMBA_Basic_Sayre_selected_v3",
+  "geometry_note": "Original non-overlapping GMBA Basic geometries are preserved and used in full as the processing domain. Sayre is selection-only.",
+  "tasks": [
+    {
+      "description": "treeline_gmba_prepare_mountains",
+      "task_id": "7T46MDQIVHCQK7ZYFI6PKVEY",
+      "state": "SUBMITTED",
+      "destination": "projects/ee-wsc/assets/Alpine/GMBA_Basic_Sayre_selected_v3"
+    }
+  ],
+  "last_monitor": {
+    "timestamp_utc": "2026-08-23T16:59:33.541674+00:00",
+    "recovered_task_ids": 0,
+    "counts": {
+      "COMPLETED": 1
+    },
+    "tasks": [
+      {
+        "task_id": "7T46MDQIVHCQK7ZYFI6PKVEY",
+        "description": "treeline_gmba_prepare_mountains",
+        "state": "COMPLETED",
+        "error_message": null
+      }
+    ]
+  }
+}
