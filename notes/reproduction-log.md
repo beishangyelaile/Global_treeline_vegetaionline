@@ -1,5 +1,14 @@
 # Reproduction Log
 
+## Current maintained implementation (2026-08-24)
+
+- Sole supported entry point: `gee/runs/2026821/code_region_revised_v2.py`.
+- Offline regression suite: `tests/test_code_region_revised_v2.py`.
+- Current method and run documentation: `gee/runs/2026821/METHOD_GMBA_REVISED.md` and `gee/runs/2026821/RUN_REGION.md`.
+- Earlier tracer, JavaScript, region-union and 2-degree-shard source files were removed from the working tree after their history had been preserved in Git.
+- Generated task registries, console reports, HTML maps and the validation package were moved outside the source repository to `D:\实验复现\Globaltreeline_artifacts\2026821`.
+- No Earth Engine task or Asset was changed during this repository cleanup.
+
 ## Paper
 
 - Source: E:\论文+模拟\Zetero数据库\llm-for-zotero-mineru\1892
