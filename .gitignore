@@ -19,4 +19,6 @@ credentials*.json
 gee/runs/*/outputs/
 gee/runs/*/*_console*.json
 gee/runs/*/*_map*.html
+gee/runs/*/*_report.json
+gee/runs/*/*_manifest.json
 tests/treeline_validation_package.zip

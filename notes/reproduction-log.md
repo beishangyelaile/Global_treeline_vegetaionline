@@ -1,9 +1,24 @@
 # Reproduction Log
 
+## 2026-08-24 two-stage forest/treeline architecture
+
+- Added `gee/runs/2026824/code_step1_jrc_forest_tiles.py` and `code_step2_gmba_treeline.py`; the 2026821 v2 script remains historical/compatibility code.
+- Step 1 now builds globally continuous GLAD binary forest graphs before any GMBA operation. It uses strict 3/5 m thresholds, preserves the source mask, runs two eight-neighbour counts with `maxSize=50`, fills non-forest components `<=5000 m²`, then retains forest components `>=5000 m²`.
+- The method follows the JRC sequence but deliberately changes the public-code `maxSize` from 500 to 50 and does not reproduce the JRC forest land-use definition.
+- GMBA Basic only selects intersecting 10-degree tiles. The default -60 to 80 degree range is diagnosed rather than described as global; the check expands the manifest to -90 to 90 when target mountains or valid forest would be omitted.
+- Step 2 only reads `Global_tree_3m` and `Global_tree_5m`, mosaics before median filtering/Zero Crossing, and then restricts candidates and 300 m local samples to each selected complete GMBA Basic geometry.
+- Step 2 verifies paired tile IDs, both year bands, non-empty IMAGE Assets, max size 50, one Step 1 configuration hash, the fixed grid, and the tiles required by the selected mountains before creating export configurations.
+- The analysis TABLE is `projects/ee-wsc/assets/Alpine/GMBA_Sayre`. It contains 3,115 unique Basic units selected by `hm_fraction >=0.50` and `tree_fraction <=0.90`; the latter uses ESA WorldCover 10 m 2021 `Map=10` tree cover.
+- Read-only validation found no null or threshold-violating rows. The first geometry area matches full `gmba_area_km2`, not `hm_area_km2`, so the formal domain is the selected complete GMBA Basic geometry rather than a clipped Sayre intersection.
+- Step 2 derives `gmba_id_text` and `gmba_sort_key` from `GMBA_V2_ID`, re-applies both fixed filters, and records `hm_fraction`/`tree_fraction` in QA and metadata. `sayre_high` is a mountain-level selection flag, not a pixelwise Sayre mask.
+- The formerly referenced current-manifest Asset was not present in the `ee-wsc/Alpine` folder at check time. Its outside-range count is therefore recorded as unavailable rather than inferred from the full-GMBA TABLE. The conservative check expanded latitude coverage to -90..90.
+- Final read-only Step 1 check: 648 candidate global-latitude tiles, 304 GMBA-intersecting tiles, 608 expected exports, both target ImageCollections present and empty, two non-empty serialized sample task configurations, `exports_started=false`, configuration hash `f5f06aaedea56604d570bb3bc4219debb34929a8a69670612b4d03f4e948c9e0`.
+- GEEMu environment verification passed for project `ee-wsc` with Python 3.11.15, earthengine-api 1.7.32 and geemap 0.37.2. Python 3.11.9 compilation and all 41 offline tests passed. The default Step 2 dry-run is ready with configuration hash `06db2931ba0024a4c85ab2242b60245779ca30c5aa70a8c70707650ffedccaab`. No Earth Engine task was submitted and no Asset was modified.
+
 ## Current maintained implementation (2026-08-24)
 
-- Sole supported entry point: `gee/runs/2026821/code_region_revised_v2.py`.
-- Offline regression suite: `tests/test_code_region_revised_v2.py`.
+- Historical baseline entry point: `gee/runs/2026821/code_region_revised_v2.py`; superseded by the two 2026824 entries above.
+- Regression suites include the historical test plus both 2026824 stage contracts.
 - Current method and run documentation: `gee/runs/2026821/METHOD_GMBA_REVISED.md` and `gee/runs/2026821/RUN_REGION.md`.
 - Earlier tracer, JavaScript, region-union and 2-degree-shard source files were removed from the working tree after their history had been preserved in Git.
 - Generated task registries, console reports, HTML maps and the validation package were moved outside the source repository to `D:\实验复现\Globaltreeline_artifacts\2026821`.

@@ -6,17 +6,23 @@
 
 ### Added
 
-- QA 波段 `forest_small_patch_removed_*` 和 `nonforest_small_gap_filled_*`。
+- 两个正式入口：全球连续森林瓦片 Step 1 与筛选后逐 GMBA 树线 Step 2。
+- 两组 2026824 离线契约测试、Step 1 瓦片清单和 Step 2 森林产品完整性门禁。
+- 两阶段数据层文档和 GEE 入口索引。
 
 ### Changed
 
-- 二值森林后处理固定为 JRC GFC2020 v2 式 0.5 ha MMU：八邻域、连通对象内 `pixelArea()` 面积求和、先删除小森林斑块再填充小非森林间隙。
-- 工作流配置标识更新为 `per-gmba-v4-jrc-mmu`，默认 run label 更新为 `mountain_v4_jrc_mmu`。
+- 正式架构由单入口改为 Step 1/Step 2；旧 v2 入口降为历史兼容。
+- Step 1 固定 JRC 式顺序、八邻域、`maxSize=50` 和 `count×pixelArea`：先填充 `<=0.5 ha` 非森林小间隙，再保留 `>=0.5 ha` 森林。
+- Step 2 分析 TABLE 固定为 `GMBA_Sayre`：保留 `hm_fraction >=0.50`、WorldCover 2021 Class 10 树木覆盖率 `tree_fraction <=0.90` 的山体，正式域为入选山体的完整 GMBA Basic 几何。
+- Step 2 先 mosaic/中值/Zero Crossing，之后才应用完整 GMBA 分析域，不使用山体 buffer。
+- Step 2 从 `GMBA_V2_ID` 派生运行键，新增 `hm_fraction`、`tree_fraction` QA/元数据，并在 check/export 前复核 TABLE schema、唯一性和阈值。
+- CI dry-run 同时验证两个新入口，仍保持完全离线。
 
 ### Removed
 
-- 四邻域孔隙判定、矢量边界环和无面积约束填孔实现。
-- 可调整固定 MMU 的 CLI 参数及正式导出的填孔假设确认参数。
+- 当前正式流程中的对象标签/对象内面积求和、先删小森林后填孔和 `maxSize=500` 方案。
+- Step 2 对原始冠层高度和森林 MMU 的任何依赖。
 
 ## [0.1.0] - 2026-08-24
 

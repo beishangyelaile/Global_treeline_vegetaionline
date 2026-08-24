@@ -39,17 +39,25 @@ jobs:
           PYTHONDONTWRITEBYTECODE: "1"
         run: python -m pytest -q -p no:cacheprovider
 
-      - name: Validate the offline 10-mountain plan
+      - name: Compile both maintained stages
+        run: python -m py_compile gee/runs/2026824/code_step1_jrc_forest_tiles.py gee/runs/2026824/code_step2_gmba_treeline.py
+
+      - name: Validate the offline Step 1 plan
         shell: bash
         run: |
-          python gee/runs/2026821/code_region_revised_v2.py \
+          python gee/runs/2026824/code_step1_jrc_forest_tiles.py \
             --dry-run \
             --project test-project \
-            --prepared-mountains-asset projects/example/assets/prepared_mountains \
-            --chelsa-bio01 projects/example/assets/chelsa_bio01 \
-            --treeline30m-collection projects/example/assets/treeline30m \
-            --treeline1km-collection projects/example/assets/treeline1km \
-            --qa30m-collection projects/example/assets/qa30m \
+            --tile-manifest tests/fixtures/step1_tiles_minimal.json \
+            --max-tiles 1 \
+          | python -c 'import json, sys; plan=json.load(sys.stdin); assert plan["ready"] is True; assert plan["missing_requirements"] == []; assert plan["expected_task_count"] == 2'
+
+      - name: Validate the offline Step 2 plan
+        shell: bash
+        run: |
+          python gee/runs/2026824/code_step2_gmba_treeline.py \
+            --dry-run \
+            --project test-project \
+            --step1-manifest tests/fixtures/step1_tiles_minimal.json \
             --max-mountains 10 \
-            --mountain-offset 0 \
           | python -c 'import json, sys; plan=json.load(sys.stdin); assert plan["ready"] is True; assert plan["missing_requirements"] == []; assert plan["expected_task_count"] == 30'
