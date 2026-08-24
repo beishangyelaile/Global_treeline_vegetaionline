@@ -1,7 +1,7 @@
 __pycache__/
 *.py[cod]
 .pytest_cache/
-outputs/tasks/*.json
-outputs/gee-exports/*
-!outputs/gee-exports/.gitkeep
-
+gee/runs/*/outputs/tasks/
+gee/runs/*/*_console*.json
+gee/runs/*/*_map*.html
+tests/treeline_validation_package.zip
