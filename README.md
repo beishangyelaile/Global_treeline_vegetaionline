@@ -16,6 +16,8 @@ gee/runs/2026821/code_region_revised_v2.py
 [`gee/runs/2026821/METHOD_GMBA_REVISED.md`](gee/runs/2026821/METHOD_GMBA_REVISED.md)，完整运行说明见
 [`gee/runs/2026821/RUN_REGION.md`](gee/runs/2026821/RUN_REGION.md)。
 
+当前 `per-gmba-v4-jrc-mmu` 方法固定采用 JRC GFC2020 v2 式二值 MMU 后处理：八邻域删除面积 `<=0.5 ha` 的森林斑块，再填充面积 `<0.5 ha` 的内部非森林间隙，面积均由连通对象内 `ee.Image.pixelArea()` 求和。这只对齐 JRC 的二值后处理；森林输入仍为 GLAD 约 30 m 冠层高度，`>3 m` 为主结果、`>5 m` 为敏感性结果。
+
 ## 环境与测试
 
 固定使用 Python 3.11.9；运行库和测试库的精确版本分别记录在 `requirements.txt` 和 `requirements-dev.txt`。安装开发环境并运行测试：
@@ -49,7 +51,7 @@ python .\gee\runs\2026821\code_region_revised_v2.py `
 
 - `--check` 只检查，不提交导出。
 - `--export` 必须显式提供 `--max-mountains`；默认拒绝一次提交超过 100 个山体。
-- 正式导出必须提供 `--accept-hole-filling-assumption`。
+- 固定 MMU 不提供面积、连通性或“不填孔”命令行分支；旧 MMU 参数会被拒绝。
 - 默认不覆盖 Asset；恢复相同配置使用 `--resume`，不要使用 `--overwrite-assets`。
 - 每个山体默认产生 30 m、1 km 和 QA 三个 Asset 任务，任务登记写入
   `gee/runs/2026821/outputs/tasks/`，该目录不属于源码。
