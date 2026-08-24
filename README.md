@@ -18,11 +18,15 @@ gee/runs/2026821/code_region_revised_v2.py
 
 ## 环境与测试
 
-需要 Python 3.11，以及 `earthengine-api`、`geemap`、`google-auth` 和 `pytest`。所有测试均为离线测试，不会初始化 Earth Engine 或提交任务：
+固定使用 Python 3.11.9；运行库和测试库的精确版本分别记录在 `requirements.txt` 和 `requirements-dev.txt`。安装开发环境并运行测试：
 
 ```powershell
-python -m pytest -q
+python -m pip install --disable-pip-version-check -r requirements-dev.txt
+$env:PYTHONDONTWRITEBYTECODE = '1'
+python -m pytest -q -p no:cacheprovider
 ```
+
+所有 CI 测试均为离线测试，不配置 GEE 凭据，不初始化 Earth Engine 或提交任务。
 
 ## 安全预览
 
@@ -51,3 +55,11 @@ python .\gee\runs\2026821\code_region_revised_v2.py `
   `gee/runs/2026821/outputs/tasks/`，该目录不属于源码。
 
 仓库只保存源码、测试、方法文档和复现记录。任务登记、检查报告、HTML 地图与验证包保存在仓库外的运行产物目录。
+
+## 维护与开发
+
+- 修改入口前先增加或调整离线测试，不建立新的平行版本脚本。
+- 使用 `feat/`、`fix/`、`test/`、`docs/` 或 `chore/` 短分支，通过 PR 合并到 `main`。
+- 入口文件任何变化都会改变实现指纹和 `configuration_hash`；不得用新代码恢复旧哈希 Asset。
+- 科学代码变化依次经过 dry-run、单山体 check、最多 10 山体 pilot，再考虑扩大批次。
+- 详细规则见 [`CONTRIBUTING.md`](CONTRIBUTING.md)，版本变化见 [`CHANGELOG.md`](CHANGELOG.md)。
