@@ -1,60 +1,89 @@
-# 逐 GMBA 树线方法决策记录
+# 两阶段全球高山树线方法
 
-## 与论文一致的主干
+## 架构
 
-Liang et al. (2026) 的正文方法依次描述：Sayre 高山/稀疏高山域、0.25°格网筛选、冠层高大于 3 m、孔洞填充、删除小于 0.5 ha 的斑块、中值滤波和 zero crossing、谷地排除、年均温 Otsu，以及 300 m × 300 m 窗口中的森林/非森林高程 t 检验。
+当前正式方法拆为两个独立程序：
 
-本实现有一项明确的研究域变更：Sayre 相交清单只负责选择 GMBA 山体；选择完成后，在每个完整 GMBA Basic 多边形内执行后续处理，不再使用 Sayre 31/32 像元掩膜和 0.25°有效格网。5 m 冠层阈值作为 3 m 主结果的并行敏感性分析。
+1. `2026824/code_step1_jrc_forest_tiles.py`：从全球连续 GLAD 冠层高度生成 3 m、5 m 二值森林瓦片。
+2. `2026824/code_step2_gmba_treeline.py`：只读取 Step 1 瓦片，在经 Sayre/WorldCover 规则筛选的完整 GMBA Basic 几何内提取树线。
 
-## 固定的 JRC 式二值 MMU 后处理
+旧 `code_region_revised_v2.py` 仅保留历史兼容；其“完整 GMBA 内直接重算森林 MMU”的计算图不再是正式方法。
 
-孔隙和小斑块处理固定为以下顺序，不再保留“不填孔”或可调 0.5 ha 阈值分支：
+## Step 1：连续二值森林
 
-1. 将 GLAD 冠层高度按阈值二值化；`>3 m` 为主结果，`>5 m` 为敏感性结果。
-2. 以八邻域标记森林连通对象，对对象内 `ee.Image.pixelArea()` 求和，仅保留面积 `>0.5 ha` 的森林斑块。
-3. 在保留后的二值图上以八邻域标记非森林连通对象，对对象内 `ee.Image.pixelArea()` 求和，填充大森林斑块内部面积 `<0.5 ha` 的非森林间隙。
-4. 对清理后的森林二值图进行中值滤波，再执行 Zero Crossing；Canny 只作为独立敏感性运行。
+2000/2020 分别读取真实 GLAD 冠层高度。对 3 m、5 m 分别严格执行 `height.gt(threshold)`，保留源影像有效掩膜，不先 clip 或 mask 到 GMBA。
 
-森林斑块恰好为 0.5 ha 时删除，非森林间隙恰好为 0.5 ha 时不填充。`connectedComponents` 和 `reduceConnectedComponents` 的 `maxSize=512` 仅是连通对象计算保护上限，不是面积阈值或孔洞尺度。旧实现的四邻域判定、无面积约束填孔以及 `buffer(-90) + difference` 边界环均已删除。
+每个年份/阈值固定顺序为：
 
-这里对齐的是 JRC GFC2020 v2 的二值 MMU 后处理规则，不是完整复现 JRC 的森林定义。当前研究仍使用约 30 m 的 GLAD 冠层高度和 3/5 m 阈值；JRC GFC2020 是 10 m 森林土地利用产品，并结合树冠覆盖、树高、农业、城市和扰动等多类数据。
+```text
+连续冠层高度二值图
+→ connectedPixelCount(maxSize=500, eightConnected=True)
+→ count × pixelArea
+→ 填充面积 <=5000 m² 的非森林小连通域
+→ 再次 connectedPixelCount(maxSize=500, eightConnected=True)
+→ count × pixelArea
+→ 保留面积 >=5000 m² 的森林
+→ 在原始有效掩膜内恢复0/1 Byte图
+```
 
-## Otsu 的决定
+`ee.Image.pixelArea()` 重投影到森林图投影。禁止对象标签/对象内面积归约，也禁止先删除小森林再填孔。两次计数均固定 `maxSize=500`。
 
-结论：主分析采用“每个 GMBA、每个冠层阈值、2000/2020 合并的 post-landform 边缘候选”的温度总体，而不是 GMBA 内所有像元。
+这采用了 JRC GFC2020 v2 的处理顺序、八邻域、0.5 ha 规则和 `maxSize=500`。但 JRC 是 10 m 森林土地利用产品，本研究是约 30 m GLAD 冠层高度二值图，因此仍不是森林定义或产品层面的完整复现。
 
-理由：
+3 m、5 m 分别写入：
 
-- Otsu 的输入应对应待分割对象。此处待分割的是候选树线边缘，不是整个山体背景。
-- GMBA 全像元总体会按山体面积和高程带面积加权，谷地及无关裸地可形成主要温度峰，阈值不再专门描述候选树线。
-- 先做 landform 筛选可避免明确要排除的谷地边缘影响温度阈值。
-- 2000/2020 共用阈值可避免把逐年阈值变化错误解释成树线变化。
-- CHELSA 分辨率约为 1 km。先把候选掩膜聚合到 CHELSA 原生格网、每格计一次，可避免一格温度因含有更多 30 m 边缘像元而被伪重复加权。
+```text
+projects/ee-alpine-506212/assets/Global_tree_3m
+projects/ee-alpine-506212/assets/Global_tree_5m
+```
 
-这是方法学推断，不是对论文未披露细节的事实陈述。论文没有给出 Otsu 的空间总体、最小样本量或退化分布处理方式。
+每个 10°瓦片均含 `tree_2000`、`tree_2020`，采用全局对齐 `EPSG:4326` transform `[0.00025,0,-180,0,-0.00025,90]` 和 `mode` 金字塔策略。GMBA Basic 只用于选择相交瓦片；输出瓦片内部保留完整森林背景。
 
-## 推荐的稳健性分析
+默认检查 `-60°..80°`，但这不是完整全球覆盖。只读 check 统计范围外 GMBA、manifest 目标和有效森林；若目标遗漏，瓦片清单自动扩展到 `-90°..90°`。
 
-1. 主结果：3 m、zero crossing、山体级合并 Otsu、单侧 0.05 Welch t 检验。
-2. 冠层敏感性：5 m，其他参数不变。
-3. 边缘敏感性：Canny，单独 run label，不能覆盖主结果。
-4. t 检验敏感性：pooled variance 或 two-sided；报告最终像元数量和高程变化差异。
-5. Otsu 诊断：记录候选 CHELSA 格数、直方图桶数、阈值和有效标记；对样本过少或单峰/退化山体不使用静默全局回退。
-6. 研究域诊断：抽样比较完整 GMBA 域与 `GMBA ∩ Sayre 31/32` 域，检查低海拔森林边缘是否显著改变 Otsu 阈值和最终树线高程。
+## Step 2：逐山体树线
 
-## 不能称为“精确复现”的细节
+Step 2 默认读取 `projects/ee-wsc/assets/Alpine/GMBA_Sayre`。该 TABLE 的山体筛选规则为：
 
-- Liang et al. 没有披露本研究二值森林孔洞的连通规则与面积边界；本实现明确采用 JRC GFC2020 v2 的 MMU 后处理作为方法决定。
-- 中值滤波核大小未披露。
-- Otsu 空间作用域未披露。
-- t 检验的等方差假设、单双侧、最小样本量及窗口边界处理未披露。
+- `hm_fraction >=0.50`：Sayre 31/32 高山与极高山面积至少占完整 GMBA Basic 的 50%；
+- `tree_fraction <=0.90`：ESA WorldCover 10 m 2021（`ESA/WorldCover/v200`，`Map` 波段 Class 10）树木覆盖面积最多占 90%，即剔除 `>90%` 的山体。
 
-固定 MMU 规则直接写入实现、配置哈希和 Asset 元数据，不提供命令行调整。其他可变科学参数仍进入命令行、配置哈希和 Asset 元数据；改变入口代码或任一科学参数都会生成不同的输出 ID。
+TABLE 几何保留入选山体的完整 GMBA Basic，不是 Sayre 31/32 裁剪交集。Step 2 先分别 mosaic 3 m、5 m ImageCollection，再选择 2000/2020 波段。对连续图执行半径 1 像元方形中值滤波、Laplacian 8 邻域和 Zero Crossing；只有边缘形成后才应用逐山体完整 GMBA 域。这避免把瓦片或 GMBA 边界误识别成森林边缘。
+
+正式顺序为：
+
+```text
+森林瓦片 mosaic
+→ 中值滤波
+→ Zero Crossing
+→ 筛选后完整GMBA Basic分析域
+→ 排除 ERGo landform 41/42
+→ 合并2000/2020候选
+→ CHELSA原生格每格计一次
+→ 每山体/每阈值 Otsu
+→ 同阈值用于两年
+→ 冷区候选
+→ 分析域内300 m局地单侧Welch检验
+```
+
+无山体 buffer，无 0.25°格网。Otsu 样本不足或退化时 `otsu_valid=0`，不使用全局回退，也不按瓦片重算。
+
+## 输出与 QA
+
+- `treeline30m`：3/5 m × 2000/2020 树线高程。
+- `treeline1km`：30 arc-second 格网中的两年平均树线高程和 20 年平均年变化率。
+- `qa30m`：分析域、森林、候选/landform 后边缘、Otsu 有效性、DEM、样本数、高程差和 t 统计量。
+
+分类、布尔和计数 QA 使用 `mode`；`hm_fraction`、`tree_fraction`、DEM、高程差、t 统计量等连续变量使用 `mean`。`gmba_mask` 是完整 GMBA 分析域；`sayre_high` 仅表示该山体通过 `hm_fraction >=0.50` 筛选，不是逐像元 Sayre 掩膜。
+
+## 完整性门禁与限制
+
+Step 2 在构图前核对两个森林集合的瓦片 ID、波段、非空状态、`mmu_max_size=500`、配置哈希、CRS/transform、缺失/重复/失败记录和当前山体所需瓦片。任一不符即拒绝创建任务。
+
+只读 TABLE 验收确认 3,115 个唯一 Basic 山体且全部满足两项阈值。尚待服务端确认：`maxSize=500` 的计算成本及其在高纬度/极大对象上的影响、Step 1 导出图执行可行性，以及代表性山体的 Step 2 深度检查。
 
 ## 参考
 
-- Liang et al. (2026), *Global elevational shifts and drivers of alpine treelines*, International Journal of Applied Earth Observation and Geoinformation 146, 105088. DOI: 10.1016/j.jag.2026.105088.
-- Bourgoin et al. (2026), *GFC2020: a global map of forest land use for year 2020 to support the EU Deforestation Regulation*, Earth System Science Data 18, 1331–1365. DOI: 10.5194/essd-18-1331-2026. https://essd.copernicus.org/articles/18/1331/2026/
-- JRC GFC2020 v2 public code source: https://figshare.com/articles/code/Joint_Research_Centre_-_Global_Forest_Cover_for_year_2020_version_2_Code_source/29315528
-- Körner et al. (2022), *A global inventory of mountains for bio-geographical applications*, Scientific Data 9, 103. DOI: 10.1038/s41597-022-01256-y.
-- Google Earth Engine API: `Image.connectedComponents`, `Image.reduceConnectedComponents`, `Image.pixelArea`, `Image.zeroCrossing`, `Algorithms.CannyEdgeDetector`, `Export.table.toAsset`.
+- Liang et al. (2026), DOI `10.1016/j.jag.2026.105088`。
+- Bourgoin et al. (2026), DOI `10.5194/essd-18-1331-2026`。
+- JRC GFC2020 v2 public source: https://figshare.com/articles/code/Joint_Research_Centre_-_Global_Forest_Cover_for_year_2020_version_2_Code_source/29315528

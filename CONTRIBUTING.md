@@ -1,109 +1,60 @@
 # 维护与贡献规范
 
-## 基本原则
+## 开发对象
 
-- 唯一公开入口是 `gee/runs/2026821/code_region_revised_v2.py`。
-- 后续直接迭代该文件，不复制 `v3.py`、`final.py` 或其他平行入口。
-- `main` 必须始终可安装、离线测试通过且 dry-run 可运行。
-- 一个分支和 PR 只处理一个目的明确的变更。
-- CI 不连接 Earth Engine；所有在线检查和导出都由人工确认后在本地运行。
+正式工作流由以下两个入口组成：
 
-## 开发环境
+- `gee/runs/2026824/code_step1_jrc_forest_tiles.py`
+- `gee/runs/2026824/code_step2_gmba_treeline.py`
 
-固定使用 Python 3.11.9：
+不要通过复制文件创建 `v3.py` 或 `final.py`。旧 `2026821/code_region_revised_v2.py` 仅保留兼容测试，科学变化应进入对应的新阶段入口。
 
-```powershell
-python -m venv .venv
-.\.venv\Scripts\Activate.ps1
-python -m pip install --disable-pip-version-check -r requirements-dev.txt
-```
+## 分支、提交与修改顺序
 
-运行依赖和测试依赖均使用精确版本。依赖升级必须单独提交，并重新执行本文全部离线门禁。
+- 使用 `feat/`、`fix/`、`test/`、`docs/`、`chore/` 短分支；一个 PR 只处理一个问题。
+- 固定顺序：先补失败测试 → 修改对应入口 → 更新方法/运行/数据文档 → 完整测试与 dry-run。
+- Step 1 和 Step 2 的变化尽量分别提交；依赖升级必须使用独立 PR。
+- CLI、默认值、波段、metadata 或 registry 变化必须同步测试与 `CHANGELOG.md`。
 
-## 分支与提交
-
-从最新 `main` 创建短分支：
-
-- `feat/<name>`：新增行为。
-- `fix/<name>`：修复缺陷。
-- `test/<name>`：只调整测试。
-- `docs/<name>`：只调整文档。
-- `chore/<name>`：构建、依赖或仓库维护。
-
-提交应小且可独立审查。推荐提交前缀为 `feat:`、`fix:`、`test:`、`docs:`、`build:`、`refactor:` 或 `chore:`。禁止直接向 `main` 强制推送。
-
-## 固定修改顺序
-
-1. 先增加一个能够暴露问题或表达新需求的离线测试。
-2. 修改唯一入口；不得建立平行版本脚本。
-3. 按变化类型更新 README、运行手册、方法记录或复现日志。
-4. 运行离线测试、dry-run 和 Git 差异检查。
-5. 推送分支并通过 PR 合并。
-
-每个 PR 至少执行：
+## 离线门禁
 
 ```powershell
 $env:PYTHONDONTWRITEBYTECODE = '1'
 python -m pytest -q -p no:cacheprovider
+python -m py_compile .\gee\runs\2026824\code_step1_jrc_forest_tiles.py .\gee\runs\2026824\code_step2_gmba_treeline.py
 git diff --check
 git status --short
 ```
 
-dry-run 必须使用完整但无敏感信息的参数，确认：
+CI 只执行离线测试，不保存 Earth Engine 凭据、不访问私有 Asset、不执行 `--check` 或 `--export`。
 
-- `ready=true`
-- `missing_requirements=[]`
-- `selection` 与预期批次一致
-- `expected_task_count` 正确
+## 科学变化
 
-## 变化分类
-
-### 文档或测试变化
-
-- 不改变入口代码时，科学配置哈希不应变化。
-- 更新 `CHANGELOG.md` 的 `Unreleased` 段落。
-
-### CLI、registry 或运行保护变化
-
-- 同步修改测试、README 和 `RUN_REGION.md`。
-- 检查旧 registry 是否仍可由 `--monitor-once` 读取。
-- 若入口文件发生任何变化，必须记录新的 `configuration_hash`。
-
-### 科学方法、计算图、默认参数或输出 schema 变化
-
-- 更新 `METHOD_GMBA_REVISED.md` 和 `notes/reproduction-log.md`。
-- 记录变更前后的 `configuration_hash`、Git commit 和 run label。
-- 使用新的 run label 和 Git 版本标签。
-- 不得对旧哈希的 Asset 使用 `--resume`，不得使用 `--overwrite-assets` 混写结果。
-
-当前 `configuration_hash` 包含入口文件完整 SHA-256。因此，即使入口中的维护性代码变化不影响科学计算，也会产生新的配置哈希。这是当前保守的防混用策略。若未来拆分内部模块，必须先让实现指纹覆盖全部运行源码并增加相应测试。
+- Step 1 算法、源数据、MMU、格网或波段变化时，使用新的 Step 1 `configuration_hash`，重新生成全部所需瓦片；不得混合不同哈希。
+- Step 2 研究域、边缘、Otsu、局地检验或输出 schema 变化时，使用新的 run label 和 Step 2 哈希。
+- 同步更新 `docs/research/method_decisions.md`、`METHOD_GMBA_REVISED.md` 和 `notes/reproduction-log.md`。
+- 新代码不得用 `--resume` 继承旧哈希 Asset，不得用覆盖写入作为常规恢复方式。
 
 ## Earth Engine 人工门禁
 
-固定 Cloud Project 为 `ee-wsc`。科学代码合并后，在线验证顺序为：
+Cloud Project 固定为 `ee-wsc`。推荐顺序：
 
-1. 验证 Python、Earth Engine API、geemap、凭据和 `ee-wsc` 初始化。
-2. 运行无网络副作用的 dry-run。
-3. 对一个代表性山体运行 `--check`；该模式不得提交导出。
-4. 使用新 run label 提交不超过 10 个山体的 pilot。
-5. pilot 任务和 Asset 验收通过后才扩大批次。
+1. Step 1 离线 dry-run 和只读 check；
+2. 人工确认有效瓦片、纬度诊断、目标集合和任务数；
+3. 明确授权后执行小批 Step 1 pilot，并验收两个集合；
+4. Step 1 全量完成且完整性检查通过；
+5. Step 2 单山体只读 check；
+6. 明确授权后执行不超过 10 山体 pilot；
+7. pilot 验收后再授权扩批。
 
-任何 `--prepare-mountains` 或 `--export` 都必须预先确认输入 Asset、输出集合、山体范围、任务数量和成本风险。禁止把 GEE 凭据写入仓库或 GitHub Actions。
+任何 `--export` 都必须预先确认输入、输出、范围、任务数和成本。分析 TABLE 固定为 `projects/ee-wsc/assets/Alpine/GMBA_Sayre`，并复核 `hm_fraction >=0.50`、`tree_fraction <=0.90` 和唯一 `GMBA_V2_ID`；不得换用其他 Asset。
 
-## 产物与归档
+## 产物
 
-Git 只保存源码、测试、依赖和文档。任务 registry、错误报告、控制台输出、HTML 地图、验证数据和压缩包不得提交。
-
-导出时优先显式指定仓库外目录：
+Git 只保存源码、测试、依赖和文档。registry、错误报告、检查报告、地图、验证数据和导出结果写到仓库外，例如：
 
 ```powershell
---registry-dir 'D:\实验复现\Globaltreeline_artifacts\<YYYYMMDD-run_label>\tasks'
+--registry-dir D:\实验复现\Globaltreeline_artifacts\<YYYYMMDD-run_label>\tasks
 ```
 
-每批归档至少保留：registry、错误报告、配置哈希、Git commit、run label、目标 Asset ID、验收结果和文件 SHA-256 清单。归档目录不得包含凭据。
-
-## 版本号
-
-- `PATCH`：文档、测试或不改变科学输出的维护。
-- `MINOR`：算法、默认参数、输出波段或 Asset schema 变化。
-- `MAJOR`：研究域、核心数据源或分析单位变化。
+每批归档 registry、输入/输出 Asset、两阶段配置哈希、Git commit、run label、验收结果和 SHA-256 清单；不得归档凭据。

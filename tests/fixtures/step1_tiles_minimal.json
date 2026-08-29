@@ -1,0 +1,18 @@
+{
+  "configuration_hash": "offline-fixture-not-a-production-hash",
+  "latitude_diagnostics": {
+    "outside_range_gmba_count": 0,
+    "outside_range_manifest_count": 0,
+    "outside_range_with_valid_forest_count": 0
+  },
+  "tiles": [
+    {
+      "tile_id": "N00_E000",
+      "bbox": [0.0, 0.0, 10.0, 10.0],
+      "min_lon": 0.0,
+      "max_lon": 10.0,
+      "min_lat": 0.0,
+      "max_lat": 10.0
+    }
+  ]
+}
