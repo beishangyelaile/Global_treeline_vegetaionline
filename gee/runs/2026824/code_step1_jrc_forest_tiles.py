@@ -40,13 +40,13 @@ GLOBAL_TREE_3M = "projects/ee-alpine-506212/assets/Global_tree_3m"
 GLOBAL_TREE_5M = "projects/ee-alpine-506212/assets/Global_tree_5m"
 
 MMU_AREA_M2 = 5000
-MMU_MAX_SIZE = 50
+MMU_MAX_SIZE = 500
 MMU_CONNECTIVITY = 8
 CANOPY_THRESHOLDS: Tuple[int, int] = (3, 5)
 TILE_SIZE_DEGREES = 10
 FINE_CRS = "EPSG:4326"
 FINE_TRANSFORM = [0.00025, 0, -180, 0, -0.00025, 90]
-WORKFLOW = "step1-global-forest-jrc-sequence-modified-ms50-v1"
+WORKFLOW = "step1-global-forest-jrc-sequence-ms500-v2"
 WORKLOAD_TAG = "globaltreeline-step1"
 ADC_SCOPES = tuple(ee.oauth.SCOPES) if ee is not None else ()
 
@@ -90,7 +90,7 @@ def build_parser() -> argparse.ArgumentParser:
         default=Path(os.environ.get("GLOBALTREELINE_ARTIFACTS", "outputs/tasks")),
     )
     parser.add_argument("--resume", action="store_true")
-    parser.add_argument("--run-label", default="step1_ms50")
+    parser.add_argument("--run-label", default="step1_ms500")
     parser.add_argument("--task-prefix", default="global_forest_tile")
     return parser
 
@@ -123,7 +123,7 @@ def scientific_configuration(args: argparse.Namespace) -> Dict[str, object]:
         "mmu_max_size": MMU_MAX_SIZE,
         "mmu_area_m2": MMU_AREA_M2,
         "mmu_connectivity": MMU_CONNECTIVITY,
-        "mmu_method": "JRC_sequence_modified_maxSize50",
+        "mmu_method": "JRC_sequence_maxSize500",
         "mmu_operation_order": "fill_small_nonforest_then_remove_small_forest",
         "area_measure": "connected_pixel_count_times_pixelArea",
         "source_mask_policy": "preserve_original_valid_mask",
@@ -274,7 +274,7 @@ def build_forest_year(canopy_asset: str, canopy_threshold_m: float) -> "ee.Image
 
 
 def apply_jrc_mmu(forest_raw: "ee.Image") -> "ee.Image":
-    """Apply the fixed JRC operation sequence with modified maxSize=50."""
+    """Apply the fixed JRC operation sequence with maxSize=500."""
     proj = forest_raw.projection()
     valid_mask = forest_raw.mask()
     pixel_area = ee.Image.pixelArea().reproject(crs=proj)
@@ -480,7 +480,7 @@ def planned_export_records(
                     **dict(tile),
                     "product": product,
                     "canopy_threshold_m": threshold,
-                    "description": f"GFC_{product}_ms50_{identifier}",
+                    "description": f"GFC_{product}_ms500_{identifier}",
                     "destination": (
                         f"{collection.rstrip('/')}/GFC_2000_2020_{identifier}"
                     ),
@@ -503,7 +503,7 @@ def asset_metadata(args: argparse.Namespace, record: Mapping[str, object]) -> Di
         "mmu_max_size": MMU_MAX_SIZE,
         "mmu_area_m2": MMU_AREA_M2,
         "mmu_connectivity": MMU_CONNECTIVITY,
-        "mmu_method": "JRC_sequence_modified_maxSize50",
+        "mmu_method": "JRC_sequence_maxSize500",
         "source_height_2000": FOREST_HEIGHT_2000,
         "source_height_2020": FOREST_HEIGHT_2020,
         "source_years": "2000,2020",

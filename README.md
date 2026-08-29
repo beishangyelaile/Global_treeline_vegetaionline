@@ -14,7 +14,7 @@ Step 2  gee/runs/2026824/code_step2_gmba_treeline.py
 
 旧 [`code_region_revised_v2.py`](gee/runs/2026821/code_region_revised_v2.py) 仅作历史兼容，不再是当前完整工作流入口。
 
-Step 1 固定使用严格 `>3 m` 主阈值和 `>5 m` 敏感性阈值。MMU 采用 JRC GFC2020 v2 的处理顺序、八邻域和 0.5 ha 规则，但把 JRC 公开源码的 `maxSize=500` 修改为 `50`；当前输入也仍是约 30 m GLAD 冠层高度，而不是 JRC 10 m 森林土地利用产品。因此不得称为参数或森林定义的完整 JRC 复现。
+Step 1 固定使用严格 `>3 m` 主阈值和 `>5 m` 敏感性阈值。MMU 采用 JRC GFC2020 v2 的处理顺序、八邻域、0.5 ha 规则和 `maxSize=500`；当前输入仍是约 30 m GLAD 冠层高度，而不是 JRC 10 m 森林土地利用产品。因此不得称为森林定义或产品层面的完整 JRC 复现。
 
 Step 2 默认读取 `projects/ee-wsc/assets/Alpine/GMBA_Sayre`。该 TABLE 仅保留 `hm_fraction >=0.50` 且 `tree_fraction <=0.90` 的 GMBA Basic；树木覆盖率来自 ESA WorldCover 10 m 2021（`ESA/WorldCover/v200`，`Map=10`）。Asset 几何仍是入选山体的完整 GMBA Basic 范围，不是 Sayre 像元交集。
 

@@ -350,7 +350,7 @@ def inventory_fixture(tile_id: str, canopy_threshold_m: int) -> Dict[str, object
         "properties": {
             "tile_id": tile_id,
             "canopy_threshold_m": canopy_threshold_m,
-            "mmu_max_size": 50,
+            "mmu_max_size": 500,
             "configuration_hash": "test-step1-hash",
             "grid_crs": FINE_CRS,
             "grid_transform": json.dumps(FINE_TRANSFORM, separators=(",", ":")),
@@ -396,7 +396,7 @@ def validate_step1_inventory(
                 errors.append(f"invalid Asset type for {product}/{identifier}")
             if _integer_size(asset.get("sizeBytes")) <= 0:
                 errors.append(f"empty Asset for {product}/{identifier}")
-            if int(properties.get("mmu_max_size", -1)) != 50:
+            if int(properties.get("mmu_max_size", -1)) != 500:
                 errors.append(f"invalid max size for {product}/{identifier}")
             if int(properties.get("canopy_threshold_m", -1)) != expected_threshold:
                 errors.append(f"wrong canopy threshold for {product}/{identifier}")
@@ -799,8 +799,8 @@ def expected_product_bands() -> Dict[str, List[str]]:
     treeline30m: List[str] = []
     treeline1km: List[str] = []
     qa = [
-        "analysis_domain", "sayre_high", "gmba_mask", "non_valley",
-        "hm_fraction", "tree_fraction", "dem_elevation_m", "dem_msk", "dem_stk",
+        "analysis_domain", "sayre_high", "gmba_mask", "hm_fraction",
+        "tree_fraction", "non_valley", "dem_elevation_m", "dem_msk", "dem_stk",
     ]
     for label, _ in THRESHOLDS:
         for year in (2000, 2020):

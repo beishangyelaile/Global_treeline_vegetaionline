@@ -54,7 +54,7 @@ class Step1ForestTileTests(unittest.TestCase):
             "projects/glad/GLCLU2020/Forest_height_2020",
         )
         self.assertEqual(self.module.MMU_AREA_M2, 5000)
-        self.assertEqual(self.module.MMU_MAX_SIZE, 50)
+        self.assertEqual(self.module.MMU_MAX_SIZE, 500)
         self.assertEqual(self.module.MMU_CONNECTIVITY, 8)
 
     def test_jrc_sequence_uses_two_eight_connected_counts(self) -> None:
@@ -147,6 +147,7 @@ class Step1ForestTileTests(unittest.TestCase):
         self.assertEqual(len(records), 2)
         self.assertEqual({record["product"] for record in records}, {"h3m", "h5m"})
         for record in records:
+            self.assertIn("_ms500_", record["description"])
             self.assertTrue(record["destination"].endswith("/GFC_2000_2020_" + tile["tile_id"]))
             self.assertEqual(record["pyramiding_policy"]["tree_2000"], "mode")
             self.assertEqual(record["pyramiding_policy"]["tree_2020"], "mode")

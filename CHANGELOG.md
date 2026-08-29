@@ -13,15 +13,16 @@
 ### Changed
 
 - 正式架构由单入口改为 Step 1/Step 2；旧 v2 入口降为历史兼容。
-- Step 1 固定 JRC 式顺序、八邻域、`maxSize=50` 和 `count×pixelArea`：先填充 `<=0.5 ha` 非森林小间隙，再保留 `>=0.5 ha` 森林。
+- Step 1 固定 JRC 式顺序、八邻域、`maxSize=500` 和 `count×pixelArea`：先填充 `<=0.5 ha` 非森林小间隙，再保留 `>=0.5 ha` 森林。
 - Step 2 分析 TABLE 固定为 `GMBA_Sayre`：保留 `hm_fraction >=0.50`、WorldCover 2021 Class 10 树木覆盖率 `tree_fraction <=0.90` 的山体，正式域为入选山体的完整 GMBA Basic 几何。
 - Step 2 先 mosaic/中值/Zero Crossing，之后才应用完整 GMBA 分析域，不使用山体 buffer。
 - Step 2 从 `GMBA_V2_ID` 派生运行键，新增 `hm_fraction`、`tree_fraction` QA/元数据，并在 check/export 前复核 TABLE schema、唯一性和阈值。
+- Step 2 的 QA 波段验收顺序与实际组装顺序统一：`hm_fraction`、`tree_fraction` 位于 `non_valley` 之前；计算图和既有 Asset 内容不变。
 - CI dry-run 同时验证两个新入口，仍保持完全离线。
 
 ### Removed
 
-- 当前正式流程中的对象标签/对象内面积求和、先删小森林后填孔和 `maxSize=500` 方案。
+- 当前正式流程中的对象标签/对象内面积求和、先删小森林后填孔和 `maxSize=50` 方案。
 - Step 2 对原始冠层高度和森林 MMU 的任何依赖。
 
 ## [0.1.0] - 2026-08-24

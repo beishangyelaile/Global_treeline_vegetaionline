@@ -17,18 +17,18 @@
 
 ```text
 连续冠层高度二值图
-→ connectedPixelCount(maxSize=50, eightConnected=True)
+→ connectedPixelCount(maxSize=500, eightConnected=True)
 → count × pixelArea
 → 填充面积 <=5000 m² 的非森林小连通域
-→ 再次 connectedPixelCount(maxSize=50, eightConnected=True)
+→ 再次 connectedPixelCount(maxSize=500, eightConnected=True)
 → count × pixelArea
 → 保留面积 >=5000 m² 的森林
 → 在原始有效掩膜内恢复0/1 Byte图
 ```
 
-`ee.Image.pixelArea()` 重投影到森林图投影。禁止对象标签/对象内面积归约，也禁止先删除小森林再填孔。两次计数均固定 `maxSize=50`。
+`ee.Image.pixelArea()` 重投影到森林图投影。禁止对象标签/对象内面积归约，也禁止先删除小森林再填孔。两次计数均固定 `maxSize=500`。
 
-这采用了 JRC GFC2020 v2 的处理顺序、八邻域和 0.5 ha 规则，但不是参数完全复现：JRC 公开源码使用 `maxSize=500`，本项目修改为 50；JRC 还是 10 m 森林土地利用产品，而本研究是约 30 m GLAD 冠层高度二值图。
+这采用了 JRC GFC2020 v2 的处理顺序、八邻域、0.5 ha 规则和 `maxSize=500`。但 JRC 是 10 m 森林土地利用产品，本研究是约 30 m GLAD 冠层高度二值图，因此仍不是森林定义或产品层面的完整复现。
 
 3 m、5 m 分别写入：
 
@@ -78,9 +78,9 @@ TABLE 几何保留入选山体的完整 GMBA Basic，不是 Sayre 31/32 裁剪�
 
 ## 完整性门禁与限制
 
-Step 2 在构图前核对两个森林集合的瓦片 ID、波段、非空状态、`mmu_max_size=50`、配置哈希、CRS/transform、缺失/重复/失败记录和当前山体所需瓦片。任一不符即拒绝创建任务。
+Step 2 在构图前核对两个森林集合的瓦片 ID、波段、非空状态、`mmu_max_size=500`、配置哈希、CRS/transform、缺失/重复/失败记录和当前山体所需瓦片。任一不符即拒绝创建任务。
 
-只读 TABLE 验收确认 3,115 个唯一 Basic 山体且全部满足两项阈值。尚待服务端确认：`maxSize=50` 在高纬度/极大对象上的影响、Step 1 导出图执行可行性，以及代表性山体的 Step 2 深度检查。
+只读 TABLE 验收确认 3,115 个唯一 Basic 山体且全部满足两项阈值。尚待服务端确认：`maxSize=500` 的计算成本及其在高纬度/极大对象上的影响、Step 1 导出图执行可行性，以及代表性山体的 Step 2 深度检查。
 
 ## 参考
 

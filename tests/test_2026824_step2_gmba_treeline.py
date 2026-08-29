@@ -123,6 +123,7 @@ class Step2TreelineTests(unittest.TestCase):
             "h3m": [self.module.inventory_fixture("N00_E000", 3)],
             "h5m": [self.module.inventory_fixture("N00_E000", 5)],
         }
+        self.assertEqual(valid["h3m"][0]["properties"]["mmu_max_size"], 500)
         passed = self.module.validate_step1_inventory(["N00_E000"], valid)
         self.assertTrue(passed["ready"])
 
@@ -137,6 +138,22 @@ class Step2TreelineTests(unittest.TestCase):
         self.assertFalse(failed["ready"])
         self.assertTrue(any("duplicate" in error for error in failed["errors"]))
 
+        old_max_size = {
+            "h3m": [
+                {
+                    **valid["h3m"][0],
+                    "properties": {
+                        **valid["h3m"][0]["properties"],
+                        "mmu_max_size": 50,
+                    },
+                }
+            ],
+            "h5m": valid["h5m"],
+        }
+        failed = self.module.validate_step1_inventory(["N00_E000"], old_max_size)
+        self.assertFalse(failed["ready"])
+        self.assertTrue(any("invalid max size" in error for error in failed["errors"]))
+
     def test_expected_outputs_include_traceable_qa(self) -> None:
         bands = self.module.expected_product_bands()
         self.assertEqual(
@@ -146,6 +163,20 @@ class Step2TreelineTests(unittest.TestCase):
                 "treeline_2020_h3m_m",
                 "treeline_2000_h5m_m",
                 "treeline_2020_h5m_m",
+            ],
+        )
+        self.assertEqual(
+            bands["qa30m"][:9],
+            [
+                "analysis_domain",
+                "sayre_high",
+                "gmba_mask",
+                "hm_fraction",
+                "tree_fraction",
+                "non_valley",
+                "dem_elevation_m",
+                "dem_msk",
+                "dem_stk",
             ],
         )
         for name in (

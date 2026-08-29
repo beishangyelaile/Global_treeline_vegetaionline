@@ -1,19 +1,35 @@
 # Reproduction Log
 
+## 2026-08-29 Step 2 pilot validation and 100-mountain batch
+
+- The five-mountain pilot completed all 15 tasks. All destinations passed read-only validation for IMAGE type, non-zero `sizeBytes`, product-specific bands, `configuration_hash`, `run_label`, and `mountain_id` after aligning `expected_product_bands()` with the existing QA construction order (`hm_fraction`, `tree_fraction`, then `non_valley`). This correction did not alter the Step 2 image graph or existing Assets.
+- The contract correction changed the source fingerprint and therefore the traceability-only Step 2 configuration hash to `6d6ea51646f2a01127c91d7e785e3d94c6aa4a2f3cc77fd0e35a94c2c8e815c3`; implementation SHA-256 is `6069b1a3cd7984ae21d43edfd9bec889a83d6fccb03792e14591df65da9347a1`.
+- The authorized follow-up selection used `mountain-offset=5` and `max-mountains=100`, excluded all five pilot mountains, and resolved 100 unique mountains with three products each. Dry-run returned `ready=true`, no missing requirements, and 300 expected tasks. Preflight found no existing target Asset or matching remote description; current READY was 0 and projected READY was exactly the queue limit of 300.
+- Submitted all 300 tasks without `--resume` or overwrite. Registry: `D:\实验复现\Globaltreeline_artifacts\20260828-step2-gmba-batch100-o005\tasks\20260829T002900Z-step2-gmba-batch100-o005.json`. It contains 300 unique task IDs, 300 unique destinations, 100 unique mountains, three products per mountain, and one configuration hash.
+- Initial monitor at `2026-08-29T00:39:38Z` reported 4 COMPLETED, 4 RUNNING, and 292 READY, with no failed or cancelled task.
+
 ## 2026-08-24 two-stage forest/treeline architecture
 
 - Added `gee/runs/2026824/code_step1_jrc_forest_tiles.py` and `code_step2_gmba_treeline.py`; the 2026821 v2 script remains historical/compatibility code.
-- Step 1 now builds globally continuous GLAD binary forest graphs before any GMBA operation. It uses strict 3/5 m thresholds, preserves the source mask, runs two eight-neighbour counts with `maxSize=50`, fills non-forest components `<=5000 m²`, then retains forest components `>=5000 m²`.
-- The method follows the JRC sequence but deliberately changes the public-code `maxSize` from 500 to 50 and does not reproduce the JRC forest land-use definition.
+- Step 1 now builds globally continuous GLAD binary forest graphs before any GMBA operation. It uses strict 3/5 m thresholds, preserves the source mask, runs two eight-neighbour counts with `maxSize=500`, fills non-forest components `<=5000 m²`, then retains forest components `>=5000 m²`.
+- The method follows the JRC sequence and uses the public-code `maxSize=500`, but it does not reproduce the JRC forest land-use definition because the input and resolution differ.
 - GMBA Basic only selects intersecting 10-degree tiles. The default -60 to 80 degree range is diagnosed rather than described as global; the check expands the manifest to -90 to 90 when target mountains or valid forest would be omitted.
 - Step 2 only reads `Global_tree_3m` and `Global_tree_5m`, mosaics before median filtering/Zero Crossing, and then restricts candidates and 300 m local samples to each selected complete GMBA Basic geometry.
-- Step 2 verifies paired tile IDs, both year bands, non-empty IMAGE Assets, max size 50, one Step 1 configuration hash, the fixed grid, and the tiles required by the selected mountains before creating export configurations.
+- Step 2 verifies paired tile IDs, both year bands, non-empty IMAGE Assets, max size 500, one Step 1 configuration hash, the fixed grid, and the tiles required by the selected mountains before creating export configurations.
 - The analysis TABLE is `projects/ee-wsc/assets/Alpine/GMBA_Sayre`. It contains 3,115 unique Basic units selected by `hm_fraction >=0.50` and `tree_fraction <=0.90`; the latter uses ESA WorldCover 10 m 2021 `Map=10` tree cover.
 - Read-only validation found no null or threshold-violating rows. The first geometry area matches full `gmba_area_km2`, not `hm_area_km2`, so the formal domain is the selected complete GMBA Basic geometry rather than a clipped Sayre intersection.
 - Step 2 derives `gmba_id_text` and `gmba_sort_key` from `GMBA_V2_ID`, re-applies both fixed filters, and records `hm_fraction`/`tree_fraction` in QA and metadata. `sayre_high` is a mountain-level selection flag, not a pixelwise Sayre mask.
 - The formerly referenced current-manifest Asset was not present in the `ee-wsc/Alpine` folder at check time. Its outside-range count is therefore recorded as unavailable rather than inferred from the full-GMBA TABLE. The conservative check expanded latitude coverage to -90..90.
-- Final read-only Step 1 check: 648 candidate global-latitude tiles, 304 GMBA-intersecting tiles, 608 expected exports, both target ImageCollections present and empty, two non-empty serialized sample task configurations, `exports_started=false`, configuration hash `f5f06aaedea56604d570bb3bc4219debb34929a8a69670612b4d03f4e948c9e0`.
-- GEEMu environment verification passed for project `ee-wsc` with Python 3.11.15, earthengine-api 1.7.32 and geemap 0.37.2. Python 3.11.9 compilation and all 41 offline tests passed. The default Step 2 dry-run is ready with configuration hash `06db2931ba0024a4c85ab2242b60245779ca30c5aa70a8c70707650ffedccaab`. No Earth Engine task was submitted and no Asset was modified.
+- Initial `maxSize=50` read-only Step 1 check: 648 candidate global-latitude tiles, 304 GMBA-intersecting tiles, 608 expected exports, both target ImageCollections present and empty, two non-empty serialized sample task configurations, `exports_started=false`, configuration hash `f5f06aaedea56604d570bb3bc4219debb34929a8a69670612b4d03f4e948c9e0`. This configuration is superseded and must not be resumed.
+- GEEMu environment verification passed for project `ee-wsc` with Python 3.11.15, earthengine-api 1.7.32 and geemap 0.37.2. Python compilation and all 41 offline tests passed. The default Step 2 dry-run is ready with configuration hash `06db2931ba0024a4c85ab2242b60245779ca30c5aa70a8c70707650ffedccaab`.
+
+## 2026-08-24 Step 1 maxSize=500 mid-latitude pilot
+
+- At the user's direction, both `connectedPixelCount` calls changed from `maxSize=50` to `maxSize=500`; task descriptions, workflow ID, metadata, Step 2 integrity checks, tests and method documentation changed to `ms500`/`mmu_max_size=500`.
+- The two `ms50` tasks for tile `N40_E000` were cancelled before execution; neither target ImageCollection contained a child Asset.
+- The new read-only check passed with `exports_started=false`, 304 valid tiles, two non-empty serialized task configurations and configuration hash `33b97c487aa3117d2bc6fb988b0cb0490949bfcd26dbb3ba4355f5a658940542`.
+- The bounded dry-run selected only `N40_E000` (`0..10°E`, `40..50°N`) and expected two exports. The submitted `ms500` tasks are `GOKSPBE5OBKNZT4VTS2BCIPQ` (3 m) and `MVMAQ44BBUC4RWCORT6OFJ7S` (5 m); both were `READY` at the first monitor pass.
+- Registry: `D:\实验复现\Globaltreeline_artifacts\20260824-step1-ms500-midlat-pilot\tasks\20260824T141110Z-step1-ms500-midlat-N40_E000.json`.
 
 ## Current maintained implementation (2026-08-24)
 

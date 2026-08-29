@@ -20,7 +20,7 @@
 
 每个 IMAGE 必须非空并包含顺序固定的 `tree_2000`、`tree_2020` Byte 波段。固定格网为 `EPSG:4326`、`[0.00025,0,-180,0,-0.00025,90]`；金字塔策略为 `mode`。
 
-必备属性：`canopy_threshold_m`、`mmu_max_size=50`、`mmu_area_m2=5000`、`mmu_connectivity=8`、`mmu_method=JRC_sequence_modified_maxSize50`、两个源 Asset、`tile_id`、`bbox`、格网、`configuration_hash`、`implementation_sha256`、run label 和 Git commit。
+必备属性：`canopy_threshold_m`、`mmu_max_size=500`、`mmu_area_m2=5000`、`mmu_connectivity=8`、`mmu_method=JRC_sequence_maxSize500`、两个源 Asset、`tile_id`、`bbox`、格网、`configuration_hash`、`implementation_sha256`、run label 和 Git commit。
 
 ## Step 2 输入
 
@@ -59,4 +59,4 @@ projects/ee-alpine-506212/assets/Treeline_QA30m_Collection
 
 ## 完整性门禁
 
-Step 2 必须拒绝以下任一情况：3/5 m 瓦片集合不一致、缺少任一年波段、空 Asset、`mmu_max_size` 非50、哈希或格网混合、重复/失败瓦片、当前山体需要的瓦片不在清单、分析 TABLE 类型/ID/唯一键不满足契约。
+Step 2 必须拒绝以下任一情况：3/5 m 瓦片集合不一致、缺少任一年波段、空 Asset、`mmu_max_size` 非500、哈希或格网混合、重复/失败瓦片、当前山体需要的瓦片不在清单、分析 TABLE 类型/ID/唯一键不满足契约。

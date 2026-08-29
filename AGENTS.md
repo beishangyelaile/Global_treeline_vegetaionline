@@ -42,8 +42,8 @@ gee/runs/2026824/code_step2_gmba_treeline.py
 - 保留 GLAD 有效掩膜；不得把覆盖范围外无条件恢复为 0。
 - GMBA Basic 只筛选需要导出的 10°×10°瓦片，不能裁剪或掩膜森林计算图。
 - 固定执行 JRC 式顺序：第一次八邻域计数 → 填充面积 `<=5000 m²` 的非森林小间隙 → 第二次八邻域计数 → 保留面积 `>=5000 m²` 的森林。
-- 面积固定为 `connectedPixelCount × ee.Image.pixelArea()`，两次 `maxSize=50`；不使用对象标签/对象内面积归约，也不保留 `maxSize=500` 方案。
-- 这只采用 JRC 的顺序、八邻域和 0.5 ha 规则；JRC 公开源码使用 `maxSize=500`，本项目修改为 50，且森林定义不同，不能称为参数完全复现。
+- 面积固定为 `connectedPixelCount × ee.Image.pixelArea()`，两次 `maxSize=500`；不使用对象标签/对象内面积归约，也不保留 `maxSize=50` 方案。
+- 处理顺序、八邻域、0.5 ha 规则和 `maxSize=500` 与 JRC 公开源码一致，但本项目的输入、分辨率和森林定义不同，不能称为完整复现 JRC 森林产品。
 
 ### Step 2
 
