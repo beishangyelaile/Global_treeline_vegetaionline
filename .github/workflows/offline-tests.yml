@@ -39,8 +39,12 @@ jobs:
           PYTHONDONTWRITEBYTECODE: "1"
         run: python -m pytest -q -p no:cacheprovider
 
-      - name: Compile both maintained stages
-        run: python -m py_compile gee/runs/2026824/code_step1_jrc_forest_tiles.py gee/runs/2026824/code_step2_gmba_treeline.py
+      - name: Compile the three maintained entry points
+        run: |
+          python -m py_compile \
+            gee/runs/2026824/code_step1_jrc_forest_tiles.py \
+            gee/runs/2026824/code_step2_gmba_treeline.py \
+            gee/runs/2026824/code_step2b_treeline1km_from_30m.py
 
       - name: Validate the offline Step 1 plan
         shell: bash
@@ -52,7 +56,7 @@ jobs:
             --max-tiles 1 \
           | python -c 'import json, sys; plan=json.load(sys.stdin); assert plan["ready"] is True; assert plan["missing_requirements"] == []; assert plan["expected_task_count"] == 2'
 
-      - name: Validate the offline Step 2 plan
+      - name: Validate the offline Step 2A plan
         shell: bash
         run: |
           python gee/runs/2026824/code_step2_gmba_treeline.py \
@@ -60,4 +64,14 @@ jobs:
             --project test-project \
             --step1-manifest tests/fixtures/step1_tiles_minimal.json \
             --max-mountains 10 \
-          | python -c 'import json, sys; plan=json.load(sys.stdin); assert plan["ready"] is True; assert plan["missing_requirements"] == []; assert plan["expected_task_count"] == 30'
+          | python -c 'import json, sys; plan=json.load(sys.stdin); assert plan["ready"] is True; assert plan["missing_requirements"] == []; assert plan["products"] == ["treeline30m", "qa30m"]; assert plan["expected_task_count"] == 20'
+
+      - name: Validate the offline Step 2B plan
+        shell: bash
+        run: |
+          python gee/runs/2026824/code_step2b_treeline1km_from_30m.py \
+            --dry-run \
+            --project test-project \
+            --source-registry tests/fixtures/step2a_registry_minimal.json \
+            --mountain-ids 11158 \
+          | python -c 'import json, sys; plan=json.load(sys.stdin); assert plan["workflow"] == "step2b-materialized-treeline30m-to-30arcsec-v2"; assert plan["mountain_ids"] == ["11158"]; assert plan["expected_task_count"] == 1; assert plan["eligibility_requires_online_check"] is True; assert plan["exports_started"] is False'
