@@ -89,6 +89,8 @@ treeline_2020_h5m_m
 
 2026-08-31 只读验收中，原 100 山体批次的 8 个失败均为 direct 1 km OOM，100 个 30 m 来源全部有效。三个 direct 成功山体的 v1/v2 有效格和数值存在差异；9 个随机 30 arc-second 格按细像元与目标格的显式相交面积独立复算，最大高程误差约 `1.003e-4 m`、最大变化率误差约 `5.016e-6 m/yr`，符合 Float32 容差。
 
+GMBA 10067 的物化后 A/B 进一步排除了聚合常量差异：legacy direct 与 Step 2B 均使用 `bestEffort=False`、`maxPixels=2048`，但仍不等价。只读投影探针显示，direct 的均值输入继承 AW3D30 1 arc-second 默认格网，而 Step 2B 输入是导出后固定的全局对齐 0.00025°格网；两者进入同一 30 arc-second 目标格的源像元支持和权重不同。因此 direct 仅是旧路径对照，不能替代从正式物化 30 m 产品生成的 Step 2B 结果。
+
 ## 输出与 QA
 
 - `treeline30m`：3/5 m × 2000/2020 树线高程。
