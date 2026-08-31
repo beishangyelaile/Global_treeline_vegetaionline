@@ -19,7 +19,7 @@ Step 2B gee/runs/2026824/code_step2b_treeline1km_from_30m.py
 
 Step 1 固定使用严格 `>3 m` 主阈值和 `>5 m` 敏感性阈值。MMU 采用 JRC GFC2020 v2 的处理顺序、八邻域、0.5 ha 规则和 `maxSize=500`；当前输入仍是约 30 m GLAD 冠层高度，而不是 JRC 10 m 森林土地利用产品。因此不得称为森林定义或产品层面的完整 JRC 复现。
 
-Step 2A 默认读取 `projects/ee-wsc/assets/Alpine/GMBA_Sayre`。该 TABLE 仅保留 `hm_fraction >=0.50` 且 `tree_fraction <=0.90` 的 GMBA Basic；树木覆盖率来自 ESA WorldCover 10 m 2021（`ESA/WorldCover/v200`，`Map=10`）。Asset 几何仍是入选山体的完整 GMBA Basic 范围，不是 Sayre 像元交集。Step 2A 默认只提交 `treeline30m + qa30m`；待 30 m 完成并验收后，Step 2B 才单独生成 1 km。
+Step 2A 默认读取 `projects/ee-wsc/assets/Alpine/GMBA_Sayre`。该 TABLE 仅保留 `hm_fraction >=0.50` 且 `tree_fraction <=0.90` 的 GMBA Basic；树木覆盖率来自 ESA WorldCover 10 m 2021（`ESA/WorldCover/v200`，`Map=10`）。Asset 几何仍是入选山体的完整 GMBA Basic 范围，不是 Sayre 像元交集。Step 2A 默认只提交 `treeline30m + qa30m`；待 30 m 完成并验收后，Step 2B 才单独生成 1 km。三个默认输出集合均使用 `_v2` 后缀。
 
 ## 环境与离线测试
 
@@ -67,6 +67,6 @@ python .\gee\runs\2026824\code_step2b_treeline1km_from_30m.py `
   --max-mountains 10
 ```
 
-`--dry-run` 不联网。`--diagnose`/`--check` 只读并序列化计算图或生成本地报告，不启动任务。只有显式 `--export` 能到达 `task.start()`；所有导出必须先通过来源、清单、目标集合、已有任务、哈希和队列保护。旧 direct 1 km 只能单独显式对照，不能与 Step 2A 产品同批。
+`--dry-run` 不联网。`--diagnose`/`--check` 只读并序列化计算图或生成本地报告，不启动任务。只有显式 `--export` 能到达 `task.start()`；所有导出必须先通过来源、清单、目标集合、已有任务、哈希和队列保护。旧 direct 1 km 通常只能单独显式对照；仅 `--allow-direct-1km-ab` 可在恰好一个山体上同步提交三产品，用于受控 A/B。
 
 详细方法见 [`METHOD_GMBA_REVISED.md`](gee/runs/2026821/METHOD_GMBA_REVISED.md)，运行命令见 [`RUN_REGION.md`](gee/runs/2026821/RUN_REGION.md)，数据层契约见 [`DATA_LAYER_REGION.md`](gee/runs/2026821/DATA_LAYER_REGION.md)。维护规范见 [`CONTRIBUTING.md`](CONTRIBUTING.md)。

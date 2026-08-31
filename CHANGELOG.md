@@ -21,8 +21,9 @@
 - Step 2 `--check` 改用紧凑 Earth Engine 表达式序列化，避免把共享计算图递归展开为超大字符串；仍不启动导出任务。
 - Step 2 从 `GMBA_V2_ID` 派生运行键，新增 `hm_fraction`、`tree_fraction` QA/元数据，并在 check/export 前复核 TABLE schema、唯一性和阈值。
 - Step 2 的 QA 波段验收顺序与实际组装顺序统一：`hm_fraction`、`tree_fraction` 位于 `non_valley` 之前；计算图和既有 Asset 内容不变。
-- Step 2A 的 `--export-products` 默认改为 `treeline30m qa30m`；旧 direct `treeline1km` 仅允许单独显式选择，不能与 Step 2A 产品同批。
-- Step 2B 固定从已完成且严格验收的 `treeline30m` 一次性聚合四带，使用 `bestEffort=False`、`maxPixels=2048` 和独立聚合哈希/子 Asset 名；`--diagnose`、`--check` 不启动任务，`--export` 必须显式有界。
+- Step 2A 的 `--export-products` 默认改为 `treeline30m qa30m`；旧 direct `treeline1km` 通常仅允许单独显式选择。受保护的 `--allow-direct-1km-ab` 例外必须恰好选择三产品且 `--max-mountains 1`。
+- Step 2A legacy direct 与 Step 2B 的 1 km 聚合均固定为 `bestEffort=False`、`maxPixels=2048`；Step 2B 从已完成且严格验收的 `treeline30m` 一次性聚合四带，并使用独立聚合哈希/子 Asset 名。
+- Step 2A/Step 2B 默认输出集合切换到三个 `_v2` ImageCollection；A/B 比较在目标存在时读取实际 Step 2B Asset，并分别报告六波段完整案例与逐波段成对有效区。
 - CI dry-run 同时验证两个新入口，仍保持完全离线。
 
 ### Removed

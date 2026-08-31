@@ -51,7 +51,7 @@ tree_fraction = WorldCover Class 10 tree_area_km2 / gmba_area_km2 <= 0.90
 
 | 角色 | Asset | 契约 |
 | --- | --- | --- |
-| 物化 30 m 树线 | `projects/ee-alpine-506212/assets/Treeline_30m_Collection/<child>` | 对应任务为 `COMPLETED`；IMAGE 非空；四个固定 Float 波段顺序一致；所有波段同一 0.00025°全局对齐格网；mountain ID、源 Step 2 哈希、run label、Git commit 和 child 名匹配 |
+| 物化 30 m 树线 | `projects/ee-alpine-506212/assets/Treeline_30m_Collection_v2/<child>` | 对应任务为 `COMPLETED`；IMAGE 非空；四个固定 Float 波段顺序一致；所有波段同一 0.00025°全局对齐格网；mountain ID、源 Step 2 哈希、run label、Git commit 和 child 名匹配 |
 | 原任务 registry | 本地 JSON | 只读；最新远端状态优先于提交时快照；不得覆盖或用普通 Step 2 `--resume` 恢复 OOM direct 1 km 图 |
 
 Step 2B 不读取 Step 1 森林集合、WorldCover、温度、DEM 或 landform。四个 30 m 波段一次性聚合到固定 30 arc-second 格网，`bestEffort=False`、`maxPixels=2048`。
@@ -61,9 +61,9 @@ Step 2B 不读取 Step 1 森林集合、WorldCover、温度、DEM 或 landform�
 目标集合固定为：
 
 ```text
-projects/ee-alpine-506212/assets/Treeline_30m_Collection
-projects/ee-alpine-506212/assets/Treeline_1km_Collection
-projects/ee-alpine-506212/assets/Treeline_QA30m_Collection
+projects/ee-alpine-506212/assets/Treeline_30m_Collection_v2
+projects/ee-alpine-506212/assets/Treeline_1km_Collection_v2
+projects/ee-alpine-506212/assets/Treeline_QA30m_Collection_v2
 ```
 
 每个山体的完整产品仍为一个 30 m 树线、一个 1 km 汇总和一个 30 m QA IMAGE。Step 2A 默认先生成 30 m 树线与 QA；Step 2B 仅在 30 m 完成并验收后生成新的 1 km child。旧 direct 1 km Asset 不覆盖、不删除，也不与 from-30m v2 混用为同一方法版本。

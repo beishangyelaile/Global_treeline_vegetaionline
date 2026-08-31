@@ -36,12 +36,12 @@ GLOBAL_TREE_3M = "projects/ee-alpine-506212/assets/Global_tree_3m"
 GLOBAL_TREE_5M = "projects/ee-alpine-506212/assets/Global_tree_5m"
 CHELSA_BIO01 = "projects/ee-wsc/assets/Alpine/CHELSA_bio01_1981-2010_V21"
 TREELINE30M_COLLECTION = (
-    "projects/ee-alpine-506212/assets/Treeline_30m_Collection"
+    "projects/ee-alpine-506212/assets/Treeline_30m_Collection_v2"
 )
 TREELINE1KM_COLLECTION = (
-    "projects/ee-alpine-506212/assets/Treeline_1km_Collection"
+    "projects/ee-alpine-506212/assets/Treeline_1km_Collection_v2"
 )
-QA30M_COLLECTION = "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection"
+QA30M_COLLECTION = "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection_v2"
 ANALYSIS_MOUNTAINS_ASSET = "projects/ee-wsc/assets/Alpine/GMBA_Sayre"
 WORLDCOVER_2021 = "ESA/WorldCover/v200"
 WORLDCOVER_BAND = "Map"
@@ -55,6 +55,8 @@ FINE_CRS = "EPSG:4326"
 FINE_TRANSFORM = [0.00025, 0, -180, 0, -0.00025, 90]
 CLIMATE_CRS = "EPSG:4326"
 CLIMATE_TRANSFORM = [1 / 120, 0, -180, 0, -1 / 120, 90]
+AGGREGATION_MAX_PIXELS = 2048
+AGGREGATION_BEST_EFFORT = False
 FOREST_MOSAIC_PROJECTION_PLACEMENT = (
     "after_mosaic_select_before_pixel_neighborhood"
 )
@@ -104,6 +106,14 @@ def build_parser() -> argparse.ArgumentParser:
         help=(
             "products to export; defaults to Step 2A treeline30m + qa30m; "
             "explicit treeline1km selection uses the legacy direct graph"
+        ),
+    )
+    parser.add_argument(
+        "--allow-direct-1km-ab",
+        action="store_true",
+        help=(
+            "allow the three-product direct-1km A/B bundle for exactly one "
+            "mountain; normal Step 2A runs must leave this disabled"
         ),
     )
 
@@ -216,6 +226,11 @@ def scientific_configuration(args: argparse.Namespace) -> Dict[str, object]:
         "minimum_elevation_difference_m": args.minimum_elevation_difference_m,
         "fine_grid": {"crs": FINE_CRS, "transform": list(FINE_TRANSFORM)},
         "climate_grid": {"crs": CLIMATE_CRS, "transform": list(CLIMATE_TRANSFORM)},
+        "treeline1km_aggregation": {
+            "reducer": "mean",
+            "max_pixels": AGGREGATION_MAX_PIXELS,
+            "best_effort": AGGREGATION_BEST_EFFORT,
+        },
         "export_products": list(args.export_products),
         "treeline1km_execution": (
             "legacy_direct_full_graph"
@@ -260,6 +275,7 @@ def resolved_plan(args: argparse.Namespace) -> Dict[str, object]:
         "forest_inputs": {"h3m": args.global_tree_3m, "h5m": args.global_tree_5m},
         "products": list(args.export_products),
         "legacy_direct_1km": "treeline1km" in args.export_products,
+        "direct_1km_ab_bundle": args.allow_direct_1km_ab,
         "expected_task_count": count * len(args.export_products),
         "configuration_hash": configuration_hash(args),
         "scientific_configuration": scientific_configuration(args),
@@ -827,9 +843,11 @@ def upper_edge_test(
 
 
 def aggregate_to_climate_grid(image: "ee.Image") -> "ee.Image":
-    return image.reduceResolution(ee.Reducer.mean(), maxPixels=4096).reproject(
-        ee.Projection(CLIMATE_CRS, CLIMATE_TRANSFORM)
-    )
+    return image.reduceResolution(
+        reducer=ee.Reducer.mean(),
+        bestEffort=AGGREGATION_BEST_EFFORT,
+        maxPixels=AGGREGATION_MAX_PIXELS,
+    ).reproject(ee.Projection(CLIMATE_CRS, CLIMATE_TRANSFORM))
 
 
 def add_band(base: Optional["ee.Image"], band: "ee.Image") -> "ee.Image":
@@ -1387,7 +1405,16 @@ def validate_args(parser: argparse.ArgumentParser, args: argparse.Namespace) -> 
         parser.error("--queue-safety-limit must be in [1,3000]")
     if len(set(args.export_products)) != len(args.export_products):
         parser.error("--export-products must not contain duplicates")
-    if "treeline1km" in args.export_products and len(args.export_products) != 1:
+    selected_products = set(args.export_products)
+    if args.allow_direct_1km_ab:
+        if selected_products != set(EXPORT_PRODUCTS):
+            parser.error(
+                "--allow-direct-1km-ab requires exactly "
+                "treeline30m treeline1km qa30m"
+            )
+        if args.max_mountains != 1:
+            parser.error("--allow-direct-1km-ab requires --max-mountains 1")
+    elif "treeline1km" in selected_products and len(selected_products) != 1:
         parser.error("legacy treeline1km must be selected alone")
     if args.window_radius_m != 150:
         parser.error("--window-radius-m is fixed at 150 (300 m window)")

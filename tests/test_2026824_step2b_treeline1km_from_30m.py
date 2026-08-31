@@ -137,6 +137,21 @@ class Step2BTests(unittest.TestCase):
     def setUpClass(cls) -> None:
         cls.module = load_module()
 
+    def test_v2_collections_are_the_defaults(self) -> None:
+        args = self.module.build_parser().parse_args(["--dry-run"])
+        self.assertEqual(
+            args.source_treeline30m_collection,
+            "projects/ee-alpine-506212/assets/Treeline_30m_Collection_v2",
+        )
+        self.assertEqual(
+            args.source_qa30m_collection,
+            "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection_v2",
+        )
+        self.assertEqual(
+            args.target_treeline1km_collection,
+            "projects/ee-alpine-506212/assets/Treeline_1km_Collection_v2",
+        )
+
     def test_dry_run_resolves_one_materialized_1km_task_without_network(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
             registry = Path(directory) / "source.json"
@@ -667,6 +682,95 @@ class Step2BTests(unittest.TestCase):
         size = self.module.serialized_export_expression_bytes(Task(expression))
         self.assertEqual(size, len('{"type":"Invocation"}'.encode("utf-8")))
         self.assertEqual(expression.calls, [(False, True)])
+
+    def test_comparison_reports_complete_case_and_per_band_validity(self) -> None:
+        source = inspect.getsource(self.module.compare_direct_and_materialized)
+        self.assertIn('"complete_case_all_six"', source)
+        self.assertIn('"per_band_pairwise"', source)
+        self.assertIn('"pairwise_valid_by_band"', source)
+
+    def test_post_export_comparison_receives_materialized_step2b_asset(self) -> None:
+        direct_destination = "projects/example/assets/direct/gmba_11158"
+        target_destination = "projects/example/assets/materialized/gmba_11158"
+        direct_record = {
+            "mountain_id": "11158",
+            "product": "treeline1km",
+            "destination": direct_destination,
+            "task_id": "TASK1K",
+        }
+        source_record = {
+            "mountain_id": "11158",
+            "product": "treeline30m",
+            "destination": "projects/example/assets/source/gmba_11158",
+            "task_id": "TASK30",
+        }
+        qa_record = {
+            "mountain_id": "11158",
+            "product": "qa30m",
+            "destination": "projects/example/assets/qa/gmba_11158",
+            "task_id": "TASKQA",
+        }
+        target_record = {
+            "mountain_id": "11158",
+            "source_treeline30m_asset": source_record["destination"],
+            "destination": target_destination,
+        }
+        materialized_info = {"name": target_destination, "type": "IMAGE"}
+        context = {
+            "registry": {
+                "tasks": [source_record, direct_record, qa_record],
+                "configuration_hash": "source-hash",
+            },
+            "statuses": {"TASK1K": {"id": "TASK1K", "state": "COMPLETED"}},
+            "direct_assets": {
+                direct_destination: {"name": direct_destination, "type": "IMAGE"}
+            },
+            "target_assets": {target_destination: materialized_info},
+            "records": [target_record],
+            "selected_mountain_ids": ["11158"],
+        }
+        args = self.module.build_parser().parse_args(
+            [
+                "--check",
+                "--source-registry",
+                "source.json",
+                "--mountain-ids",
+                "11158",
+            ]
+        )
+        captured = {}
+        replacements = {
+            "exact_analysis_geometry": lambda unused_args, unused_id: "region",
+            "compare_direct_and_materialized": (
+                lambda record, direct_info, region, target_info=None: captured.update(
+                    {
+                        "record": record,
+                        "direct_info": direct_info,
+                        "region": region,
+                        "target_info": target_info,
+                    }
+                )
+                or {"status": "compared", "mountain_id": "11158"}
+            ),
+            "independent_overlap_sample_check": (
+                lambda unused_record, unused_region: {
+                    "status": "passed",
+                    "mountain_id": "11158",
+                }
+            ),
+        }
+        originals = {name: getattr(self.module, name) for name in replacements}
+        for name, replacement in replacements.items():
+            setattr(self.module, name, replacement)
+        try:
+            comparisons, checks = self.module.run_read_only_comparisons(args, context)
+        finally:
+            for name, original in originals.items():
+                setattr(self.module, name, original)
+
+        self.assertEqual(comparisons[0]["status"], "compared")
+        self.assertEqual(checks[0]["status"], "passed")
+        self.assertIs(captured["target_info"], materialized_info)
 
     def test_export_requires_an_explicit_bounded_selection(self) -> None:
         with tempfile.TemporaryDirectory() as directory:

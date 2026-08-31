@@ -32,13 +32,13 @@ WORKFLOW = "step2b-materialized-treeline30m-to-30arcsec-v2"
 WORKLOAD_TAG = "globaltreeline-step2b"
 ADC_SCOPES = tuple(ee.oauth.SCOPES) if ee is not None else ()
 SOURCE_TREELINE30M_COLLECTION = (
-    "projects/ee-alpine-506212/assets/Treeline_30m_Collection"
+    "projects/ee-alpine-506212/assets/Treeline_30m_Collection_v2"
 )
 SOURCE_QA30M_COLLECTION = (
-    "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection"
+    "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection_v2"
 )
 TARGET_TREELINE1KM_COLLECTION = (
-    "projects/ee-alpine-506212/assets/Treeline_1km_Collection"
+    "projects/ee-alpine-506212/assets/Treeline_1km_Collection_v2"
 )
 ANALYSIS_MOUNTAINS_ASSET = "projects/ee-wsc/assets/Alpine/GMBA_Sayre"
 FINE_CRS = "EPSG:4326"
@@ -632,36 +632,60 @@ def explicit_overlap_weighted_means(
     }
 
 
+def validated_comparison_asset(
+    asset_info: Mapping[str, object], label: str
+) -> str:
+    asset_id = _asset_id(asset_info)
+    if asset_info.get("type") != "IMAGE":
+        raise ValueError(f"{label} comparison Asset is not an IMAGE: {asset_id}")
+    try:
+        size_bytes = int(asset_info.get("sizeBytes") or 0)
+    except (TypeError, ValueError) as exc:
+        raise ValueError(f"{label} comparison Asset has invalid sizeBytes") from exc
+    if size_bytes <= 0:
+        raise ValueError(f"{label} comparison Asset is empty: {asset_id}")
+    bands = [str(band.get("id") or "") for band in asset_info.get("bands", [])]
+    if bands != OUTPUT_BANDS:
+        raise ValueError(f"{label} comparison Asset bands do not match Step 2B output")
+    return asset_id
+
+
+def _band_dictionary(
+    raw: Mapping[str, object], *, integer: bool = False
+) -> Dict[str, object]:
+    if integer:
+        return {band: int(raw.get(band) or 0) for band in OUTPUT_BANDS}
+    return {band: raw.get(band) for band in OUTPUT_BANDS}
+
+
 def compare_direct_and_materialized(
     record: Mapping[str, object],
     direct_asset_info: Mapping[str, object],
     region: object,
+    materialized_asset_info: Optional[Mapping[str, object]] = None,
 ) -> Dict[str, object]:
-    direct_asset = _asset_id(direct_asset_info)
-    if direct_asset_info.get("type") != "IMAGE":
-        raise ValueError(f"direct comparison Asset is not an IMAGE: {direct_asset}")
-    try:
-        direct_size = int(direct_asset_info.get("sizeBytes") or 0)
-    except (TypeError, ValueError) as exc:
-        raise ValueError("direct comparison Asset has invalid sizeBytes") from exc
-    if direct_size <= 0:
-        raise ValueError(f"direct comparison Asset is empty: {direct_asset}")
-    direct_bands = [
-        str(band.get("id") or "")
-        for band in direct_asset_info.get("bands", [])
-    ]
-    if direct_bands != OUTPUT_BANDS:
-        raise ValueError("direct comparison Asset bands do not match Step 2B output")
+    direct_asset = validated_comparison_asset(direct_asset_info, "direct")
 
     source_asset = str(record["source_treeline30m_asset"])
     old = ee.Image(direct_asset).select(OUTPUT_BANDS)
-    new = build_treeline1km_from_30m(source_asset).select(OUTPUT_BANDS)
+    materialized_asset = None
+    if materialized_asset_info is None:
+        new = build_treeline1km_from_30m(source_asset).select(OUTPUT_BANDS)
+    else:
+        materialized_asset = validated_comparison_asset(
+            materialized_asset_info, "Step 2B materialized"
+        )
+        if materialized_asset != str(record["destination"]):
+            raise ValueError("Step 2B comparison Asset does not match planned destination")
+        new = ee.Image(materialized_asset).select(OUTPUT_BANDS)
     old_band_mask = old.mask().unmask(0, sameFootprint=False).gt(0)
     new_band_mask = new.mask().unmask(0, sameFootprint=False).gt(0)
+    pairwise_mask = old_band_mask.And(new_band_mask)
+    pairwise_difference = new.subtract(old).updateMask(pairwise_mask)
     old_joint = old_band_mask.reduce(ee.Reducer.min()).gt(0)
     new_joint = new_band_mask.reduce(ee.Reducer.min()).gt(0)
     joint_mask = old_joint.And(new_joint)
-    difference = new.subtract(old).updateMask(joint_mask)
+    complete_case_difference = new.subtract(old).updateMask(joint_mask)
     count_image = ee.Image.cat(
         [
             old_joint.selfMask().rename("direct_valid"),
@@ -677,21 +701,58 @@ def compare_direct_and_materialized(
         "maxPixels": 500_000,
         "tileScale": 2,
     }
-    values = ee.Dictionary(
+    raw_values = ee.Dictionary(
         {
-            "counts": count_image.reduceRegion(
-                reducer=ee.Reducer.count(), **reduce_kwargs
+            "complete_case_all_six": ee.Dictionary(
+                {
+                    "counts": count_image.reduceRegion(
+                        reducer=ee.Reducer.count(), **reduce_kwargs
+                    ),
+                    "mean_difference_new_minus_direct_by_band": (
+                        complete_case_difference.reduceRegion(
+                            reducer=ee.Reducer.mean(), **reduce_kwargs
+                        )
+                    ),
+                    "maximum_absolute_difference_by_band": (
+                        complete_case_difference.abs().reduceRegion(
+                            reducer=ee.Reducer.max(), **reduce_kwargs
+                        )
+                    ),
+                }
             ),
-            "mean_difference_new_minus_direct_by_band": difference.reduceRegion(
-                reducer=ee.Reducer.mean(), **reduce_kwargs
-            ),
-            "maximum_absolute_difference_by_band": difference.abs().reduceRegion(
-                reducer=ee.Reducer.max(), **reduce_kwargs
+            "per_band_pairwise": ee.Dictionary(
+                {
+                    "direct_valid_by_band": old_band_mask.selfMask().reduceRegion(
+                        reducer=ee.Reducer.count(), **reduce_kwargs
+                    ),
+                    "from30m_valid_by_band": new_band_mask.selfMask().reduceRegion(
+                        reducer=ee.Reducer.count(), **reduce_kwargs
+                    ),
+                    "pairwise_valid_by_band": pairwise_mask.selfMask().reduceRegion(
+                        reducer=ee.Reducer.count(), **reduce_kwargs
+                    ),
+                    "mask_mismatch_by_band": (
+                        old_band_mask.neq(new_band_mask).selfMask().reduceRegion(
+                            reducer=ee.Reducer.count(), **reduce_kwargs
+                        )
+                    ),
+                    "mean_difference_new_minus_direct_by_band": (
+                        pairwise_difference.reduceRegion(
+                            reducer=ee.Reducer.mean(), **reduce_kwargs
+                        )
+                    ),
+                    "maximum_absolute_difference_by_band": (
+                        pairwise_difference.abs().reduceRegion(
+                            reducer=ee.Reducer.max(), **reduce_kwargs
+                        )
+                    ),
+                }
             ),
         }
     ).getInfo()
-    counts = values.get("counts") or {}
-    values["counts"] = {
+    complete_case = raw_values.get("complete_case_all_six") or {}
+    counts = complete_case.get("counts") or {}
+    complete_case["counts"] = {
         "direct_valid": int(counts.get("direct_valid") or 0),
         "from30m_valid": int(counts.get("from30m_valid") or 0),
         "mask_mismatch": int(counts.get("mask_mismatch") or 0),
@@ -700,18 +761,43 @@ def compare_direct_and_materialized(
         "mean_difference_new_minus_direct_by_band",
         "maximum_absolute_difference_by_band",
     ):
-        raw = values.get(key) or {}
-        values[key] = {band: raw.get(band) for band in OUTPUT_BANDS}
+        complete_case[key] = _band_dictionary(complete_case.get(key) or {})
+    complete_case["validity_definition"] = "all_six_bands"
+
+    pairwise = raw_values.get("per_band_pairwise") or {}
+    for key in (
+        "direct_valid_by_band",
+        "from30m_valid_by_band",
+        "pairwise_valid_by_band",
+        "mask_mismatch_by_band",
+    ):
+        pairwise[key] = _band_dictionary(pairwise.get(key) or {}, integer=True)
+    for key in (
+        "mean_difference_new_minus_direct_by_band",
+        "maximum_absolute_difference_by_band",
+    ):
+        pairwise[key] = _band_dictionary(pairwise.get(key) or {})
+    pairwise["validity_definition"] = "same_band_pairwise_overlap"
+
     return {
         "status": "compared",
         "mountain_id": record["mountain_id"],
         "old_direct_asset": direct_asset,
-        "new_from30m_virtual_graph": True,
+        "new_from30m_asset": materialized_asset,
+        "new_from30m_virtual_graph": materialized_asset is None,
         "validity_definition": "all_six_bands",
         "bands": list(OUTPUT_BANDS),
         "grid": {"crs": CLIMATE_CRS, "transform": list(CLIMATE_TRANSFORM)},
         "limits": {"max_pixels": 500_000, "tile_scale": 2},
-        **values,
+        "counts": complete_case["counts"],
+        "mean_difference_new_minus_direct_by_band": complete_case[
+            "mean_difference_new_minus_direct_by_band"
+        ],
+        "maximum_absolute_difference_by_band": complete_case[
+            "maximum_absolute_difference_by_band"
+        ],
+        "complete_case_all_six": complete_case,
+        "per_band_pairwise": pairwise,
     }
 
 
@@ -1661,6 +1747,7 @@ def run_read_only_comparisons(
     grouped = source_records_by_mountain(registry)
     statuses = context["statuses"]
     direct_assets = context["direct_assets"]
+    target_assets = context["target_assets"]
     records_by_mountain = {
         str(record["mountain_id"]): record for record in context["records"]
     }
@@ -1714,7 +1801,10 @@ def run_read_only_comparisons(
         record = records_by_mountain[mountain_id]
         geometry = exact_analysis_geometry(args, mountain_id)
         comparison = compare_direct_and_materialized(
-            record, direct_info, geometry
+            record,
+            direct_info,
+            geometry,
+            target_assets.get(str(record["destination"])),
         )
         comparison["direct_task_id"] = direct_status["task_id"]
         comparisons.append(comparison)

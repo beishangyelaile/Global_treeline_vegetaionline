@@ -65,6 +65,21 @@ class Step2TreelineTests(unittest.TestCase):
         self.assertEqual(source.count(".setDefaultProjection(projection)"), 2)
         self.assertNotIn(".reproject(", source)
 
+    def test_v2_output_collections_are_the_defaults(self) -> None:
+        args = self.module.build_parser().parse_args(["--dry-run"])
+        self.assertEqual(
+            args.treeline30m_collection,
+            "projects/ee-alpine-506212/assets/Treeline_30m_Collection_v2",
+        )
+        self.assertEqual(
+            args.treeline1km_collection,
+            "projects/ee-alpine-506212/assets/Treeline_1km_Collection_v2",
+        )
+        self.assertEqual(
+            args.qa30m_collection,
+            "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection_v2",
+        )
+
     def test_forest_mosaics_set_the_fine_default_projection_before_edges(self) -> None:
         events = []
 
@@ -147,6 +162,55 @@ class Step2TreelineTests(unittest.TestCase):
             },
         )
         self.assertIn("set_fine_default_projection", configuration["edge_order"])
+
+    def test_legacy_1km_aggregation_matches_step2b_limits(self) -> None:
+        events = []
+
+        class FakeImage:
+            def reduceResolution(self, **kwargs):
+                events.append(("reduceResolution", kwargs))
+                return self
+
+            def reproject(self, projection):
+                events.append(("reproject", projection))
+                return self
+
+        class FakeReducer:
+            @staticmethod
+            def mean():
+                return "mean"
+
+        class FakeEE:
+            Reducer = FakeReducer
+
+            @staticmethod
+            def Projection(crs, transform):
+                return (crs, tuple(transform))
+
+        original_ee = self.module.ee
+        self.module.ee = FakeEE
+        try:
+            output = self.module.aggregate_to_climate_grid(FakeImage())
+        finally:
+            self.module.ee = original_ee
+
+        self.assertIsInstance(output, FakeImage)
+        self.assertEqual(
+            events,
+            [
+                (
+                    "reduceResolution",
+                    {"reducer": "mean", "bestEffort": False, "maxPixels": 2048},
+                ),
+                (
+                    "reproject",
+                    (
+                        self.module.CLIMATE_CRS,
+                        tuple(self.module.CLIMATE_TRANSFORM),
+                    ),
+                ),
+            ],
+        )
 
     def test_analysis_asset_and_selection_thresholds_are_fixed(self) -> None:
         self.assertEqual(
@@ -360,6 +424,57 @@ class Step2TreelineTests(unittest.TestCase):
         self.assertNotEqual(result.returncode, 0)
         self.assertIn(
             "legacy treeline1km must be selected alone",
+            result.stderr,
+        )
+
+    def test_single_mountain_ab_bundle_can_explicitly_select_all_products(self) -> None:
+        result = run_cli(
+            "--dry-run",
+            "--max-mountains",
+            "1",
+            "--allow-direct-1km-ab",
+            "--export-products",
+            "treeline30m",
+            "treeline1km",
+            "qa30m",
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        payload = json.loads(result.stdout)
+        self.assertEqual(
+            payload["products"], ["treeline30m", "treeline1km", "qa30m"]
+        )
+        self.assertEqual(payload["expected_task_count"], 3)
+        self.assertTrue(payload["direct_1km_ab_bundle"])
+
+    def test_direct_1km_ab_bundle_is_restricted_to_one_mountain(self) -> None:
+        result = run_cli(
+            "--dry-run",
+            "--max-mountains",
+            "2",
+            "--allow-direct-1km-ab",
+            "--export-products",
+            "treeline30m",
+            "treeline1km",
+            "qa30m",
+        )
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "--allow-direct-1km-ab requires --max-mountains 1",
+            result.stderr,
+        )
+
+    def test_direct_1km_ab_bundle_requires_exactly_all_three_products(self) -> None:
+        result = run_cli(
+            "--dry-run",
+            "--max-mountains",
+            "1",
+            "--allow-direct-1km-ab",
+            "--export-products",
+            "treeline1km",
+        )
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "--allow-direct-1km-ab requires exactly treeline30m treeline1km qa30m",
             result.stderr,
         )
 

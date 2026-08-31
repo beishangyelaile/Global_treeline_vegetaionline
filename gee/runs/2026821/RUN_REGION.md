@@ -82,7 +82,7 @@ python .\gee\runs\2026824\code_step2_gmba_treeline.py `
   --mountain-offset 0
 ```
 
-确认 `products=[treeline30m,qa30m]`、任务数为山体数乘 2。旧 direct `treeline1km` 只能用 `--export-products treeline1km` 单独显式选择作对照；与其他产品同时选择会在联网前拒绝。
+确认 `products=[treeline30m,qa30m]`、任务数为山体数乘 2。旧 direct `treeline1km` 通常只能用 `--export-products treeline1km` 单独显式选择作对照。唯一例外是受控单山体 A/B：必须同时给出 `--allow-direct-1km-ab --max-mountains 1 --export-products treeline30m treeline1km qa30m`；缺少任一产品或选择多于一个山体都会在联网前拒绝。Step 2A legacy 与 Step 2B 的聚合参数均为 `bestEffort=False`、`maxPixels=2048`。
 
 ## 6. Step 2A 完整性与单山体 check
 

@@ -74,7 +74,7 @@ TABLE 几何保留入选山体的完整 GMBA Basic，不是 Sayre 31/32 裁剪�
 
 ## Step 2B：物化后 30 arc-second 聚合
 
-正式 1 km 产品不再默认从 Step 2A 的完整未物化图直接导出。Step 2A 默认只提交 `treeline30m` 和 `qa30m`；等待对应 30 m 任务完成并通过 Asset 类型、非空、四波段、格网与 provenance 门禁后，Step 2B 才能由第二次显式命令构图。旧 direct 1 km 只保留为单独显式对照入口。
+正式 1 km 产品不再默认从 Step 2A 的完整未物化图直接导出。Step 2A 默认只提交 `treeline30m` 和 `qa30m`；等待对应 30 m 任务完成并通过 Asset 类型、非空、四波段、格网与 provenance 门禁后，Step 2B 才能由第二次显式命令构图。旧 direct 1 km 通常只保留为单独显式对照入口；受保护的 `--allow-direct-1km-ab` 仅允许恰好一个山体同时提交三产品。该 direct 聚合与 Step 2B 同样固定为 `bestEffort=False`、`maxPixels=2048`。
 
 Step 2B 固定选择：
 
