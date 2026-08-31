@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
-  "validation_id": "upstream-gmba-sayre-step1-20260831-v1",
-  "validated_at_utc": "2026-08-31T08:25:54.529114+00:00",
+  "validation_id": "upstream-gmba-sayre-step1-20260831-v2",
+  "validated_at_utc": "2026-08-31T16:56:09.0616769Z",
   "upstream_identity": {
     "project": "ee-wsc",
     "science_source_sha256": "e111a64f945d88a9bca3e943e6b1701d6584da115ffef4a3b31a43f3ec26bd18",
@@ -49,7 +49,7 @@
       "temperature_offset": -273.15,
       "otsu_min_samples": 20,
       "otsu_max_pixels": 100000000.0,
-      "tile_scale": 4,
+      "tile_scale": 8,
       "strict_aw3d_native_only": false,
       "aggregation_max_pixels": 2048,
       "aggregation_best_effort": false,
@@ -110,7 +110,7 @@
     "execution_feasibility_verified": true,
     "scope": "representative_mountain",
     "mountain_id": "10067",
-    "source_step2_configuration_hash": "cca8f504c770d21441b5fed4a31cc097e5b4168474d6f3b5cabdf93a1350b740",
+    "source_step2_configuration_hash": "d49bd16592abfc9bc5654068a49d5da8e522f7718afcfc49ba02c33fa416134f",
     "thresholds": {
       "h3m": {
         "candidate_sample_count": 105.0392156862745,

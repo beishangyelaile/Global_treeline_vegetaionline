@@ -319,6 +319,14 @@ class Step2TreelineTests(unittest.TestCase):
             payload["upstream_identity"]["science_source_sha256"],
             self.module.validated_science_source_sha256(),
         )
+        self.assertEqual(
+            payload["validation_id"],
+            "upstream-gmba-sayre-step1-20260831-v2",
+        )
+        self.assertEqual(
+            payload["upstream_identity"]["parameters"]["tile_scale"],
+            8,
+        )
         self.assertEqual(payload["analysis_table"]["selected_feature_count"], 3115)
         self.assertEqual(
             payload["step1_integrity"]["all_analysis_mountain_count"],
@@ -458,9 +466,11 @@ class Step2TreelineTests(unittest.TestCase):
         self.assertNotIn("buffer(", source)
 
     def test_otsu_contract_is_pooled_and_has_no_global_fallback(self) -> None:
-        configuration = self.module.scientific_configuration(
-            self.module.build_parser().parse_args(["--dry-run"])
-        )
+        args = self.module.build_parser().parse_args(["--dry-run"])
+        configuration = self.module.scientific_configuration(args)
+        temperature_source = inspect.getsource(self.module.temperature_graph)
+        self.assertEqual(args.tile_scale, 8)
+        self.assertIn("tileScale=args.tile_scale", temperature_source)
         self.assertEqual(configuration["otsu_scope"], "per_gmba_threshold")
         self.assertEqual(configuration["otsu_year_pooling"], "2000_2020")
         self.assertTrue(configuration["otsu_native_cells_counted_once"])

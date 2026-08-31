@@ -199,7 +199,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--temperature-offset", type=float, default=-273.15)
     parser.add_argument("--otsu-min-samples", type=int, default=20)
     parser.add_argument("--otsu-max-pixels", type=float, default=1e8)
-    parser.add_argument("--tile-scale", type=float, default=4)
+    parser.add_argument("--tile-scale", type=float, default=8)
     parser.add_argument("--strict-aw3d-native-only", action="store_true")
     return parser
 

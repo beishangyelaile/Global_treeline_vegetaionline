@@ -61,6 +61,7 @@ jobs:
         run: |
           python gee/runs/2026824/code_step2_gmba_treeline.py \
             --dry-run \
+            --revalidate-upstream \
             --project test-project \
             --step1-manifest tests/fixtures/step1_tiles_minimal.json \
             --max-mountains 10 \
