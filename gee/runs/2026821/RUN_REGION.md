@@ -77,23 +77,26 @@ python .\gee\runs\2026824\code_step2_gmba_treeline.py `
   --dry-run `
   --project ee-wsc `
   --analysis-mountains-asset projects/ee-wsc/assets/Alpine/GMBA_Sayre `
-  --step1-manifest D:\实验复现\Globaltreeline_artifacts\<run>\step1_tile_manifest.json `
+  --step1-manifest D:\实验复现\Globaltreeline_artifacts\20260824-step1-ms500-midlat-pilot\step1_tile_manifest_ms500.json `
   --max-mountains 1 `
   --mountain-offset 0
 ```
 
 确认 `products=[treeline30m,qa30m]`、任务数为山体数乘 2。旧 direct `treeline1km` 通常只能用 `--export-products treeline1km` 单独显式选择作对照。唯一例外是受控单山体 A/B：必须同时给出 `--allow-direct-1km-ab --max-mountains 1 --export-products treeline30m treeline1km qa30m`；缺少任一产品或选择多于一个山体都会在联网前拒绝。Step 2A legacy 与 Step 2B 的聚合参数均为 `bestEffort=False`、`maxPixels=2048`。
 
-## 6. Step 2A 完整性与单山体 check
+默认固定凭据为 `gee/runs/2026824/step2_validated_upstream_20260831.json`，ID 为 `upstream-gmba-sayre-step1-20260831-v1`。它已固定：3,115 个完整且唯一的 Basic 山体、无阈值违规；Step 1 h3m/h5m 各 304 个同哈希有效瓦片；全部 3,115 个山体需要的 182 个瓦片均在 manifest 中；GMBA 10067 的 h3m/h5m deep check 均有效。普通 dry-run/check/export 不加 `--revalidate-upstream` 或 `--deep-check`，本地身份完全匹配后直接复用这些事实。
 
-该命令读取两个森林集合和正式分析 TABLE，核对完整性并序列化 30 m 与 QA 两个输出图，不启动任务：
+## 6. Step 2A 一次性完整重验与 deep check
+
+仅当上游 Asset 被覆盖、manifest/科学参数/相关代码改变、固定事实受到怀疑时运行；它不是每批导出的前置步骤。该命令读取两个森林集合和正式分析 TABLE，重新核对完整性，重新计算当前选择的瓦片覆盖并执行 representative Otsu，同时序列化 30 m 与 QA 两个输出图，不启动任务：
 
 ```powershell
 python .\gee\runs\2026824\code_step2_gmba_treeline.py `
   --check `
+  --revalidate-upstream `
   --project ee-wsc `
   --analysis-mountains-asset projects/ee-wsc/assets/Alpine/GMBA_Sayre `
-  --step1-manifest D:\实验复现\Globaltreeline_artifacts\<run>\step1_tile_manifest.json `
+  --step1-manifest D:\实验复现\Globaltreeline_artifacts\20260824-step1-ms500-midlat-pilot\step1_tile_manifest_ms500.json `
   --max-mountains 1 `
   --check-mountain-id <GMBA_ID> `
   --deep-check `
@@ -102,6 +105,8 @@ python .\gee\runs\2026824\code_step2_gmba_treeline.py `
 
 验收：分析 TABLE 为 3,115 个唯一 Basic 山体、无阈值违规；`status=step2-integrity-and-graph-preflight-passed`、`exports_started=false`、`step1_integrity.ready=true`、两个任务配置非空、Otsu `evaluated` 且有效。
 
+`--revalidate-upstream` 只在本次进程中改走实时门禁，不会自动重写仓库凭据。要建立新基线，必须归档新的只读报告，再审查并更新固定凭据及其测试。
+
 ## 7. Step 2A 有界导出（需明确授权）
 
 ```powershell
@@ -109,7 +114,7 @@ python .\gee\runs\2026824\code_step2_gmba_treeline.py `
   --export `
   --project ee-wsc `
   --analysis-mountains-asset projects/ee-wsc/assets/Alpine/GMBA_Sayre `
-  --step1-manifest D:\实验复现\Globaltreeline_artifacts\<run>\step1_tile_manifest.json `
+  --step1-manifest D:\实验复现\Globaltreeline_artifacts\20260824-step1-ms500-midlat-pilot\step1_tile_manifest_ms500.json `
   --max-mountains <N> `
   --mountain-offset <OFFSET> `
   --run-label <NEW_STEP2A_RUN_LABEL> `
@@ -118,6 +123,8 @@ python .\gee\runs\2026824\code_step2_gmba_treeline.py `
 ```
 
 每个山体默认产生 2 个任务。相同配置中断后可加 `--resume`；不同哈希必须使用新 Asset 名和 run label。
+
+在固定上游未变化时不要给批量导出增加 `--revalidate-upstream`；启动过程仍会实时解析所选山体、检查 `_v2` 目标冲突、远程任务描述和队列上限，但不会重复 TABLE 全表统计、608 个 Step 1 child Asset 逐项读取、648 个候选瓦片覆盖计算或 deep check。
 
 ## 8. 等待并验收 30 m
 

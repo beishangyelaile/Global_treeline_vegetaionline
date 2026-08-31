@@ -33,6 +33,7 @@ CI 只执行离线测试，不保存 Earth Engine 凭据、不访问私有 Asset
 
 - Step 1 算法、源数据、MMU、格网或波段变化时，使用新的 Step 1 `configuration_hash`，重新生成全部所需瓦片；不得混合不同哈希。
 - Step 2 研究域、边缘、Otsu、局地检验或输出 schema 变化时，使用新的 run label 和 Step 2 哈希。
+- `step2_validated_upstream_20260831.json` 只适用于其精确绑定的 Asset ID、Step 1 manifest、参数及科学/验证逻辑。任一绑定项变化后，先执行 `--check --revalidate-upstream --deep-check` 并归档证据，再审查更新凭据；不得仅为绕过不匹配而手工改哈希。
 - Step 2B 聚合方法、输入/输出格网、`maxPixels` 或实现变化时，使用新的 Step 2B run label、实现 SHA 和聚合哈希；源 Step 2 哈希必须另存，不得冒充新哈希。
 - 同步更新 `docs/research/method_decisions.md`、`METHOD_GMBA_REVISED.md` 和 `notes/reproduction-log.md`。
 - 新代码不得用 `--resume` 继承旧哈希 Asset，不得用覆盖写入作为常规恢复方式。
@@ -44,8 +45,8 @@ Cloud Project 固定为 `ee-wsc`。推荐顺序：
 1. Step 1 离线 dry-run 和只读 check；
 2. 人工确认有效瓦片、纬度诊断、目标集合和任务数；
 3. 明确授权后执行有界 Step 1 导出，并验收两个集合；
-4. Step 1 全部完成且完整性检查通过；
-5. Step 2A 单山体只读 check；
+4. Step 1 全部完成且一次性完整性检查通过，当前固定上游凭据与输入精确匹配；
+5. 上游和科学图未变化时，后续 Step 2A 批次只需默认凭据 dry-run；发生变化时才重新执行单山体 live/deep check；
 6. 明确授权后执行有界 Step 2A 导出，等待并验收 30 m Asset；
 7. Step 2B 只读 diagnose/check；
 8. 明确授权后执行有界 Step 2B 导出。监控不得自动启动下一阶段。

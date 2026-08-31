@@ -21,6 +21,8 @@ Step 1 固定使用严格 `>3 m` 主阈值和 `>5 m` 敏感性阈值。MMU 采�
 
 Step 2A 默认读取 `projects/ee-wsc/assets/Alpine/GMBA_Sayre`。该 TABLE 仅保留 `hm_fraction >=0.50` 且 `tree_fraction <=0.90` 的 GMBA Basic；树木覆盖率来自 ESA WorldCover 10 m 2021（`ESA/WorldCover/v200`，`Map=10`）。Asset 几何仍是入选山体的完整 GMBA Basic 范围，不是 Sayre 像元交集。Step 2A 默认只提交 `treeline30m + qa30m`；待 30 m 完成并验收后，Step 2B 才单独生成 1 km。三个默认输出集合均使用 `_v2` 后缀。
 
+普通 Step 2A 批次默认复用仓库内的 [`step2_validated_upstream_20260831.json`](gee/runs/2026824/step2_validated_upstream_20260831.json)。脚本先在本地核对科学/验证逻辑指纹、正式 Step 1 manifest 哈希、输入 Asset ID 和全部固定参数；完全一致时，不再逐批重复分析 TABLE 聚合、608 个 Step 1 child Asset 检查、山体瓦片覆盖计算或 representative deep check。目标集合冲突、已有任务、队列上限、批次范围和导出配置仍实时检查。上游 Asset 内容、manifest、参数或相关代码发生变化时，必须显式使用 `--revalidate-upstream`；重新执行 Otsu deep check 还需在 `--check` 中同时给出 `--deep-check`。
+
 ## 环境与离线测试
 
 仓库依赖固定在 `requirements.txt` 和 `requirements-dev.txt`，CI 使用 Python 3.11.9 且不连接 Earth Engine：
@@ -52,7 +54,7 @@ python .\gee\runs\2026824\code_step2_gmba_treeline.py `
   --dry-run `
   --project ee-wsc `
   --analysis-mountains-asset projects/ee-wsc/assets/Alpine/GMBA_Sayre `
-  --step1-manifest D:\实验复现\Globaltreeline_artifacts\<run>\step1_tile_manifest.json `
+  --step1-manifest D:\实验复现\Globaltreeline_artifacts\20260824-step1-ms500-midlat-pilot\step1_tile_manifest_ms500.json `
   --max-mountains 10 `
   --mountain-offset 0
 ```
@@ -67,6 +69,6 @@ python .\gee\runs\2026824\code_step2b_treeline1km_from_30m.py `
   --max-mountains 10
 ```
 
-`--dry-run` 不联网。`--diagnose`/`--check` 只读并序列化计算图或生成本地报告，不启动任务。只有显式 `--export` 能到达 `task.start()`；所有导出必须先通过来源、清单、目标集合、已有任务、哈希和队列保护。旧 direct 1 km 通常只能单独显式对照；仅 `--allow-direct-1km-ab` 可在恰好一个山体上同步提交三产品，用于受控 A/B。
+`--dry-run` 不联网。`--diagnose`/`--check` 只读并序列化计算图或生成本地报告，不启动任务。只有显式 `--export` 能到达 `task.start()`；所有导出必须先通过固定上游凭据或显式在线重验，以及目标集合、已有任务、哈希和队列保护。旧 direct 1 km 通常只能单独显式对照；仅 `--allow-direct-1km-ab` 可在恰好一个山体上同步提交三产品，用于受控 A/B。
 
 详细方法见 [`METHOD_GMBA_REVISED.md`](gee/runs/2026821/METHOD_GMBA_REVISED.md)，运行命令见 [`RUN_REGION.md`](gee/runs/2026821/RUN_REGION.md)，数据层契约见 [`DATA_LAYER_REGION.md`](gee/runs/2026821/DATA_LAYER_REGION.md)。维护规范见 [`CONTRIBUTING.md`](CONTRIBUTING.md)。

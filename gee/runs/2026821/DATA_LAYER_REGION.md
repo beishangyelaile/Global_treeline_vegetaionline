@@ -72,6 +72,10 @@ Step 2A 输出记录 Step 1 两个输入集合、分析 TABLE、CHELSA、配置�
 
 ## 完整性门禁
 
-Step 2A 必须拒绝以下任一情况：3/5 m 瓦片集合不一致、缺少任一年波段、空 Asset、`mmu_max_size` 非500、哈希或格网混合、重复/失败瓦片、当前山体需要的瓦片不在清单、分析 TABLE 类型/ID/唯一键不满足契约。
+Step 2A 默认读取受版本控制的 `gee/runs/2026824/step2_validated_upstream_20260831.json`。该凭据绑定正式项目、分析 TABLE、两个 Step 1 集合、manifest 内容哈希、科学与完整性验证函数源码、全部输入数据/格网/阈值参数，并保存已通过的 TABLE、Step 1 全量完整性、全分析域瓦片覆盖和 representative deep check 事实。任一身份字段不一致时，必须在创建任务前拒绝旧凭据。
+
+凭据匹配时，Step 2A 不再逐批远程复查以下已确定事实：3/5 m 各 304 个瓦片、两年波段、非空 IMAGE、`mmu_max_size=500`、统一 Step 1 哈希/格网、全部 3,115 个山体所需 182 个瓦片无缺失、分析 TABLE 3,115 个完整唯一 Basic 记录，以及 GMBA 10067 的 h3m/h5m deep check 有效。`--revalidate-upstream` 恢复 TABLE、Step 1 inventory 和当前批次覆盖的实时门禁；`--check --revalidate-upstream --deep-check` 另恢复 Otsu 实算。
+
+该优化明确假设固定 ID 下的 GEE Asset 内容未被原地覆盖；本地代码无法廉价证明远端不可变性。若任何上游 Asset 被重建/覆盖、manifest 或绑定参数/代码变化，必须先实时重验并建立新凭据。无论使用哪种上游模式，输出集合类型与冲突、已有任务、队列限制、选择范围和配置哈希都不会被跳过。
 
 Step 2B 必须拒绝以下任一情况：源 30 m 任务未完成、Asset 缺失或为空、四带名称/顺序错误、CRS/分辨率/全局格网对齐错误、mountain ID/run label/配置哈希/provenance 不匹配；新目标同哈希仅可用 `--resume` 跳过，异哈希一律拒绝。

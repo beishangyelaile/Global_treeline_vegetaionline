@@ -39,6 +39,85 @@ def run_cli(*arguments: str) -> subprocess.CompletedProcess[str]:
     )
 
 
+def validated_upstream_fixture(module, directory: str):
+    root = Path(directory)
+    manifest = root / "step1.json"
+    receipt = root / "validated-upstream.json"
+    manifest.write_text(
+        json.dumps(
+            {
+                "project": "ee-wsc",
+                "gmba_asset": module.ANALYSIS_MOUNTAINS_ASSET,
+                "configuration_hash": "test-step1-hash",
+                "tiles": [
+                    {
+                        "tile_id": "N00_E000",
+                        "bbox": [0, 0, 10, 10],
+                    }
+                ],
+            }
+        ),
+        encoding="utf-8",
+    )
+    args = module.build_parser().parse_args(
+        [
+            "--dry-run",
+            "--project",
+            "ee-wsc",
+            "--step1-manifest",
+            str(manifest),
+            "--validated-upstream-receipt",
+            str(receipt),
+        ]
+    )
+    identity = module.validated_upstream_identity(args)
+    receipt.write_text(
+        json.dumps(
+            {
+                "schema_version": module.VALIDATED_UPSTREAM_SCHEMA_VERSION,
+                "validation_id": "test-validated-upstream",
+                "validated_at_utc": "2026-08-31T08:25:54+00:00",
+                "upstream_identity": identity,
+                "analysis_table": {
+                    "id": module.ANALYSIS_MOUNTAINS_ASSET,
+                    "type": "TABLE",
+                    "source_feature_count": 2,
+                    "complete_property_count": 2,
+                    "selected_feature_count": 2,
+                    "distinct_gmba_id_count": 2,
+                    "mapunit_histogram": {"Basic": 2},
+                    "below_minimum_hm_fraction_count": 0,
+                    "above_maximum_tree_fraction_count": 0,
+                },
+                "step1_integrity": {
+                    "ready": True,
+                    "errors": [],
+                    "expected_tile_count": 1,
+                    "h3m_tile_count": 1,
+                    "h5m_tile_count": 1,
+                    "configuration_hashes": ["test-step1-hash"],
+                    "all_analysis_mountain_count": 2,
+                    "all_analysis_required_tile_count": 1,
+                    "all_analysis_required_tile_ids_sha256": "test-tiles-hash",
+                    "missing_required_tile_ids": [],
+                },
+                "deep_check": {
+                    "status": "evaluated",
+                    "execution_feasibility_verified": True,
+                    "scope": "representative_mountain",
+                    "mountain_id": "10067",
+                    "thresholds": {
+                        "h3m": {"valid": 1},
+                        "h5m": {"valid": 1},
+                    },
+                },
+            }
+        ),
+        encoding="utf-8",
+    )
+    return args, manifest, receipt
+
+
 class Step2TreelineTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls) -> None:
@@ -227,6 +306,133 @@ class Step2TreelineTests(unittest.TestCase):
         self.assertIn('ee.Filter.gte("hm_fraction", MIN_HM_FRACTION)', selection_source)
         self.assertIn('ee.Filter.lte("tree_fraction", MAX_TREE_FRACTION)', selection_source)
         self.assertIn("add_analysis_keys", selection_source)
+
+    def test_repository_validated_upstream_receipt_matches_science_source(self) -> None:
+        receipt_path = self.module.VALIDATED_UPSTREAM_RECEIPT
+        self.assertTrue(receipt_path.is_file())
+        payload = json.loads(receipt_path.read_text(encoding="utf-8"))
+        self.assertEqual(
+            payload["schema_version"],
+            self.module.VALIDATED_UPSTREAM_SCHEMA_VERSION,
+        )
+        self.assertEqual(
+            payload["upstream_identity"]["science_source_sha256"],
+            self.module.validated_science_source_sha256(),
+        )
+        self.assertEqual(payload["analysis_table"]["selected_feature_count"], 3115)
+        self.assertEqual(
+            payload["step1_integrity"]["all_analysis_mountain_count"],
+            3115,
+        )
+        self.assertEqual(payload["step1_integrity"]["h3m_tile_count"], 304)
+        self.assertEqual(payload["step1_integrity"]["h5m_tile_count"], 304)
+        self.assertEqual(
+            payload["step1_integrity"]["all_analysis_required_tile_count"],
+            182,
+        )
+        self.assertTrue(
+            payload["deep_check"]["execution_feasibility_verified"]
+        )
+
+    def test_trusted_upstream_fast_path_is_local_and_auditable(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            args, _, _ = validated_upstream_fixture(self.module, directory)
+            originals = {
+                "getAsset": self.module.ee.data.getAsset,
+                "listAssets": self.module.ee.data.listAssets,
+                "FeatureCollection": self.module.ee.FeatureCollection,
+            }
+
+            def unexpected_remote_call(*unused_args, **unused_kwargs):
+                raise AssertionError("trusted receipt must skip remote upstream checks")
+
+            self.module.ee.data.getAsset = unexpected_remote_call
+            self.module.ee.data.listAssets = unexpected_remote_call
+            self.module.ee.FeatureCollection = unexpected_remote_call
+            try:
+                result = self.module.resolve_upstream_validation(
+                    args,
+                    [{"mountain_id": "10067", "mountain_key": "gmba_10067"}],
+                )
+            finally:
+                self.module.ee.data.getAsset = originals["getAsset"]
+                self.module.ee.data.listAssets = originals["listAssets"]
+                self.module.ee.FeatureCollection = originals["FeatureCollection"]
+
+        self.assertEqual(result["mode"], "trusted_receipt")
+        self.assertEqual(result["validation_id"], "test-validated-upstream")
+        self.assertTrue(result["step1_integrity"]["ready"])
+        self.assertEqual(
+            result["deep_check"]["scope"], "representative_mountain"
+        )
+
+    def test_trusted_upstream_rejects_changed_manifest_or_asset(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            args, manifest, _ = validated_upstream_fixture(self.module, directory)
+            manifest.write_text(
+                json.dumps(
+                    {
+                        "configuration_hash": "changed",
+                        "tiles": [{"tile_id": "N00_E000"}],
+                    }
+                ),
+                encoding="utf-8",
+            )
+            with self.assertRaisesRegex(ValueError, "trusted upstream receipt mismatch"):
+                self.module.validate_trusted_upstream_receipt(args)
+
+        with tempfile.TemporaryDirectory() as directory:
+            args, _, receipt = validated_upstream_fixture(self.module, directory)
+            payload = json.loads(receipt.read_text(encoding="utf-8"))
+            payload["analysis_table"]["complete_property_count"] = 1
+            receipt.write_text(json.dumps(payload), encoding="utf-8")
+            with self.assertRaisesRegex(
+                ValueError,
+                "analysis_table.complete_property_count",
+            ):
+                self.module.validate_trusted_upstream_receipt(args)
+
+        with tempfile.TemporaryDirectory() as directory:
+            args, _, _ = validated_upstream_fixture(self.module, directory)
+            args.global_tree_3m = "projects/example/assets/changed"
+            with self.assertRaisesRegex(ValueError, "trusted upstream receipt mismatch"):
+                self.module.validate_trusted_upstream_receipt(args)
+
+    def test_explicit_upstream_revalidation_keeps_full_remote_gates(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            args, _, _ = validated_upstream_fixture(self.module, directory)
+            args.revalidate_upstream = True
+            calls = []
+            replacements = {
+                "validate_analysis_table": lambda unused_args: calls.append("table")
+                or {"id": self.module.ANALYSIS_MOUNTAINS_ASSET},
+                "resolve_required_tile_ids": (
+                    lambda unused_args, unused_plan: calls.append("coverage")
+                    or ["N00_E000"]
+                ),
+                "run_step1_integrity_check": (
+                    lambda unused_args, required: calls.append(
+                        ("step1", tuple(required))
+                    )
+                    or {"ready": True}
+                ),
+            }
+            originals = {
+                name: getattr(self.module, name) for name in replacements
+            }
+            for name, replacement in replacements.items():
+                setattr(self.module, name, replacement)
+            try:
+                result = self.module.resolve_upstream_validation(
+                    args,
+                    [{"mountain_id": "10067", "mountain_key": "gmba_10067"}],
+                )
+            finally:
+                for name, original in originals.items():
+                    setattr(self.module, name, original)
+
+        self.assertEqual(result["mode"], "live_revalidation")
+        self.assertEqual(calls, ["table", "coverage", ("step1", ("N00_E000",))])
 
     def test_analysis_keys_are_derived_from_gmba_v2_id(self) -> None:
         source = inspect.getsource(self.module.add_analysis_keys)
@@ -487,6 +693,7 @@ class Step2TreelineTests(unittest.TestCase):
             )
             result = run_cli(
                 "--dry-run",
+                "--revalidate-upstream",
                 "--analysis-mountains-asset",
                 "projects/example/assets/filtered_gmba_basic",
                 "--step1-manifest",
@@ -495,7 +702,41 @@ class Step2TreelineTests(unittest.TestCase):
                 "4",
             )
         self.assertEqual(result.returncode, 0, result.stderr)
-        self.assertTrue(json.loads(result.stdout)["ready"])
+        payload = json.loads(result.stdout)
+        self.assertTrue(payload["ready"])
+        self.assertEqual(
+            payload["upstream_validation_mode"],
+            "live_revalidation",
+        )
+
+    def test_dry_run_accepts_matching_trusted_upstream_receipt(self) -> None:
+        with tempfile.TemporaryDirectory() as directory:
+            args, manifest, receipt = validated_upstream_fixture(
+                self.module,
+                directory,
+            )
+            result = run_cli(
+                "--dry-run",
+                "--project",
+                args.project,
+                "--step1-manifest",
+                str(manifest),
+                "--validated-upstream-receipt",
+                str(receipt),
+                "--max-mountains",
+                "4",
+            )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        payload = json.loads(result.stdout)
+        self.assertTrue(payload["ready"])
+        self.assertEqual(
+            payload["upstream_validation_mode"],
+            "trusted_receipt",
+        )
+        self.assertEqual(
+            payload["validated_upstream_id"],
+            "test-validated-upstream",
+        )
 
     def test_dry_run_can_select_two_export_products(self) -> None:
         result = run_cli(

@@ -10,6 +10,7 @@
 - 2026824 离线契约测试、Step 1 瓦片清单、Step 2A 森林产品门禁和 Step 2B 源 Asset/投影/provenance 门禁。
 - Step 2B 原批次只读诊断、目标冲突检查、direct-v1/from-30m-v2 比较和显式细像元相交面积加权核验。
 - 三阶段数据层文档和 GEE 入口索引。
+- Step 2A 受版本控制的上游验证凭据，固定已验收的分析 TABLE、Step 1 完整性、全分析域瓦片覆盖和 representative deep check 事实。
 
 ### Changed
 
@@ -25,6 +26,7 @@
 - Step 2A legacy direct 与 Step 2B 的 1 km 聚合均固定为 `bestEffort=False`、`maxPixels=2048`；Step 2B 从已完成且严格验收的 `treeline30m` 一次性聚合四带，并使用独立聚合哈希/子 Asset 名。
 - Step 2A/Step 2B 默认输出集合切换到三个 `_v2` ImageCollection；A/B 比较在目标存在时读取实际 Step 2B Asset，并分别报告六波段完整案例与逐波段成对有效区。
 - CI dry-run 同时验证两个新入口，仍保持完全离线。
+- Step 2A 普通 dry-run/check/export 默认本地核对固定凭据并跳过重复 TABLE 聚合、608 个 Step 1 child Asset 读取、瓦片覆盖计算和 deep check；`--revalidate-upstream` 与 `--check --deep-check` 保留显式实时重验路径，输出冲突、任务与队列保护不变。
 
 ### Removed
 
