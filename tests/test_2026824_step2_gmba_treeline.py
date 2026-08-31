@@ -62,6 +62,91 @@ class Step2TreelineTests(unittest.TestCase):
         source = inspect.getsource(self.module.build_global_forest_inputs)
         self.assertEqual(source.count(".mosaic()"), 2)
         self.assertIn('select(["tree_2000", "tree_2020"])', source)
+        self.assertEqual(source.count(".setDefaultProjection(projection)"), 2)
+        self.assertNotIn(".reproject(", source)
+
+    def test_forest_mosaics_set_the_fine_default_projection_before_edges(self) -> None:
+        events = []
+
+        class FakeImage:
+            def __init__(self, asset_id: str) -> None:
+                self.asset_id = asset_id
+
+            def mosaic(self):
+                events.append((self.asset_id, "mosaic"))
+                return self
+
+            def select(self, bands):
+                events.append((self.asset_id, "select", tuple(bands)))
+                return self
+
+            def setDefaultProjection(self, projection):
+                events.append((self.asset_id, "setDefaultProjection", projection))
+                return self
+
+        class FakeEE:
+            @staticmethod
+            def Projection(crs, transform=None):
+                projection = (crs, tuple(transform))
+                events.append(("Projection", projection))
+                return projection
+
+            @staticmethod
+            def ImageCollection(asset_id):
+                events.append((asset_id, "ImageCollection"))
+                return FakeImage(asset_id)
+
+        original_ee = self.module.ee
+        self.module.ee = FakeEE
+        try:
+            args = self.module.build_parser().parse_args(["--dry-run"])
+            forests = self.module.build_global_forest_inputs(args)
+        finally:
+            self.module.ee = original_ee
+
+        projection = (self.module.FINE_CRS, tuple(self.module.FINE_TRANSFORM))
+        self.assertEqual(
+            events,
+            [
+                ("Projection", projection),
+                (self.module.GLOBAL_TREE_3M, "ImageCollection"),
+                (self.module.GLOBAL_TREE_3M, "mosaic"),
+                (
+                    self.module.GLOBAL_TREE_3M,
+                    "select",
+                    ("tree_2000", "tree_2020"),
+                ),
+                (self.module.GLOBAL_TREE_3M, "setDefaultProjection", projection),
+                (self.module.GLOBAL_TREE_5M, "ImageCollection"),
+                (self.module.GLOBAL_TREE_5M, "mosaic"),
+                (
+                    self.module.GLOBAL_TREE_5M,
+                    "select",
+                    ("tree_2000", "tree_2020"),
+                ),
+                (self.module.GLOBAL_TREE_5M, "setDefaultProjection", projection),
+            ],
+        )
+        self.assertEqual(forests["h3m"].asset_id, self.module.GLOBAL_TREE_3M)
+        self.assertEqual(forests["h5m"].asset_id, self.module.GLOBAL_TREE_5M)
+
+    def test_projection_change_has_new_method_identity_and_provenance(self) -> None:
+        args = self.module.build_parser().parse_args(["--dry-run"])
+        configuration = self.module.scientific_configuration(args)
+        self.assertEqual(
+            self.module.WORKFLOW,
+            "step2-per-gmba-sayre-treeline-v2",
+        )
+        self.assertEqual(args.run_label, "gmba_sayre_step2_v2")
+        self.assertEqual(
+            configuration["forest_mosaic_default_projection"],
+            {
+                "crs": self.module.FINE_CRS,
+                "transform": self.module.FINE_TRANSFORM,
+                "placement": "after_mosaic_select_before_pixel_neighborhood",
+            },
+        )
+        self.assertIn("set_fine_default_projection", configuration["edge_order"])
 
     def test_analysis_asset_and_selection_thresholds_are_fixed(self) -> None:
         self.assertEqual(
@@ -203,6 +288,38 @@ class Step2TreelineTests(unittest.TestCase):
         )
         self.assertEqual(policies["treeline30m"][".default"], "mean")
 
+    def test_check_uses_compact_expression_serialization_without_starting_task(self) -> None:
+        class Expression:
+            def __init__(self) -> None:
+                self.calls = []
+
+            def serialize(self, *, pretty, for_cloud_api):
+                self.calls.append((pretty, for_cloud_api))
+                return '{"type":"Invocation"}'
+
+            def __str__(self):
+                raise AssertionError("check must not expand the expression with str()")
+
+        class Task:
+            def __init__(self, expression) -> None:
+                self.config = {
+                    "expression": expression,
+                    "assetExportOptions": {"earthEngineDestination": {}},
+                }
+
+            def start(self):
+                raise AssertionError("check must not start an export task")
+
+        expression = Expression()
+        size = self.module.serialized_export_expression_bytes(
+            Task(expression), "treeline30m"
+        )
+        self.assertEqual(size, len('{"type":"Invocation"}'.encode("utf-8")))
+        self.assertEqual(expression.calls, [(False, True)])
+        check_source = inspect.getsource(self.module.run_check)
+        self.assertIn("serialized_export_expression_bytes", check_source)
+        self.assertNotIn(".start()", check_source)
+
     def test_dry_run_uses_default_analysis_asset_without_network(self) -> None:
         result = run_cli("--dry-run", "--max-mountains", "4")
         self.assertEqual(result.returncode, 0, result.stderr)
@@ -213,7 +330,38 @@ class Step2TreelineTests(unittest.TestCase):
         )
         self.assertNotIn("analysis_mountains_asset", payload["missing_requirements"])
         self.assertIn("step1_manifest", payload["missing_requirements"])
-        self.assertEqual(payload["expected_task_count"], 12)
+        self.assertEqual(payload["products"], ["treeline30m", "qa30m"])
+        self.assertEqual(payload["expected_task_count"], 8)
+        self.assertFalse(payload["legacy_direct_1km"])
+
+    def test_direct_1km_is_only_planned_when_explicitly_selected(self) -> None:
+        result = run_cli(
+            "--dry-run",
+            "--max-mountains",
+            "2",
+            "--export-products",
+            "treeline1km",
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        payload = json.loads(result.stdout)
+        self.assertEqual(payload["products"], ["treeline1km"])
+        self.assertEqual(payload["expected_task_count"], 2)
+        self.assertTrue(payload["legacy_direct_1km"])
+
+    def test_legacy_direct_1km_cannot_share_a_batch_with_step2a_products(self) -> None:
+        result = run_cli(
+            "--dry-run",
+            "--max-mountains",
+            "1",
+            "--export-products",
+            "treeline30m",
+            "treeline1km",
+        )
+        self.assertNotEqual(result.returncode, 0)
+        self.assertIn(
+            "legacy treeline1km must be selected alone",
+            result.stderr,
+        )
 
     def test_dry_run_becomes_ready_with_explicit_inputs(self) -> None:
         with tempfile.TemporaryDirectory() as directory:
@@ -233,6 +381,46 @@ class Step2TreelineTests(unittest.TestCase):
             )
         self.assertEqual(result.returncode, 0, result.stderr)
         self.assertTrue(json.loads(result.stdout)["ready"])
+
+    def test_dry_run_can_select_two_export_products(self) -> None:
+        result = run_cli(
+            "--dry-run",
+            "--max-mountains",
+            "200",
+            "--export-products",
+            "treeline30m",
+            "qa30m",
+        )
+        self.assertEqual(result.returncode, 0, result.stderr)
+        payload = json.loads(result.stdout)
+        self.assertEqual(payload["products"], ["treeline30m", "qa30m"])
+        self.assertEqual(payload["expected_task_count"], 400)
+        self.assertEqual(
+            payload["scientific_configuration"]["export_products"],
+            ["treeline30m", "qa30m"],
+        )
+
+    def test_planned_records_exclude_unselected_product(self) -> None:
+        args = self.module.build_parser().parse_args(
+            [
+                "--dry-run",
+                "--export-products",
+                "treeline30m",
+                "qa30m",
+            ]
+        )
+        records = self.module.planned_export_records(
+            args,
+            [{"mountain_id": "11106", "mountain_key": "gmba_11106"}],
+        )
+        self.assertEqual(
+            [record["product"] for record in records],
+            ["treeline30m", "qa30m"],
+        )
+        self.assertNotIn(
+            "Treeline_1km_Collection",
+            " ".join(str(record["destination"]) for record in records),
+        )
 
     def test_export_requires_a_bounded_batch_and_step1_manifest(self) -> None:
         result = run_cli("--export")

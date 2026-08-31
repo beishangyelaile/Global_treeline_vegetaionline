@@ -1,17 +1,17 @@
 # Global treeline method decisions
 
 - 状态：当前有效
-- 最近更新：2026-08-24
-- 适用入口：`gee/runs/2026824/code_step1_jrc_forest_tiles.py`、`gee/runs/2026824/code_step2_gmba_treeline.py`
+- 最近更新：2026-08-31
+- 适用入口：`gee/runs/2026824/code_step1_jrc_forest_tiles.py`、`gee/runs/2026824/code_step2_gmba_treeline.py`、`gee/runs/2026824/code_step2b_treeline1km_from_30m.py`
 
 本文件记录当前已接受的科学和计算决定。历史 `2026821/code_region_revised_v2.py` 的完整 GMBA 单阶段方法已被本架构取代。
 
-## MD-001：两阶段边界
+## MD-001：三阶段边界
 
 - 状态：已接受
 - 类型：计算架构决定
 
-Step 1 独立生成连续的二值森林瓦片；Step 2 只消费这些瓦片并提取树线。Step 2 不得读取原始冠层高度、重新二值化或重做森林 MMU。这样可把全球连续邻域计算与逐山体统计分开，也使 Step 2 能在运行前验证森林产品完整性。
+Step 1 独立生成连续的二值森林瓦片；Step 2A 只消费这些瓦片并生成逐山体 30 m 树线与 QA；Step 2B 只消费已完成并验收的 30 m 树线 Asset，生成 30 arc-second 汇总。Step 2A 不得读取原始冠层高度、重新二值化或重做森林 MMU；Step 2B 不得重建 Step 2A 完整计算图。这样把全球连续邻域、逐山体统计和低分辨率聚合分别物化并验收。
 
 ## MD-002：森林定义与年份
 
@@ -44,7 +44,7 @@ Step 1 独立生成连续的二值森林瓦片；Step 2 只消费这些瓦片并
 
 一致：处理顺序、八邻域、0.5 ha 面积规则。
 
-一致：JRC 公开源码同样使用 `maxSize=500`。不一致之处仍包括输入、分辨率和森林定义，因此不能写成完整复现 JRC 森林产品。`maxSize=500` 的服务端成本和大对象截断语义仍需通过在线 pilot 验证。
+一致：JRC 公开源码同样使用 `maxSize=500`。不一致之处仍包括输入、分辨率和森林定义，因此不能写成完整复现 JRC 森林产品。`maxSize=500` 的服务端成本和大对象截断语义仍需在经授权的有界在线执行中验证。
 
 ## MD-004：Step 1 瓦片与格网
 
@@ -66,8 +66,11 @@ Step 1 独立生成连续的二值森林瓦片；Step 2 只消费这些瓦片并
 - TABLE 几何保留入选山体的完整 GMBA Basic，而不是 `GMBA∩Sayre` 的裁剪几何。正式像元分析域、候选中心、森林/非森林局地样本均使用该完整几何。
 - 不使用 0.25°格网或山体 buffer。
 - 森林集合必须先 mosaic，再执行半径 1 像元中值滤波、Laplacian 8 邻域和 Zero Crossing；分析域只能在边缘已形成后介入，避免把研究域或瓦片边界识别成森林边缘。
+- 两个森林集合在 `mosaic().select(["tree_2000", "tree_2020"])` 后、任何像元邻域或跨尺度运算前，必须用 `setDefaultProjection` 显式声明 Step 1 的全局对齐 `EPSG:4326`、0.00025° transform。这里不使用 `reproject()` 强制提前重采样。
 
 2026-08-24 只读验收：3,115 个要素、3,115 个唯一 `GMBA_V2_ID`、全部 `MapUnit=Basic`；`hm_fraction` 最小 0.500055，低于 0.50 为 0；`tree_fraction` 最大 0.899486，高于 0.90 为 0；两字段无空值。首要素几何面积约 325.36 km²，接近 `gmba_area_km2=326.09`，而非 `hm_area_km2=170.95`，据此确认完整 GMBA 几何语义。
+
+2026-08-31 投影 A/B 验收：在固定源码和 10011–10013 三座山体上，仅增加上述默认投影；9/9 对三类产品均不等价，但波段、PixelType、原生输出格网和 pyramiding policy 一致。差异首先出现在 CHELSA 原生格候选聚合及 Otsu 样本/阈值，随后经冷区和局地检验放大到树线 mask 与 1 km 值。因此最终导出 transform 不能补救此前已经发生的聚合和阈值差异，显式默认投影属于科学可复现性要求。
 
 ## MD-006：landform、Otsu 与局地高程检验
 
@@ -85,9 +88,12 @@ Step 1 独立生成连续的二值森林瓦片；Step 2 只消费这些瓦片并
 - 状态：已接受
 
 - Step 2 发起任何任务前，3/5 m 瓦片 ID 必须一致，波段完整，`mmu_max_size=500`，配置哈希与格网一致，无缺失、重复、失败或空 Asset，且覆盖当前山体。
-- 每个山体输出 `treeline30m`、`treeline1km`、`qa30m`。
+- 完整产品契约仍为每个山体输出 `treeline30m`、`treeline1km`、`qa30m`，但正式生产顺序固定为 Step 2A 默认导出 `treeline30m qa30m`，待 30 m 完成并验收后，再由 Step 2B 单独生成 `treeline1km`。旧完整计算图的 direct 1 km 仅允许通过 `--export-products treeline1km` 单独显式选择作对照，不能与 Step 2A 产品同批。
+- Step 2B 将四个固定 30 m 波段一次性执行 `reduceResolution(mean, bestEffort=False, maxPixels=2048)` 并投影到固定 30 arc-second 格网；变化率为两年均值之差除以 20。源 30 m 缺失、为空、波段/投影或 provenance 不匹配时拒绝构图。
 - 分类、布尔和计数 QA 使用 `mode`；DEM、高程差和 t 统计量等连续变量使用 `mean`。
-- 两阶段分别记录实现指纹、配置哈希、Git commit、run label、输入、目标和 registry。不同哈希不得通过 `--resume` 混用。
+- 三个阶段分别记录实现指纹、配置哈希、Git commit、run label、输入、目标和 registry。Step 2B 哈希包含源 Step 2 哈希、聚合方法、输入/输出格网、`maxPixels` 和实现指纹，不含山体 offset、批次大小或单任务 ID。不同哈希不得通过 `--resume` 混用。
+
+2026-08-31 只读恢复诊断确认原 100 山体批次为 292 个任务完成、8 个 direct `treeline1km` 因 OOM 失败；8 个失败山体的兄弟 `treeline30m` 均完成，且 100 个源 30 m Asset 全部通过完整性门禁。11158 的 30 m/QA 已完成，direct 1 km 在第 5 次尝试 OOM 且目标不存在。三个 direct 成功山体的 v1/from-30m v2 比较显示有效掩膜和局部值并不等价；9 个独立 30 arc-second 格用显式细像元相交面积加权复算，最大高程误差约 `1.003e-4 m`、最大变化率误差约 `5.016e-6 m/yr`，通过浮点容差。
 
 ## 被取代或拒绝的方案
 
@@ -99,6 +105,8 @@ Step 1 独立生成连续的二值森林瓦片；Step 2 只消费这些瓦片并
 | 0.25°有效格网 | 拒绝 | 切碎山体统计单元 |
 | GMBA 裁剪后再执行森林 MMU/边缘 | 拒绝 | 会制造边界伪影并切断连通对象 |
 | 对每个 10°瓦片先提边再拼接 | 拒绝 | 会把瓦片边界引入边缘结果 |
+| 依赖 `ImageCollection.mosaic()` 的隐式默认投影 | 拒绝 | A/B 已证实会改变 CHELSA 聚合、Otsu 阈值和最终树线支持；导出格网不能逆转上游非线性决定 |
+| 正式 1 km 继续直接执行未物化的完整 Step 2A 图 | 被取代 | 大型山体已出现可重复 OOM；物化 30 m 后的独立单次聚合可验收来源并缩短计算图 |
 | 对象标签与对象内面积求和、先删森林后填孔 | 被取代 | 不符合本次固定 JRC 式顺序 |
 | `maxSize=50` 方案 | 被取代 | 用户决定恢复 JRC 公开源码使用的 500；旧配置任务已取消且不得恢复混用 |
 | Canny 主结果 | 拒绝 | 主方法固定 Zero Crossing |
@@ -110,7 +118,7 @@ Step 1 独立生成连续的二值森林瓦片；Step 2 只消费这些瓦片并
 - `maxSize=500` 的服务端计算成本，以及高纬度、小像元面积和极大连通对象上的行为与科学影响。
 - Step 1 有效瓦片数、默认纬度范围是否触发自动扩展、两个目标集合的真实执行可行性。
 - `hm_fraction` 个别值略高于 1（当前最大 1.002936）的面积/投影数值来源及是否需要数据生产侧修正；运行时不静默裁剪该值。
-- 代表性/历史失败山体的 Step 2 Otsu、局地统计、任务大小和服务端执行。
+- Step 2B 的只读图序列化与数值核验已完成；实际 Asset 导出及服务端异步执行尚未获得授权，未验证。
 
 ## 主要依据
 

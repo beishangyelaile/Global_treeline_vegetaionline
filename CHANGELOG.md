@@ -6,18 +6,23 @@
 
 ### Added
 
-- 两个正式入口：全球连续森林瓦片 Step 1 与筛选后逐 GMBA 树线 Step 2。
-- 两组 2026824 离线契约测试、Step 1 瓦片清单和 Step 2 森林产品完整性门禁。
-- 两阶段数据层文档和 GEE 入口索引。
+- 三个正式入口：全球连续森林瓦片 Step 1、筛选后逐 GMBA 30 m 树线 Step 2A，以及从物化 30 m 生成 30 arc-second 1 km 产品的 Step 2B。
+- 2026824 离线契约测试、Step 1 瓦片清单、Step 2A 森林产品门禁和 Step 2B 源 Asset/投影/provenance 门禁。
+- Step 2B 原批次只读诊断、目标冲突检查、direct-v1/from-30m-v2 比较和显式细像元相交面积加权核验。
+- 三阶段数据层文档和 GEE 入口索引。
 
 ### Changed
 
-- 正式架构由单入口改为 Step 1/Step 2；旧 v2 入口降为历史兼容。
+- 正式架构由单入口改为 Step 1/Step 2A/Step 2B；旧 v2 入口降为历史兼容。
 - Step 1 固定 JRC 式顺序、八邻域、`maxSize=500` 和 `count×pixelArea`：先填充 `<=0.5 ha` 非森林小间隙，再保留 `>=0.5 ha` 森林。
 - Step 2 分析 TABLE 固定为 `GMBA_Sayre`：保留 `hm_fraction >=0.50`、WorldCover 2021 Class 10 树木覆盖率 `tree_fraction <=0.90` 的山体，正式域为入选山体的完整 GMBA Basic 几何。
 - Step 2 先 mosaic/中值/Zero Crossing，之后才应用完整 GMBA 分析域，不使用山体 buffer。
+- Step 2 方法身份升级为 v2：森林集合在 mosaic/select 后显式声明 Step 1 的全局对齐 0.00025°默认投影，再执行邻域与 CHELSA 跨尺度运算；投影 A/B 已证明隐式默认投影会改变 Otsu 和最终树线结果。
+- Step 2 `--check` 改用紧凑 Earth Engine 表达式序列化，避免把共享计算图递归展开为超大字符串；仍不启动导出任务。
 - Step 2 从 `GMBA_V2_ID` 派生运行键，新增 `hm_fraction`、`tree_fraction` QA/元数据，并在 check/export 前复核 TABLE schema、唯一性和阈值。
 - Step 2 的 QA 波段验收顺序与实际组装顺序统一：`hm_fraction`、`tree_fraction` 位于 `non_valley` 之前；计算图和既有 Asset 内容不变。
+- Step 2A 的 `--export-products` 默认改为 `treeline30m qa30m`；旧 direct `treeline1km` 仅允许单独显式选择，不能与 Step 2A 产品同批。
+- Step 2B 固定从已完成且严格验收的 `treeline30m` 一次性聚合四带，使用 `bestEffort=False`、`maxPixels=2048` 和独立聚合哈希/子 Asset 名；`--diagnose`、`--check` 不启动任务，`--export` 必须显式有界。
 - CI dry-run 同时验证两个新入口，仍保持完全离线。
 
 ### Removed

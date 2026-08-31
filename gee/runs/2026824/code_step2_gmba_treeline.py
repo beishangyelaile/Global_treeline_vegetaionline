@@ -55,10 +55,15 @@ FINE_CRS = "EPSG:4326"
 FINE_TRANSFORM = [0.00025, 0, -180, 0, -0.00025, 90]
 CLIMATE_CRS = "EPSG:4326"
 CLIMATE_TRANSFORM = [1 / 120, 0, -180, 0, -1 / 120, 90]
-WORKFLOW = "step2-per-gmba-sayre-treeline-v1"
+FOREST_MOSAIC_PROJECTION_PLACEMENT = (
+    "after_mosaic_select_before_pixel_neighborhood"
+)
+WORKFLOW = "step2-per-gmba-sayre-treeline-v2"
 WORKLOAD_TAG = "globaltreeline-step2"
 ADC_SCOPES = tuple(ee.oauth.SCOPES) if ee is not None else ()
 THRESHOLDS = (("h3m", 3), ("h5m", 5))
+EXPORT_PRODUCTS = ("treeline30m", "treeline1km", "qa30m")
+DEFAULT_EXPORT_PRODUCTS = ("treeline30m", "qa30m")
 
 ONE_SIDED_T_CRITICAL_95 = (
     (1, -6.314), (2, -2.920), (3, -2.353), (4, -2.132), (5, -2.015),
@@ -91,6 +96,16 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--treeline30m-collection", default=TREELINE30M_COLLECTION)
     parser.add_argument("--treeline1km-collection", default=TREELINE1KM_COLLECTION)
     parser.add_argument("--qa30m-collection", default=QA30M_COLLECTION)
+    parser.add_argument(
+        "--export-products",
+        nargs="+",
+        choices=EXPORT_PRODUCTS,
+        default=list(DEFAULT_EXPORT_PRODUCTS),
+        help=(
+            "products to export; defaults to Step 2A treeline30m + qa30m; "
+            "explicit treeline1km selection uses the legacy direct graph"
+        ),
+    )
 
     parser.add_argument("--max-mountains", type=int)
     parser.add_argument("--mountain-offset", type=int, default=0)
@@ -98,7 +113,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--deep-check", action="store_true")
     parser.add_argument("--queue-safety-limit", type=int, default=100)
     parser.add_argument("--resume", action="store_true")
-    parser.add_argument("--run-label", default="gmba_sayre_step2_v1")
+    parser.add_argument("--run-label", default="gmba_sayre_step2_v2")
     parser.add_argument("--task-prefix", default="treeline_gmba_sayre")
     parser.add_argument(
         "--registry-dir",
@@ -179,7 +194,15 @@ def scientific_configuration(args: argparse.Namespace) -> Dict[str, object]:
         "dem": AW3D30,
         "landforms": ALOS_LANDFORMS,
         "valley_classes": list(VALLEY_CLASSES),
-        "edge_order": "mosaic_then_median_then_laplacian8_zero_crossing_then_domain",
+        "edge_order": (
+            "mosaic_then_select_then_set_fine_default_projection_then_median_"
+            "then_laplacian8_zero_crossing_then_domain"
+        ),
+        "forest_mosaic_default_projection": {
+            "crs": FINE_CRS,
+            "transform": list(FINE_TRANSFORM),
+            "placement": FOREST_MOSAIC_PROJECTION_PLACEMENT,
+        },
         "median_radius_pixels": args.median_radius_pixels,
         "otsu_scope": "per_gmba_threshold",
         "otsu_year_pooling": "2000_2020",
@@ -193,6 +216,12 @@ def scientific_configuration(args: argparse.Namespace) -> Dict[str, object]:
         "minimum_elevation_difference_m": args.minimum_elevation_difference_m,
         "fine_grid": {"crs": FINE_CRS, "transform": list(FINE_TRANSFORM)},
         "climate_grid": {"crs": CLIMATE_CRS, "transform": list(CLIMATE_TRANSFORM)},
+        "export_products": list(args.export_products),
+        "treeline1km_execution": (
+            "legacy_direct_full_graph"
+            if "treeline1km" in args.export_products
+            else "separate_step2b_from_materialized_treeline30m"
+        ),
     }
 
 
@@ -229,8 +258,9 @@ def resolved_plan(args: argparse.Namespace) -> Dict[str, object]:
             "max_mountains": args.max_mountains,
         },
         "forest_inputs": {"h3m": args.global_tree_3m, "h5m": args.global_tree_5m},
-        "products": ["treeline30m", "treeline1km", "qa30m"],
-        "expected_task_count": count * 3,
+        "products": list(args.export_products),
+        "legacy_direct_1km": "treeline1km" in args.export_products,
+        "expected_task_count": count * len(args.export_products),
         "configuration_hash": configuration_hash(args),
         "scientific_configuration": scientific_configuration(args),
     }
@@ -540,8 +570,19 @@ def class_mask(image: "ee.Image", values: Iterable[int]) -> "ee.Image":
 
 
 def build_global_forest_inputs(args: argparse.Namespace) -> Dict[str, "ee.Image"]:
-    forest_h3m = ee.ImageCollection(args.global_tree_3m).mosaic().select(["tree_2000", "tree_2020"])
-    forest_h5m = ee.ImageCollection(args.global_tree_5m).mosaic().select(["tree_2000", "tree_2020"])
+    projection = ee.Projection(FINE_CRS, transform=FINE_TRANSFORM)
+    forest_h3m = (
+        ee.ImageCollection(args.global_tree_3m)
+        .mosaic()
+        .select(["tree_2000", "tree_2020"])
+        .setDefaultProjection(projection)
+    )
+    forest_h5m = (
+        ee.ImageCollection(args.global_tree_5m)
+        .mosaic()
+        .select(["tree_2000", "tree_2020"])
+        .setDefaultProjection(projection)
+    )
     return {"h3m": forest_h3m, "h5m": forest_h5m}
 
 
@@ -956,7 +997,15 @@ def build_mountain_bundle(args: argparse.Namespace, mountain: Mapping[str, objec
         "configuration_hash": configuration_hash(args),
         "git_commit": current_git_commit() or "unknown",
         "workflow": WORKFLOW,
-        "forest_edge_order": "mosaic_median_zero_crossing_domain_mask",
+        "forest_edge_order": (
+            "mosaic_select_set_fine_default_projection_median_"
+            "zero_crossing_domain_mask"
+        ),
+        "forest_mosaic_default_projection_crs": FINE_CRS,
+        "forest_mosaic_default_projection_transform": list(FINE_TRANSFORM),
+        "forest_mosaic_default_projection_placement": (
+            FOREST_MOSAIC_PROJECTION_PLACEMENT
+        ),
         "mountain_buffer_m": 0,
         "otsu_population": "pooled_2000_2020_post_landform_native_bio01_cells",
         "otsu_same_threshold_both_years": True,
@@ -1015,11 +1064,7 @@ def choose_check_mountain(
 
 def validate_output_collections(args: argparse.Namespace) -> Dict[str, Dict[str, object]]:
     summaries: Dict[str, Dict[str, object]] = {}
-    for product, asset_id in (
-        ("treeline30m", args.treeline30m_collection),
-        ("treeline1km", args.treeline1km_collection),
-        ("qa30m", args.qa30m_collection),
-    ):
+    for product, asset_id, _, _ in selected_product_specs(args):
         info = ee.data.getAsset(asset_id)
         if info.get("type") != "IMAGE_COLLECTION":
             raise ValueError(f"target for {product} must be IMAGE_COLLECTION")
@@ -1032,16 +1077,27 @@ def validate_output_collections(args: argparse.Namespace) -> Dict[str, Dict[str,
     return summaries
 
 
+def selected_product_specs(
+    args: argparse.Namespace,
+) -> Tuple[Tuple[str, str, str, Sequence[float]], ...]:
+    selected = set(args.export_products)
+    return tuple(
+        spec
+        for spec in (
+            ("treeline30m", args.treeline30m_collection, FINE_CRS, FINE_TRANSFORM),
+            ("treeline1km", args.treeline1km_collection, CLIMATE_CRS, CLIMATE_TRANSFORM),
+            ("qa30m", args.qa30m_collection, FINE_CRS, FINE_TRANSFORM),
+        )
+        if spec[0] in selected
+    )
+
+
 def planned_export_records(
     args: argparse.Namespace, mountains: Sequence[Mapping[str, object]]
 ) -> List[Dict[str, object]]:
     config_hash = configuration_hash(args)
     policies = product_pyramiding_policies()
-    specs = (
-        ("treeline30m", args.treeline30m_collection, FINE_CRS, FINE_TRANSFORM),
-        ("treeline1km", args.treeline1km_collection, CLIMATE_CRS, CLIMATE_TRANSFORM),
-        ("qa30m", args.qa30m_collection, FINE_CRS, FINE_TRANSFORM),
-    )
+    specs = selected_product_specs(args)
     records: List[Dict[str, object]] = []
     for mountain in mountains:
         for product, collection, crs, transform in specs:
@@ -1082,6 +1138,15 @@ def make_asset_export_task(
     )
 
 
+def serialized_export_expression_bytes(task: "ee.batch.Task", product: str) -> int:
+    expression = task.config.get("expression")
+    export_options = task.config.get("assetExportOptions")
+    if expression is None or not export_options:
+        raise ValueError(f"incomplete export task configuration: {product}")
+    encoded = expression.serialize(pretty=False, for_cloud_api=True)
+    return len(encoded.encode("utf-8"))
+
+
 def write_json_atomic(path: Path, payload: Mapping[str, object]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
@@ -1101,10 +1166,12 @@ def run_check(args: argparse.Namespace) -> Dict[str, object]:
     mountain = choose_check_mountain(plan, args)
     bundle = build_mountain_bundle(args, mountain)
     records = planned_export_records(args, [mountain])
-    sizes = [
-        len(json.dumps(make_asset_export_task(record, bundle).config, default=str))
-        for record in records
-    ]
+    sizes = []
+    for record in records:
+        task = make_asset_export_task(record, bundle)
+        sizes.append(
+            serialized_export_expression_bytes(task, str(record["product"]))
+        )
     otsu_report: Dict[str, object] = {
         "status": "deferred_to_export_task",
         "execution_feasibility_verified": False,
@@ -1125,7 +1192,10 @@ def run_check(args: argparse.Namespace) -> Dict[str, object]:
         "step1_integrity": integrity,
         "check_mountain": dict(mountain),
         "serialized_task_config_bytes": sizes,
-        "expected_product_bands": expected_product_bands(),
+        "expected_product_bands": {
+            product: expected_product_bands()[product]
+            for product in args.export_products
+        },
         "otsu": otsu_report,
         "targets": {
             product: {"id": info["id"], "existing_child_count": info["existing_child_count"]}
@@ -1315,6 +1385,10 @@ def validate_args(parser: argparse.ArgumentParser, args: argparse.Namespace) -> 
         parser.error("--mountain-offset requires --max-mountains")
     if not 1 <= args.queue_safety_limit <= 3000:
         parser.error("--queue-safety-limit must be in [1,3000]")
+    if len(set(args.export_products)) != len(args.export_products):
+        parser.error("--export-products must not contain duplicates")
+    if "treeline1km" in args.export_products and len(args.export_products) != 1:
+        parser.error("legacy treeline1km must be selected alone")
     if args.window_radius_m != 150:
         parser.error("--window-radius-m is fixed at 150 (300 m window)")
     if args.median_radius_pixels != 1:
