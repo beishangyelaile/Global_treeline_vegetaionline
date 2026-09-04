@@ -4,17 +4,19 @@
 
 ## 1. 正式入口
 
-当前受支持的工作流由两个独立入口组成：
+当前受支持的工作流由三个独立入口组成：
 
 ```text
 gee/runs/2026824/code_step1_jrc_forest_tiles.py
 gee/runs/2026824/code_step2_gmba_treeline.py
+gee/runs/2026824/code_step2b_treeline1km_from_30m.py
 ```
 
 - Step 1 从 2000/2020 GLAD 冠层高度生成连续的 3 m、5 m 二值森林瓦片。
-- Step 2 只读取 Step 1 的 ImageCollection，在经 Sayre/WorldCover 规则筛选的逐山体完整 GMBA Basic 几何内提取树线。
+- Step 2A 只读取 Step 1 的 ImageCollection，在经 Sayre/WorldCover 规则筛选的逐山体完整 GMBA Basic 几何内生成 `treeline30m` 和 `qa30m`。
+- Step 2B 只读取已经完成并验收的 `treeline30m` Asset，生成 30 arc-second `treeline1km`。
 - `gee/runs/2026821/code_region_revised_v2.py` 仅保留为历史兼容入口，不再代表当前正式架构。
-- 不得新建 `v3.py`、`final.py` 等版本副本；架构演进直接修改上述两个入口和对应测试。
+- 不得新建 `v3.py`、`final.py` 等版本副本；架构演进直接修改上述入口和对应测试。
 
 ## 2. 修改前必读顺序
 
@@ -45,7 +47,7 @@ gee/runs/2026824/code_step2_gmba_treeline.py
 - 面积固定为 `connectedPixelCount × ee.Image.pixelArea()`，两次 `maxSize=500`；不使用对象标签/对象内面积归约，也不保留 `maxSize=50` 方案。
 - 处理顺序、八邻域、0.5 ha 规则和 `maxSize=500` 与 JRC 公开源码一致，但本项目的输入、分辨率和森林定义不同，不能称为完整复现 JRC 森林产品。
 
-### Step 2
+### Step 2A
 
 - 只读取 `Global_tree_3m`、`Global_tree_5m`，不得再次读取原始冠层高度或执行二值/MMU处理。
 - 必须先对森林瓦片 mosaic，再中值滤波和 Laplacian 8 邻域 Zero Crossing，最后才应用分析域。
@@ -54,6 +56,14 @@ gee/runs/2026824/code_step2_gmba_treeline.py
 - Otsu 按“每个山体 × 每个冠层阈值”计算，合并 2000/2020 post-landform 候选；每个 CHELSA 原生格只计一次，同一阈值用于两年；退化时标记无效，不使用全局回退。
 - 局地检验固定为 300 m 窗口内单侧 Welch t 检验。
 - 创建任何 Step 2 任务前必须通过 Step 1 瓦片、波段、哈希、格网和当前山体覆盖完整性检查。
+- 默认产品固定为 `treeline30m qa30m`。旧完整计算图的 direct `treeline1km` 仅允许单独显式选择作对照，不能与 Step 2A 产品同批提交。
+
+### Step 2B
+
+- 像元输入只能是已物化的 `treeline30m`；不得重新读取或重做 Step 2A 的森林、温度、DEM、landform、Otsu、邻域或 Welch 计算。
+- 源任务必须为 `COMPLETED`，且 Asset 必须存在、非空、四波段顺序固定、与全局 0.00025°格网对齐，并匹配 mountain ID、run label、配置哈希和来源 Git commit。
+- 四个源波段必须合并后只执行一次 `reduceResolution(mean, bestEffort=False, maxPixels=2048)`，再显式投影到固定 30 arc-second 格网；两个变化率均除以 20。
+- Step 2B 使用独立 workflow、实现指纹、配置哈希、run label 和子 Asset 名。不得用普通 Step 2 `--resume` 重跑旧 direct 1 km 图，也不得覆盖旧 Asset。
 
 ## 5. 修改与验证
 
@@ -64,12 +74,12 @@ gee/runs/2026824/code_step2_gmba_treeline.py
 ```powershell
 $env:PYTHONDONTWRITEBYTECODE = '1'
 python -m pytest -q -p no:cacheprovider
-python -m py_compile .\gee\runs\2026824\code_step1_jrc_forest_tiles.py .\gee\runs\2026824\code_step2_gmba_treeline.py
+python -m py_compile .\gee\runs\2026824\code_step1_jrc_forest_tiles.py .\gee\runs\2026824\code_step2_gmba_treeline.py .\gee\runs\2026824\code_step2b_treeline1km_from_30m.py
 git diff --check
 git status --short
 ```
 
-- 在线顺序为：只读 Step 1 check → 完成并验收 Step 1 → Step 2 完整性/单山体 check → 不超过 10 山体 pilot → 研究者确认后扩批。
+- 在线顺序为：只读 Step 1 check → 完成并验收 Step 1 → Step 2A check/有界导出 → 等待并验收 30 m Asset → Step 2B diagnose/check → 获得明确授权后有界导出。监控不得自动启动下一阶段。
 - 编译、离线测试、图序列化或 GEE 初始化成功均不能替代服务端执行验证。
 
 ## 6. 安全、产物和版本控制

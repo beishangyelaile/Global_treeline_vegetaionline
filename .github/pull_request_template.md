@@ -11,9 +11,9 @@
 
 ## 合并门禁
 
-- [ ] 唯一入口仍为 `gee/runs/2026821/code_region_revised_v2.py`
+- [ ] 三个正式入口（Step 1、Step 2A、Step 2B）均可编译；旧 2026821 v2 仅作历史兼容
 - [ ] 已运行 `python -m pytest -q -p no:cacheprovider`
-- [ ] dry-run 为 `ready=true`、无缺项且任务数量正确
+- [ ] Step 1/2A dry-run 为 `ready=true`、无缺项且任务数量正确；Step 2B dry-run 为单任务且 `exports_started=false`
 - [ ] 已运行 `git diff --check`
 - [ ] Git 状态不含缓存、凭据、registry、地图、报告、数据或压缩包
 - [ ] CLI/输出契约变化已同步 README、运行手册和测试

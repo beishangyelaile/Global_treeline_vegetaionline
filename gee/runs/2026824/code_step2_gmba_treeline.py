@@ -10,6 +10,7 @@ from __future__ import annotations
 import argparse
 from datetime import datetime, timezone
 import hashlib
+import inspect
 import json
 import math
 import os
@@ -36,12 +37,12 @@ GLOBAL_TREE_3M = "projects/ee-alpine-506212/assets/Global_tree_3m"
 GLOBAL_TREE_5M = "projects/ee-alpine-506212/assets/Global_tree_5m"
 CHELSA_BIO01 = "projects/ee-wsc/assets/Alpine/CHELSA_bio01_1981-2010_V21"
 TREELINE30M_COLLECTION = (
-    "projects/ee-alpine-506212/assets/Treeline_30m_Collection"
+    "projects/ee-alpine-506212/assets/Treeline_30m_Collection_v2"
 )
 TREELINE1KM_COLLECTION = (
-    "projects/ee-alpine-506212/assets/Treeline_1km_Collection"
+    "projects/ee-alpine-506212/assets/Treeline_1km_Collection_v2"
 )
-QA30M_COLLECTION = "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection"
+QA30M_COLLECTION = "projects/ee-alpine-506212/assets/Treeline_QA30m_Collection_v2"
 ANALYSIS_MOUNTAINS_ASSET = "projects/ee-wsc/assets/Alpine/GMBA_Sayre"
 WORLDCOVER_2021 = "ESA/WorldCover/v200"
 WORLDCOVER_BAND = "Map"
@@ -55,10 +56,49 @@ FINE_CRS = "EPSG:4326"
 FINE_TRANSFORM = [0.00025, 0, -180, 0, -0.00025, 90]
 CLIMATE_CRS = "EPSG:4326"
 CLIMATE_TRANSFORM = [1 / 120, 0, -180, 0, -1 / 120, 90]
-WORKFLOW = "step2-per-gmba-sayre-treeline-v1"
+AGGREGATION_MAX_PIXELS = 2048
+AGGREGATION_BEST_EFFORT = False
+FOREST_MOSAIC_PROJECTION_PLACEMENT = (
+    "after_mosaic_select_before_pixel_neighborhood"
+)
+WORKFLOW = "step2-per-gmba-sayre-treeline-v2"
 WORKLOAD_TAG = "globaltreeline-step2"
 ADC_SCOPES = tuple(ee.oauth.SCOPES) if ee is not None else ()
 THRESHOLDS = (("h3m", 3), ("h5m", 5))
+EXPORT_PRODUCTS = ("treeline30m", "treeline1km", "qa30m")
+DEFAULT_EXPORT_PRODUCTS = ("treeline30m", "qa30m")
+VALIDATED_UPSTREAM_SCHEMA_VERSION = 1
+VALIDATED_UPSTREAM_RECEIPT = Path(__file__).with_name(
+    "step2_validated_upstream_20260831.json"
+)
+VALIDATED_SCIENCE_FUNCTION_NAMES = (
+    "add_analysis_keys",
+    "analysis_mountains",
+    "validate_analysis_table",
+    "list_child_assets",
+    "_integer_size",
+    "validate_step1_inventory",
+    "fetch_collection_inventory",
+    "load_step1_manifest",
+    "run_step1_integrity_check",
+    "_grid_tile_id",
+    "resolve_required_tile_ids",
+    "class_mask",
+    "build_global_forest_inputs",
+    "forest_edges_global",
+    "build_aw3d",
+    "build_mountain_context",
+    "otsu_threshold_from_histogram",
+    "otsu_threshold_ee",
+    "temperature_graph",
+    "lower_tail_t_critical_image",
+    "upper_edge_test",
+    "aggregate_to_climate_grid",
+    "add_band",
+    "expected_product_bands",
+    "product_pyramiding_policies",
+    "build_mountain_bundle",
+)
 
 ONE_SIDED_T_CRITICAL_95 = (
     (1, -6.314), (2, -2.920), (3, -2.353), (4, -2.132), (5, -2.015),
@@ -91,14 +131,53 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--treeline30m-collection", default=TREELINE30M_COLLECTION)
     parser.add_argument("--treeline1km-collection", default=TREELINE1KM_COLLECTION)
     parser.add_argument("--qa30m-collection", default=QA30M_COLLECTION)
+    parser.add_argument(
+        "--export-products",
+        nargs="+",
+        choices=EXPORT_PRODUCTS,
+        default=list(DEFAULT_EXPORT_PRODUCTS),
+        help=(
+            "products to export; defaults to Step 2A treeline30m + qa30m; "
+            "explicit treeline1km selection uses the legacy direct graph"
+        ),
+    )
+    parser.add_argument(
+        "--allow-direct-1km-ab",
+        action="store_true",
+        help=(
+            "allow the three-product direct-1km A/B bundle for exactly one "
+            "mountain; normal Step 2A runs must leave this disabled"
+        ),
+    )
 
     parser.add_argument("--max-mountains", type=int)
     parser.add_argument("--mountain-offset", type=int, default=0)
     parser.add_argument("--check-mountain-id")
-    parser.add_argument("--deep-check", action="store_true")
+    parser.add_argument(
+        "--deep-check",
+        action="store_true",
+        help=(
+            "force a live representative Otsu reducer evaluation; the trusted "
+            "upstream receipt makes this unnecessary for ordinary batch runs"
+        ),
+    )
+    parser.add_argument(
+        "--validated-upstream-receipt",
+        type=Path,
+        default=VALIDATED_UPSTREAM_RECEIPT,
+        help="tracked receipt for previously validated upstream data and graph facts",
+    )
+    parser.add_argument(
+        "--revalidate-upstream",
+        action="store_true",
+        help=(
+            "ignore the trusted receipt and repeat the full analysis TABLE, "
+            "Step 1 inventory, and selected-batch tile-coverage checks"
+        ),
+    )
     parser.add_argument("--queue-safety-limit", type=int, default=100)
     parser.add_argument("--resume", action="store_true")
-    parser.add_argument("--run-label", default="gmba_sayre_step2_v1")
+    parser.add_argument("--run-label", default="gmba_sayre_step2_v2")
     parser.add_argument("--task-prefix", default="treeline_gmba_sayre")
     parser.add_argument(
         "--registry-dir",
@@ -120,7 +199,7 @@ def build_parser() -> argparse.ArgumentParser:
     parser.add_argument("--temperature-offset", type=float, default=-273.15)
     parser.add_argument("--otsu-min-samples", type=int, default=20)
     parser.add_argument("--otsu-max-pixels", type=float, default=1e8)
-    parser.add_argument("--tile-scale", type=float, default=4)
+    parser.add_argument("--tile-scale", type=float, default=8)
     parser.add_argument("--strict-aw3d-native-only", action="store_true")
     return parser
 
@@ -179,7 +258,15 @@ def scientific_configuration(args: argparse.Namespace) -> Dict[str, object]:
         "dem": AW3D30,
         "landforms": ALOS_LANDFORMS,
         "valley_classes": list(VALLEY_CLASSES),
-        "edge_order": "mosaic_then_median_then_laplacian8_zero_crossing_then_domain",
+        "edge_order": (
+            "mosaic_then_select_then_set_fine_default_projection_then_median_"
+            "then_laplacian8_zero_crossing_then_domain"
+        ),
+        "forest_mosaic_default_projection": {
+            "crs": FINE_CRS,
+            "transform": list(FINE_TRANSFORM),
+            "placement": FOREST_MOSAIC_PROJECTION_PLACEMENT,
+        },
         "median_radius_pixels": args.median_radius_pixels,
         "otsu_scope": "per_gmba_threshold",
         "otsu_year_pooling": "2000_2020",
@@ -193,6 +280,17 @@ def scientific_configuration(args: argparse.Namespace) -> Dict[str, object]:
         "minimum_elevation_difference_m": args.minimum_elevation_difference_m,
         "fine_grid": {"crs": FINE_CRS, "transform": list(FINE_TRANSFORM)},
         "climate_grid": {"crs": CLIMATE_CRS, "transform": list(CLIMATE_TRANSFORM)},
+        "treeline1km_aggregation": {
+            "reducer": "mean",
+            "max_pixels": AGGREGATION_MAX_PIXELS,
+            "best_effort": AGGREGATION_BEST_EFFORT,
+        },
+        "export_products": list(args.export_products),
+        "treeline1km_execution": (
+            "legacy_direct_full_graph"
+            if "treeline1km" in args.export_products
+            else "separate_step2b_from_materialized_treeline30m"
+        ),
     }
 
 
@@ -211,12 +309,25 @@ def missing_requirements(args: argparse.Namespace) -> List[str]:
         missing.append("step1_manifest")
     elif not args.step1_manifest.is_file():
         missing.append("step1_manifest_not_found")
+    if (
+        not args.revalidate_upstream
+        and not args.validated_upstream_receipt.is_file()
+    ):
+        missing.append("validated_upstream_receipt_not_found")
     return missing
 
 
 def resolved_plan(args: argparse.Namespace) -> Dict[str, object]:
     count = args.max_mountains or 0
     missing = missing_requirements(args)
+    validation_error = None
+    trusted_receipt = None
+    if not missing and not args.revalidate_upstream:
+        try:
+            trusted_receipt = validate_trusted_upstream_receipt(args)
+        except ValueError as exc:
+            validation_error = str(exc)
+            missing.append("validated_upstream_receipt_mismatch")
     return {
         "status": "offline-step2-plan",
         "ready": not missing,
@@ -229,8 +340,26 @@ def resolved_plan(args: argparse.Namespace) -> Dict[str, object]:
             "max_mountains": args.max_mountains,
         },
         "forest_inputs": {"h3m": args.global_tree_3m, "h5m": args.global_tree_5m},
-        "products": ["treeline30m", "treeline1km", "qa30m"],
-        "expected_task_count": count * 3,
+        "products": list(args.export_products),
+        "legacy_direct_1km": "treeline1km" in args.export_products,
+        "direct_1km_ab_bundle": args.allow_direct_1km_ab,
+        "upstream_validation_mode": (
+            "live_revalidation"
+            if args.revalidate_upstream
+            else "trusted_receipt"
+        ),
+        "validated_upstream_receipt": (
+            str(args.validated_upstream_receipt)
+            if not args.revalidate_upstream
+            else None
+        ),
+        "validated_upstream_id": (
+            trusted_receipt.get("validation_id")
+            if trusted_receipt is not None
+            else None
+        ),
+        "upstream_validation_error": validation_error,
+        "expected_task_count": count * len(args.export_products),
         "configuration_hash": configuration_hash(args),
         "scientific_configuration": scientific_configuration(args),
     }
@@ -540,8 +669,19 @@ def class_mask(image: "ee.Image", values: Iterable[int]) -> "ee.Image":
 
 
 def build_global_forest_inputs(args: argparse.Namespace) -> Dict[str, "ee.Image"]:
-    forest_h3m = ee.ImageCollection(args.global_tree_3m).mosaic().select(["tree_2000", "tree_2020"])
-    forest_h5m = ee.ImageCollection(args.global_tree_5m).mosaic().select(["tree_2000", "tree_2020"])
+    projection = ee.Projection(FINE_CRS, transform=FINE_TRANSFORM)
+    forest_h3m = (
+        ee.ImageCollection(args.global_tree_3m)
+        .mosaic()
+        .select(["tree_2000", "tree_2020"])
+        .setDefaultProjection(projection)
+    )
+    forest_h5m = (
+        ee.ImageCollection(args.global_tree_5m)
+        .mosaic()
+        .select(["tree_2000", "tree_2020"])
+        .setDefaultProjection(projection)
+    )
     return {"h3m": forest_h3m, "h5m": forest_h5m}
 
 
@@ -786,9 +926,11 @@ def upper_edge_test(
 
 
 def aggregate_to_climate_grid(image: "ee.Image") -> "ee.Image":
-    return image.reduceResolution(ee.Reducer.mean(), maxPixels=4096).reproject(
-        ee.Projection(CLIMATE_CRS, CLIMATE_TRANSFORM)
-    )
+    return image.reduceResolution(
+        reducer=ee.Reducer.mean(),
+        bestEffort=AGGREGATION_BEST_EFFORT,
+        maxPixels=AGGREGATION_MAX_PIXELS,
+    ).reproject(ee.Projection(CLIMATE_CRS, CLIMATE_TRANSFORM))
 
 
 def add_band(base: Optional["ee.Image"], band: "ee.Image") -> "ee.Image":
@@ -956,7 +1098,15 @@ def build_mountain_bundle(args: argparse.Namespace, mountain: Mapping[str, objec
         "configuration_hash": configuration_hash(args),
         "git_commit": current_git_commit() or "unknown",
         "workflow": WORKFLOW,
-        "forest_edge_order": "mosaic_median_zero_crossing_domain_mask",
+        "forest_edge_order": (
+            "mosaic_select_set_fine_default_projection_median_"
+            "zero_crossing_domain_mask"
+        ),
+        "forest_mosaic_default_projection_crs": FINE_CRS,
+        "forest_mosaic_default_projection_transform": list(FINE_TRANSFORM),
+        "forest_mosaic_default_projection_placement": (
+            FOREST_MOSAIC_PROJECTION_PLACEMENT
+        ),
         "mountain_buffer_m": 0,
         "otsu_population": "pooled_2000_2020_post_landform_native_bio01_cells",
         "otsu_same_threshold_both_years": True,
@@ -978,6 +1128,242 @@ def build_mountain_bundle(args: argparse.Namespace, mountain: Mapping[str, objec
         },
         "metadata": metadata,
         "otsu": otsu,
+    }
+
+
+def validated_science_source_sha256() -> str:
+    sources = {
+        name: inspect.getsource(globals()[name])
+        for name in VALIDATED_SCIENCE_FUNCTION_NAMES
+    }
+    encoded = json.dumps(
+        sources, ensure_ascii=False, sort_keys=True, separators=(",", ":")
+    ).encode("utf-8")
+    return hashlib.sha256(encoded).hexdigest()
+
+
+def validated_upstream_identity(args: argparse.Namespace) -> Dict[str, object]:
+    manifest = load_step1_manifest(args.step1_manifest)
+    return {
+        "project": args.project,
+        "science_source_sha256": validated_science_source_sha256(),
+        "analysis": {
+            "asset_id": args.analysis_mountains_asset,
+            "map_unit": "Basic",
+            "minimum_high_mountain_fraction": MIN_HM_FRACTION,
+            "maximum_tree_cover_fraction": MAX_TREE_FRACTION,
+            "worldcover_2021": WORLDCOVER_2021,
+            "worldcover_band": WORLDCOVER_BAND,
+            "worldcover_tree_class": WORLDCOVER_TREE_CLASS,
+        },
+        "step1": {
+            "manifest_canonical_sha256": canonical_json_sha256(
+                args.step1_manifest
+            ),
+            "manifest_configuration_hash": str(
+                manifest.get("configuration_hash") or ""
+            ),
+            "manifest_tile_count": len(manifest["tiles"]),
+            "h3m_collection": args.global_tree_3m,
+            "h5m_collection": args.global_tree_5m,
+        },
+        "method_inputs": {
+            "chelsa_bio01": args.chelsa_bio01,
+            "dem": AW3D30,
+            "landforms": ALOS_LANDFORMS,
+            "valley_classes": list(VALLEY_CLASSES),
+            "thresholds": [list(item) for item in THRESHOLDS],
+        },
+        "grids": {
+            "fine": {"crs": FINE_CRS, "transform": list(FINE_TRANSFORM)},
+            "climate": {
+                "crs": CLIMATE_CRS,
+                "transform": list(CLIMATE_TRANSFORM),
+            },
+        },
+        "parameters": {
+            "forest_mosaic_projection_placement": (
+                FOREST_MOSAIC_PROJECTION_PLACEMENT
+            ),
+            "geometry_max_error_m": args.geometry_max_error_m,
+            "median_radius_pixels": args.median_radius_pixels,
+            "window_radius_m": args.window_radius_m,
+            "minimum_samples_per_group": args.minimum_samples_per_group,
+            "minimum_elevation_difference_m": (
+                args.minimum_elevation_difference_m
+            ),
+            "temperature_scale": args.temperature_scale,
+            "temperature_offset": args.temperature_offset,
+            "otsu_min_samples": args.otsu_min_samples,
+            "otsu_max_pixels": args.otsu_max_pixels,
+            "tile_scale": args.tile_scale,
+            "strict_aw3d_native_only": args.strict_aw3d_native_only,
+            "aggregation_max_pixels": AGGREGATION_MAX_PIXELS,
+            "aggregation_best_effort": AGGREGATION_BEST_EFFORT,
+            "one_sided_t_critical_95": [
+                list(item) for item in ONE_SIDED_T_CRITICAL_95
+            ],
+        },
+    }
+
+
+def load_validated_upstream_receipt(path: Path) -> Dict[str, object]:
+    if not path.is_file():
+        raise ValueError(f"trusted upstream receipt not found: {path}")
+    payload = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(payload, dict):
+        raise ValueError("trusted upstream receipt must be a JSON object")
+    return payload
+
+
+def validate_trusted_upstream_receipt(
+    args: argparse.Namespace,
+) -> Dict[str, object]:
+    receipt = load_validated_upstream_receipt(args.validated_upstream_receipt)
+    errors: List[str] = []
+    if not str(receipt.get("validation_id") or ""):
+        errors.append("validation_id")
+    if not str(receipt.get("validated_at_utc") or ""):
+        errors.append("validated_at_utc")
+    if receipt.get("schema_version") != VALIDATED_UPSTREAM_SCHEMA_VERSION:
+        errors.append("schema_version")
+    if receipt.get("upstream_identity") != validated_upstream_identity(args):
+        errors.append("upstream_identity")
+
+    analysis = receipt.get("analysis_table")
+    if not isinstance(analysis, Mapping):
+        errors.append("analysis_table")
+        analysis = {}
+    if analysis.get("id") != args.analysis_mountains_asset:
+        errors.append("analysis_table.id")
+    if analysis.get("type") != "TABLE":
+        errors.append("analysis_table.type")
+    source_count = _integer_size(analysis.get("source_feature_count"))
+    complete_count = _integer_size(analysis.get("complete_property_count"))
+    selected_count = _integer_size(analysis.get("selected_feature_count"))
+    if source_count < 1 or complete_count != source_count:
+        errors.append("analysis_table.complete_property_count")
+    if selected_count != source_count:
+        errors.append("analysis_table.selected_feature_count")
+    if _integer_size(analysis.get("distinct_gmba_id_count")) != selected_count:
+        errors.append("analysis_table.distinct_gmba_id_count")
+    if analysis.get("mapunit_histogram") != {"Basic": source_count}:
+        errors.append("analysis_table.mapunit_histogram")
+    if _integer_size(analysis.get("below_minimum_hm_fraction_count")) != 0:
+        errors.append("analysis_table.hm_fraction")
+    if _integer_size(analysis.get("above_maximum_tree_fraction_count")) != 0:
+        errors.append("analysis_table.tree_fraction")
+
+    manifest = load_step1_manifest(args.step1_manifest)
+    manifest_count = len(manifest["tiles"])
+    manifest_hash = str(manifest.get("configuration_hash") or "")
+    step1 = receipt.get("step1_integrity")
+    if not isinstance(step1, Mapping):
+        errors.append("step1_integrity")
+        step1 = {}
+    if step1.get("ready") is not True or step1.get("errors") != []:
+        errors.append("step1_integrity.ready")
+    for key in ("expected_tile_count", "h3m_tile_count", "h5m_tile_count"):
+        if _integer_size(step1.get(key)) != manifest_count:
+            errors.append(f"step1_integrity.{key}")
+    if step1.get("configuration_hashes") != [manifest_hash]:
+        errors.append("step1_integrity.configuration_hashes")
+    if step1.get("missing_required_tile_ids") != []:
+        errors.append("step1_integrity.missing_required_tile_ids")
+    if _integer_size(step1.get("all_analysis_mountain_count")) != selected_count:
+        errors.append("step1_integrity.all_analysis_mountain_count")
+    if _integer_size(step1.get("all_analysis_required_tile_count")) < 1:
+        errors.append("step1_integrity.all_analysis_required_tile_count")
+    if not str(step1.get("all_analysis_required_tile_ids_sha256") or ""):
+        errors.append("step1_integrity.all_analysis_required_tile_ids_sha256")
+
+    deep_check = receipt.get("deep_check")
+    if not isinstance(deep_check, Mapping):
+        errors.append("deep_check")
+        deep_check = {}
+    if deep_check.get("execution_feasibility_verified") is not True:
+        errors.append("deep_check.execution_feasibility_verified")
+    thresholds = deep_check.get("thresholds")
+    if not isinstance(thresholds, Mapping):
+        errors.append("deep_check.thresholds")
+        thresholds = {}
+    for label, _ in THRESHOLDS:
+        threshold = thresholds.get(label)
+        if not isinstance(threshold, Mapping) or threshold.get("valid") != 1:
+            errors.append(f"deep_check.thresholds.{label}")
+
+    if errors:
+        raise ValueError(
+            "trusted upstream receipt mismatch: "
+            + ", ".join(sorted(set(errors)))
+            + "; use --revalidate-upstream for a live full check"
+        )
+    return receipt
+
+
+def resolve_upstream_validation(
+    args: argparse.Namespace,
+    plan: Sequence[Mapping[str, object]],
+) -> Dict[str, object]:
+    if args.revalidate_upstream:
+        table_validation = validate_analysis_table(args)
+        required_tiles = resolve_required_tile_ids(args, plan)
+        integrity = run_step1_integrity_check(args, required_tiles)
+        return {
+            "mode": "live_revalidation",
+            "validation_id": None,
+            "validated_at_utc": datetime.now(timezone.utc).isoformat(),
+            "receipt_path": None,
+            "receipt_sha256": None,
+            "science_source_sha256": validated_science_source_sha256(),
+            "analysis_table": table_validation,
+            "step1_integrity": integrity,
+            "deep_check": None,
+        }
+
+    receipt = validate_trusted_upstream_receipt(args)
+    table_validation = dict(receipt["analysis_table"])
+    table_validation["validation_mode"] = "trusted_receipt"
+    integrity = dict(receipt["step1_integrity"])
+    integrity.update(
+        {
+            "validation_mode": "trusted_receipt",
+            "manifest": str(args.step1_manifest),
+            "collections": {
+                "h3m": args.global_tree_3m,
+                "h5m": args.global_tree_5m,
+            },
+            "required_tile_ids_scope": "all_validated_analysis_mountains",
+        }
+    )
+    return {
+        "mode": "trusted_receipt",
+        "validation_id": receipt["validation_id"],
+        "validated_at_utc": receipt["validated_at_utc"],
+        "receipt_path": str(args.validated_upstream_receipt),
+        "receipt_sha256": canonical_json_sha256(
+            args.validated_upstream_receipt
+        ),
+        "science_source_sha256": validated_science_source_sha256(),
+        "analysis_table": table_validation,
+        "step1_integrity": integrity,
+        "deep_check": dict(receipt["deep_check"]),
+    }
+
+
+def upstream_validation_summary(
+    validation: Mapping[str, object],
+) -> Dict[str, object]:
+    return {
+        key: validation.get(key)
+        for key in (
+            "mode",
+            "validation_id",
+            "validated_at_utc",
+            "receipt_path",
+            "receipt_sha256",
+            "science_source_sha256",
+        )
     }
 
 
@@ -1015,11 +1401,7 @@ def choose_check_mountain(
 
 def validate_output_collections(args: argparse.Namespace) -> Dict[str, Dict[str, object]]:
     summaries: Dict[str, Dict[str, object]] = {}
-    for product, asset_id in (
-        ("treeline30m", args.treeline30m_collection),
-        ("treeline1km", args.treeline1km_collection),
-        ("qa30m", args.qa30m_collection),
-    ):
+    for product, asset_id, _, _ in selected_product_specs(args):
         info = ee.data.getAsset(asset_id)
         if info.get("type") != "IMAGE_COLLECTION":
             raise ValueError(f"target for {product} must be IMAGE_COLLECTION")
@@ -1032,16 +1414,27 @@ def validate_output_collections(args: argparse.Namespace) -> Dict[str, Dict[str,
     return summaries
 
 
+def selected_product_specs(
+    args: argparse.Namespace,
+) -> Tuple[Tuple[str, str, str, Sequence[float]], ...]:
+    selected = set(args.export_products)
+    return tuple(
+        spec
+        for spec in (
+            ("treeline30m", args.treeline30m_collection, FINE_CRS, FINE_TRANSFORM),
+            ("treeline1km", args.treeline1km_collection, CLIMATE_CRS, CLIMATE_TRANSFORM),
+            ("qa30m", args.qa30m_collection, FINE_CRS, FINE_TRANSFORM),
+        )
+        if spec[0] in selected
+    )
+
+
 def planned_export_records(
     args: argparse.Namespace, mountains: Sequence[Mapping[str, object]]
 ) -> List[Dict[str, object]]:
     config_hash = configuration_hash(args)
     policies = product_pyramiding_policies()
-    specs = (
-        ("treeline30m", args.treeline30m_collection, FINE_CRS, FINE_TRANSFORM),
-        ("treeline1km", args.treeline1km_collection, CLIMATE_CRS, CLIMATE_TRANSFORM),
-        ("qa30m", args.qa30m_collection, FINE_CRS, FINE_TRANSFORM),
-    )
+    specs = selected_product_specs(args)
     records: List[Dict[str, object]] = []
     for mountain in mountains:
         for product, collection, crs, transform in specs:
@@ -1082,6 +1475,15 @@ def make_asset_export_task(
     )
 
 
+def serialized_export_expression_bytes(task: "ee.batch.Task", product: str) -> int:
+    expression = task.config.get("expression")
+    export_options = task.config.get("assetExportOptions")
+    if expression is None or not export_options:
+        raise ValueError(f"incomplete export task configuration: {product}")
+    encoded = expression.serialize(pretty=False, for_cloud_api=True)
+    return len(encoded.encode("utf-8"))
+
+
 def write_json_atomic(path: Path, payload: Mapping[str, object]) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     temporary = path.with_suffix(path.suffix + ".tmp")
@@ -1092,27 +1494,42 @@ def write_json_atomic(path: Path, payload: Mapping[str, object]) -> None:
 
 
 def run_check(args: argparse.Namespace) -> Dict[str, object]:
+    upstream_validation = None
+    if not args.revalidate_upstream:
+        upstream_validation = resolve_upstream_validation(args, [])
     auth = initialize_with_adc(args.project)
-    table_validation = validate_analysis_table(args)
     plan = resolve_mountain_plan(args)
-    required_tiles = resolve_required_tile_ids(args, plan)
-    integrity = run_step1_integrity_check(args, required_tiles)
+    if upstream_validation is None:
+        upstream_validation = resolve_upstream_validation(args, plan)
+    table_validation = upstream_validation["analysis_table"]
+    integrity = upstream_validation["step1_integrity"]
     targets = validate_output_collections(args)
     mountain = choose_check_mountain(plan, args)
     bundle = build_mountain_bundle(args, mountain)
     records = planned_export_records(args, [mountain])
-    sizes = [
-        len(json.dumps(make_asset_export_task(record, bundle).config, default=str))
-        for record in records
-    ]
+    sizes = []
+    for record in records:
+        task = make_asset_export_task(record, bundle)
+        sizes.append(
+            serialized_export_expression_bytes(task, str(record["product"]))
+        )
     otsu_report: Dict[str, object] = {
         "status": "deferred_to_export_task",
         "execution_feasibility_verified": False,
     }
+    validated_deep_check = upstream_validation.get("deep_check")
+    if isinstance(validated_deep_check, Mapping):
+        otsu_report = {
+            **dict(validated_deep_check),
+            "status": "trusted_validated_receipt",
+            "live_evaluation_performed": False,
+            "validation_id": upstream_validation.get("validation_id"),
+        }
     if args.deep_check:
         otsu_report = {
             "status": "evaluated",
             "execution_feasibility_verified": True,
+            "live_evaluation_performed": True,
             "thresholds": {
                 label: ee.Dictionary(info).getInfo() for label, info in bundle["otsu"].items()
             },
@@ -1123,9 +1540,15 @@ def run_check(args: argparse.Namespace) -> Dict[str, object]:
         "authentication": auth,
         "analysis_table": table_validation,
         "step1_integrity": integrity,
+        "upstream_validation": upstream_validation_summary(
+            upstream_validation
+        ),
         "check_mountain": dict(mountain),
         "serialized_task_config_bytes": sizes,
-        "expected_product_bands": expected_product_bands(),
+        "expected_product_bands": {
+            product: expected_product_bands()[product]
+            for product in args.export_products
+        },
         "otsu": otsu_report,
         "targets": {
             product: {"id": info["id"], "existing_child_count": info["existing_child_count"]}
@@ -1186,11 +1609,13 @@ def enforce_queue_limit(
 
 
 def start_exports(args: argparse.Namespace) -> Path:
+    upstream_validation = None
+    if not args.revalidate_upstream:
+        upstream_validation = resolve_upstream_validation(args, [])
     initialize_with_adc(args.project)
-    validate_analysis_table(args)
     plan = resolve_mountain_plan(args)
-    required_tiles = resolve_required_tile_ids(args, plan)
-    run_step1_integrity_check(args, required_tiles)
+    if upstream_validation is None:
+        upstream_validation = resolve_upstream_validation(args, plan)
     targets = validate_output_collections(args)
     if not plan:
         raise ValueError("selected mountain plan is empty")
@@ -1205,6 +1630,9 @@ def start_exports(args: argparse.Namespace) -> Path:
         "project": args.project,
         "analysis_mountains_asset": args.analysis_mountains_asset,
         "step1_manifest": str(args.step1_manifest),
+        "upstream_validation": upstream_validation_summary(
+            upstream_validation
+        ),
         "configuration_hash": configuration_hash(args),
         "tasks": records,
     }
@@ -1315,10 +1743,25 @@ def validate_args(parser: argparse.ArgumentParser, args: argparse.Namespace) -> 
         parser.error("--mountain-offset requires --max-mountains")
     if not 1 <= args.queue_safety_limit <= 3000:
         parser.error("--queue-safety-limit must be in [1,3000]")
+    if len(set(args.export_products)) != len(args.export_products):
+        parser.error("--export-products must not contain duplicates")
+    selected_products = set(args.export_products)
+    if args.allow_direct_1km_ab:
+        if selected_products != set(EXPORT_PRODUCTS):
+            parser.error(
+                "--allow-direct-1km-ab requires exactly "
+                "treeline30m treeline1km qa30m"
+            )
+        if args.max_mountains != 1:
+            parser.error("--allow-direct-1km-ab requires --max-mountains 1")
+    elif "treeline1km" in selected_products and len(selected_products) != 1:
+        parser.error("legacy treeline1km must be selected alone")
     if args.window_radius_m != 150:
         parser.error("--window-radius-m is fixed at 150 (300 m window)")
     if args.median_radius_pixels != 1:
         parser.error("--median-radius-pixels is fixed at 1")
+    if args.deep_check and not args.check:
+        parser.error("--deep-check is only valid with --check")
     if args.check or args.export:
         errors = []
         if not args.analysis_mountains_asset:

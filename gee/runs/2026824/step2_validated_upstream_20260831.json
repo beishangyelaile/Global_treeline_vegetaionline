@@ -1,0 +1,138 @@
+{
+  "schema_version": 1,
+  "validation_id": "upstream-gmba-sayre-step1-20260831-v2",
+  "validated_at_utc": "2026-08-31T16:56:09.0616769Z",
+  "upstream_identity": {
+    "project": "ee-wsc",
+    "science_source_sha256": "e111a64f945d88a9bca3e943e6b1701d6584da115ffef4a3b31a43f3ec26bd18",
+    "analysis": {
+      "asset_id": "projects/ee-wsc/assets/Alpine/GMBA_Sayre",
+      "map_unit": "Basic",
+      "minimum_high_mountain_fraction": 0.5,
+      "maximum_tree_cover_fraction": 0.9,
+      "worldcover_2021": "ESA/WorldCover/v200",
+      "worldcover_band": "Map",
+      "worldcover_tree_class": 10
+    },
+    "step1": {
+      "manifest_canonical_sha256": "fffb0bec26a8865fbef86e41d2cd690b199b59188b6ed94d4ee5dce3ce263f2e",
+      "manifest_configuration_hash": "33b97c487aa3117d2bc6fb988b0cb0490949bfcd26dbb3ba4355f5a658940542",
+      "manifest_tile_count": 304,
+      "h3m_collection": "projects/ee-alpine-506212/assets/Global_tree_3m",
+      "h5m_collection": "projects/ee-alpine-506212/assets/Global_tree_5m"
+    },
+    "method_inputs": {
+      "chelsa_bio01": "projects/ee-wsc/assets/Alpine/CHELSA_bio01_1981-2010_V21",
+      "dem": "JAXA/ALOS/AW3D30/V4_1",
+      "landforms": "CSP/ERGo/1_0/Global/ALOS_landforms",
+      "valley_classes": [41, 42],
+      "thresholds": [["h3m", 3], ["h5m", 5]]
+    },
+    "grids": {
+      "fine": {
+        "crs": "EPSG:4326",
+        "transform": [0.00025, 0, -180, 0, -0.00025, 90]
+      },
+      "climate": {
+        "crs": "EPSG:4326",
+        "transform": [0.008333333333333333, 0, -180, 0, -0.008333333333333333, 90]
+      }
+    },
+    "parameters": {
+      "forest_mosaic_projection_placement": "after_mosaic_select_before_pixel_neighborhood",
+      "geometry_max_error_m": 1000,
+      "median_radius_pixels": 1,
+      "window_radius_m": 150,
+      "minimum_samples_per_group": 5,
+      "minimum_elevation_difference_m": 0,
+      "temperature_scale": 0.1,
+      "temperature_offset": -273.15,
+      "otsu_min_samples": 20,
+      "otsu_max_pixels": 100000000.0,
+      "tile_scale": 8,
+      "strict_aw3d_native_only": false,
+      "aggregation_max_pixels": 2048,
+      "aggregation_best_effort": false,
+      "one_sided_t_critical_95": [
+        [1, -6.314],
+        [2, -2.92],
+        [3, -2.353],
+        [4, -2.132],
+        [5, -2.015],
+        [6, -1.943],
+        [7, -1.895],
+        [8, -1.86],
+        [9, -1.833],
+        [10, -1.812],
+        [12, -1.782],
+        [15, -1.753],
+        [20, -1.725],
+        [30, -1.697],
+        [40, -1.684],
+        [60, -1.671],
+        [120, -1.658],
+        [1000, -1.645]
+      ]
+    }
+  },
+  "analysis_table": {
+    "id": "projects/ee-wsc/assets/Alpine/GMBA_Sayre",
+    "type": "TABLE",
+    "size_bytes": "11369291",
+    "source_feature_count": 3115,
+    "complete_property_count": 3115,
+    "selected_feature_count": 3115,
+    "distinct_gmba_id_count": 3115,
+    "mapunit_histogram": {"Basic": 3115},
+    "hm_fraction_min": 0.5000552669682616,
+    "hm_fraction_max": 1.0029356929932414,
+    "tree_fraction_min": 0,
+    "tree_fraction_max": 0.899485506518567,
+    "below_minimum_hm_fraction_count": 0,
+    "above_maximum_tree_fraction_count": 0
+  },
+  "step1_integrity": {
+    "ready": true,
+    "errors": [],
+    "expected_tile_count": 304,
+    "h3m_tile_count": 304,
+    "h5m_tile_count": 304,
+    "configuration_hashes": [
+      "33b97c487aa3117d2bc6fb988b0cb0490949bfcd26dbb3ba4355f5a658940542"
+    ],
+    "all_analysis_mountain_count": 3115,
+    "all_analysis_required_tile_count": 182,
+    "all_analysis_required_tile_ids_sha256": "2ddf57615849e45f14a37f678c946b7e57a65856070d08eee7fcb34d43902239",
+    "missing_required_tile_ids": []
+  },
+  "deep_check": {
+    "status": "evaluated",
+    "execution_feasibility_verified": true,
+    "scope": "representative_mountain",
+    "mountain_id": "10067",
+    "source_step2_configuration_hash": "d49bd16592abfc9bc5654068a49d5da8e522f7718afcfc49ba02c33fa416134f",
+    "thresholds": {
+      "h3m": {
+        "candidate_sample_count": 105.0392156862745,
+        "histogram_bucket_count": 110,
+        "source": "per-gmba-pooled-2000-2020",
+        "threshold_c": 2.4500000000000455,
+        "threshold_raw": 2756,
+        "valid": 1
+      },
+      "h5m": {
+        "candidate_sample_count": 102.33333333333333,
+        "histogram_bucket_count": 110,
+        "source": "per-gmba-pooled-2000-2020",
+        "threshold_c": 2.5500000000000114,
+        "threshold_raw": 2757,
+        "valid": 1
+      }
+    }
+  },
+  "evidence": {
+    "step2a_check_report_sha256": "306DE71C78D34C1A719815F5CAF6034EC0A46AC71FA8869A8840DE104481CDB1",
+    "validated_code_commit": "8ceead249cdcfcb2c05a7f84e282bfeb5d35e8f1",
+    "reproduction_log": "notes/reproduction-log.md"
+  }
+}
